@@ -1,13 +1,25 @@
-var app = angular.module('pusherApp', ['ngMaterial']);
+var app = angular.module('pusherApp', ['ngMaterial', 'ui.sortable', 'gg.editableText']);
 
-app.controller('MessageCtrl', function ($scope) {
-  $scope.newMessage = "";
-  $scope.messages = ["Message 1", "Message 2", "Message 3"];
+app.controller('ChecklistCtrl', function ($scope) {
+  $scope.newItem = {};
+  $scope.items = [
+    {title:"Item 1"}, 
+    {title:"Item 2"}, 
+    {title:"Item 3"}, 
+  ];
 
-  $scope.addMessage = function() {
+  $scope.$watchCollection('items', function listChange(newValue, oldValue) {
+    console.log("itemListChange", oldValue, newValue);
+  });
+
+  $scope.addItem = function() {
   	console.log("Add message: " + $scope.newMessage);
   	if ($scope.newMessage) {
-  		$scope.messages.push($scope.newMessage);
+  		$scope.messages.unshift($scope.newMessage);
   	}
+  }
+
+  $scope.editItem = function(item) {
+    console.log("Edit item", item);
   }
 });

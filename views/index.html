@@ -5,10 +5,17 @@
     <title></title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/angular-material.css">
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/angular-aria/angular-aria.js"></script>
     <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="/bower_components/angular-ui-sortable/sortable.js"></script>
+
+    <script src="/bower_components/angular-editable-text/dist/angular-editable-text.js"></script>
+    <link rel="stylesheet" href="/bower_components/angular-editable-text/dist/angular-editable-text.css">
+
     <script src="/js/app.js"></script>
     <script src="/js/directives/directives.js"></script>
 </head>
@@ -16,20 +23,20 @@
 <body ng-app="pusherApp">
     <div style="width:800px;margin:auto">
         <md-content>
-            <div ng-controller="MessageCtrl">
-                <h1>Welcome to Pusher</h1>
+            <div ng-controller="ChecklistCtrl">
+                <h1>Itemizer</h1>
                 <div layout="row" layout-align="space-around">
                   <md-input-container style="width:700px">
-                      <label>Message</label>
-                      <input ng-model="newMessage">
+                      <label>Item</label>
+                      <input ng-model="newItem.title">
                   </md-input-container>
-                  <md-button class="md-raised md-primary" ng-click="addMessage()" style="height:20px">Send</md-button>
+                  <md-button class="md-raised md-primary" ng-click="addItem()" style="height:20px">Add</md-button>
                 </div>
                 
-                  <md-list>
-                      <md-list-item ng-repeat="message in messages">
-                          <p>{{message}}</p>
-                          <md-checkbox ng-model="message.selected" class="md-secondary"></md-checkbox>
+                  <md-list ui-sortable ng-model="items" >
+                      <md-list-item ng-repeat="item in items" ng-click="editItem(item)">
+                          <p editable-text="item.title"></p>
+                          <md-checkbox ng-model="item.selected" class="md-secondary"></md-checkbox>
                       </md-list-item>
                   </md-list>
                 
