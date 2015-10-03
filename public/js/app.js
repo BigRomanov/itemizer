@@ -8,8 +8,23 @@ app.controller('ChecklistCtrl', function ($scope) {
     {title:"Item 3"}, 
   ];
 
+  $scope.sortableOptions = {
+    update: function(e, ui) {console.log("Update called");},
+    handle: '.itemHandle'
+    // stop:function(e, ui) {
+    //   console.log("Stop called");
+    // }
+  };
+
+
+  // Refactor this to be handled in sortable update method
   $scope.$watchCollection('items', function listChange(newValue, oldValue) {
     console.log("itemListChange", oldValue, newValue);
+    // Set new indices to the list items
+    _.each($scope.items, function(item, index) {
+      item.index = index;
+      console.log(item);
+    });
   });
 
   $scope.addItem = function() {

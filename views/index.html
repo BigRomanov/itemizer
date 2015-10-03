@@ -5,6 +5,7 @@
     <title></title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/angular-material.css">
+    <script src="/bower_components/underscore/underscore.js"></script>
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
@@ -33,10 +34,11 @@
                   <md-button class="md-raised md-primary" ng-click="addItem()" style="height:20px">Add</md-button>
                 </div>
                 
-                  <md-list ui-sortable ng-model="items" >
-                      <md-list-item ng-repeat="item in items" ng-click="editItem(item)">
-                          <p editable-text="item.title"></p>
-                          <md-checkbox ng-model="item.selected" class="md-secondary"></md-checkbox>
+                  <md-list ui-sortable="sortableOptions" ng-model="items" >
+                      <md-list-item ng-repeat="item in items" ng-mouseenter="item.chosen=true" ng-mouseleave="item.chosen=false">
+                          <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
+                          <p style="margin-right:24px" editable-text="item.title"></p>
+                          <md-checkbox ng-model="selected" class="md-secondary"></md-checkbox>
                       </md-list-item>
                   </md-list>
                 

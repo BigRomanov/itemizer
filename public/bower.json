@@ -19,6 +19,7 @@
     "angular-material": "~0.11.0",
     "jquery": "~2.1.4",
     "angular-ui-sortable": "~0.13.4",
-    "angular-editable-text": "~1.1.2"
+    "angular-editable-text": "~1.1.2",
+    "underscore": "~1.8.3"
   }
 }
