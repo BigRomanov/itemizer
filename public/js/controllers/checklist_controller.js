@@ -1,5 +1,3 @@
-var app = angular.module('pusherApp', ['ngMaterial', 'ui.sortable', 'gg.editableText']);
-
 app.controller('ChecklistCtrl', function ($scope) {
   $scope.newItem = {};
   $scope.items = [
@@ -28,10 +26,10 @@ app.controller('ChecklistCtrl', function ($scope) {
   });
 
   $scope.addItem = function() {
-  	console.log("Add message: " + $scope.newMessage);
-  	if ($scope.newMessage) {
-  		$scope.messages.unshift($scope.newMessage);
-  	}
+    console.log("Add message: " + $scope.newMessage);
+    if ($scope.newMessage) {
+      $scope.messages.unshift($scope.newMessage);
+    }
   }
 
   $scope.editItem = function(item) {

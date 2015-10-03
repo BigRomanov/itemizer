@@ -20,6 +20,7 @@
     "jquery": "~2.1.4",
     "angular-ui-sortable": "~0.13.4",
     "angular-editable-text": "~1.1.2",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular-route": "~1.4.7"
   }
 }
