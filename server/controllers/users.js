@@ -16,12 +16,12 @@ exports.create = function (req, res, next) {
 
   newUser.save(function(err) {
     if (err) {
-      return res.json(400, err);
+      return res.status(400).json(err);
     }
 
     req.logIn(newUser, function(err) {
       if (err) return next(err);
-      return res.json(newUser.user_info);
+      return res.status(200).json(newUser.user_info);
     });
   });
 };
@@ -57,9 +57,9 @@ exports.exists = function (req, res, next) {
     }
 
     if(user) {
-      res.json({exists: true});
+      res.status(200).json({exists: true});
     } else {
-      res.json({exists: false});
+      res.status(200).json({exists: false});
     }
   });
 }

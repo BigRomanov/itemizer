@@ -37,16 +37,19 @@
     <md-content>
       <md-toolbar>
         <div class="md-toolbar-tools">
-          <md-button class="md-icon-button" aria-label="Settings">
+          <md-button class="md-icon-button" aria-label="Settings" ng-href="#/home">
             <md-icon md-svg-icon="img/ic_home_white_24px.svg"></md-icon>
           </md-button>
           <h2>
           <span style="font-weight:bold">ITEMIZER</span>
         </h2>
           <span flex></span>
-          <md-button class="md-icon-button" aria-label="Library" style="width:100px" ng-click="goTo('library')">
+          <!-- <md-button class="md-icon-button" aria-label="Library" style="width:100px" ng-href="#/library">
             <md-icon md-svg-icon="img/ic_apps_white_24px.svg"></md-icon>
             Library
+          </md-button> -->
+          <md-button class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">
+            LOGIN
           </md-button>
         </div>
       </md-toolbar>

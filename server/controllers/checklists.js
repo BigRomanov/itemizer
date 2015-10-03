@@ -7,9 +7,9 @@ var mongoose = require('mongoose'),
  * Find checklist by id
  */
 exports.checklist = function(req, res, next, id) {
-  Checklist.load(id, function(err, blog) {
+  Checklist.load(id, function(err, checklist) {
     if (err) return next(err);
-    if (!blog) return next(new Error('Failed to load blog ' + id));
+    if (!checklist) return next(new Error('Failed to load blog ' + id));
     req.checklist = checklist;
     next();
   });
@@ -24,9 +24,9 @@ exports.create = function(req, res) {
 
   checklist.save(function(err) {
     if (err) {
-      res.json(500, err);
+      res.status(500).json(err);
     } else {
-      res.json(checklist);
+      res.status(200).json(checklist);
     }
   });
 };
@@ -40,9 +40,9 @@ exports.update = function(req, res) {
   checklist.items = req.body.items;
   checklist.save(function(err) {
     if (err) {
-      res.json(500, err);
+      res.status(500).json(err);
     } else {
-      res.json(checklist);
+      res.status(200).json(checklist);
     }
   });
 };
@@ -55,9 +55,9 @@ exports.destroy = function(req, res) {
 
   checklist.remove(function(err) {
     if (err) {
-      res.json(500, err);
+      res.status(500).json(err);
     } else {
-      res.json(checklist);
+      res.status(200).json(checklist);
     }
   });
 };
@@ -66,7 +66,7 @@ exports.destroy = function(req, res) {
  * Show a checklist
  */
 exports.show = function(req, res) {
-  res.json(req.checklist);
+  res.status(200).json(checklist);
 };
 
 /**
@@ -75,9 +75,9 @@ exports.show = function(req, res) {
 exports.all = function(req, res) {
   Checklist.find().sort('-created').populate('creator', 'username').exec(function(err, checklists) {
     if (err) {
-      res.json(500, err);
+      res.status(500).json(err);
     } else {
-      res.json(checklists);
+      res.status(200).json(checklist);
     }
   });
 };

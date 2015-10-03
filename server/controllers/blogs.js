@@ -24,9 +24,9 @@ exports.create = function(req, res) {
 
   blog.save(function(err) {
     if (err) {
-      res.json(500, err);
+      res.status(500).json(err);
     } else {
-      res.json(blog);
+      res.status(200).json(blog);
     }
   });
 };
@@ -40,9 +40,9 @@ exports.update = function(req, res) {
   blog.content = req.body.content;
   blog.save(function(err) {
     if (err) {
-      res.json(500, err);
+      res.status(500).json(err);
     } else {
-      res.json(blog);
+      res.status(200).json(blog);
     }
   });
 };
@@ -55,9 +55,9 @@ exports.destroy = function(req, res) {
 
   blog.remove(function(err) {
     if (err) {
-      res.json(500, err);
+      res.status(500).json(err);
     } else {
-      res.json(blog);
+      res.status(200).json(blog);
     }
   });
 };
@@ -66,7 +66,7 @@ exports.destroy = function(req, res) {
  * Show a blog
  */
 exports.show = function(req, res) {
-  res.json(req.blog);
+  res.status(200).json(blog);
 };
 
 /**
@@ -75,9 +75,9 @@ exports.show = function(req, res) {
 exports.all = function(req, res) {
   Blog.find().sort('-created').populate('creator', 'username').exec(function(err, blogs) {
     if (err) {
-      res.json(500, err);
+      res.status(500).json(err);
     } else {
-      res.json(blogs);
+      res.status(200).json(blog);
     }
   });
 };
