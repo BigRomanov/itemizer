@@ -1,7 +1,0 @@
-<md-list ui-sortable="sortableOptions" ng-model="checklists">
-  <md-list-item ng-repeat="checklist in checklists" ng-mouseenter="checklist.chosen=true" ng-mouseleave="checklist.chosen=false">
-    <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
-    <p style="margin-right:24px" editable-text="checklist.title"></p>
-    <md-checkbox ng-model="checklist.selected" class="md-secondary"></md-checkbox>
-  </md-list-item>
-</md-list>
