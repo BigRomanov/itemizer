@@ -15,7 +15,6 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, $cookieS
           password: user.password,
           rememberMe: user.rememberMe
         }, function(user) {
-          console.log("Got currentUser", user);
           $rootScope.currentUser = user;
           return cb();
         }, function(err) {

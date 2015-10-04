@@ -1,20 +1,43 @@
-<md-content ng-init="find()" layout="row">
-  <div class="lock-size" layout="row" layout-align="center center">
-    <md-button aria-label="Add" ng-click="addChecklist()" layout-align="start center" class="md-fab md-raised md-mini" style="color:rgb(63,81,181)">
-      <md-icon md-svg-src="img/ic_add_circle_black_24px.svg" aria-label="Add checklist" class="svg-main-color"></md-icon>
+<md-content ng-init="find()" layout="column">
+  <div class="lock-size" layout="row" layout-align="start center" style="padding:10px 0">
+    <md-button aria-label="Add" ng-click="createNewChecklist()" layout-align="start center" class="md-fab md-raised md-mini" style="color:rgb(63,81,181)">
+      <md-icon md-svg-src="img/ic_add_circle_black_24px.svg" aria-label="New Checklist" class="svg-main-color"></md-icon>
+      <md-tooltip>
+        New Checklist
+      </md-tooltip>
     </md-button>
   </div>
-  <md-card>
+  <md-card ng-show="!adding && (!checklists || !checklists.length)" style="margin-top:50px">
     <md-card-content layout="row">
-      <div layout-align="center center" class="md-title" style="text-align:center">No checklists. Click 'Add' to create one</div>
+      <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No checklists. Click 'Add' to create one</p>
     </md-card-content>
-    
   </md-card>
-  <md-list ui-sortable="sortableOptions" ng-model="checklists" ng-show="checklists && checklists.length">
-    <md-list-item ng-repeat="checklist in checklists" ng-mouseenter="checklist.chosen=true" ng-mouseleave="checklist.chosen=false">
-      <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
-      <p style="margin-right:24px" editable-text="checklist.title"></p>
-      <md-checkbox ng-model="checklist.selected" class="md-secondary"></md-checkbox>
-    </md-list-item>
-  </md-list>
+  <div ng-show="adding">
+    <div layout="row" style="margin-top:20px">
+      <md-input-container class="md-icon-float" style="width:90%">
+        <label>Checklist title</label>
+        <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
+        <input ng-model="newChecklist.title" type="text">
+      </md-input-container>
+    </div>
+    <div ng-repeat="step in newChecklist.steps" layout="row" ng-show="adding">
+      <md-input-container class="md-icon-float" style="width:90%">
+        <label>Step title</label>
+        <md-icon md-svg-src="img/ic_label_black_24px.svg" class="name"></md-icon>
+        <input ng-model="step.title" type="text">
+      </md-input-container>
+      <md-button class="md-primary" ng-click="addStep()">Next step</md-button>
+    </div>
+    <md-button class="md-primary" ng-click="saveNewChecklist()">Create</md-button>
+  </div>
+  <div ng-show="checklists && checklists.length">
+    <div style="width:100%;border-bottom:1px solid #ccc"></div>
+    <md-list ui-sortable="sortableOptions" ng-model="checklists">
+      <md-list-item ng-repeat="checklist in checklists" ng-mouseenter="checklist.chosen=true" ng-mouseleave="checklist.chosen=false">
+        <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
+        <p style="margin-right:24px" editable-text="checklist.title"></p>
+        <md-checkbox ng-model="checklist.selected" class="md-secondary"></md-checkbox>
+      </md-list-item>
+    </md-list>
+  </div>
 </md-content>

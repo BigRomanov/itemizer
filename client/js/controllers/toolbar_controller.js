@@ -1,4 +1,4 @@
-app.controller('ToolbarCtrl', function ($scope, $location) {
+app.controller('ToolbarCtrl', function ($scope, $location, Auth) {
     $scope.goTo = function(path) {
       console.log("Go to", path);
       $location.path( path );
@@ -17,4 +17,8 @@ app.controller('ToolbarCtrl', function ($scope, $location) {
         }
       });
     };
+
+    this.inLogin = function() {
+      return ($location.path().indexOf("login") > -1) || ($location.path().indexOf("signup") > -1);
+    }
 });

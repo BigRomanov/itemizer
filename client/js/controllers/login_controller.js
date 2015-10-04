@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('LoginCtrl', function ($scope, Auth, $location) {
+app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
     $scope.error = {};
     $scope.user = {};
 
