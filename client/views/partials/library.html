@@ -1,7 +1,20 @@
-<md-list ui-sortable="sortableOptions" ng-model="checklists">
-  <md-list-item ng-repeat="checklist in checklists" ng-mouseenter="checklist.chosen=true" ng-mouseleave="checklist.chosen=false">
-    <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
-    <p style="margin-right:24px" editable-text="checklist.title"></p>
-    <md-checkbox ng-model="checklist.selected" class="md-secondary"></md-checkbox>
-  </md-list-item>
-</md-list>
+<md-content ng-init="find()" layout="row">
+  <div class="lock-size" layout="row" layout-align="center center">
+    <md-button aria-label="Add" ng-click="addChecklist()" layout-align="start center" class="md-fab md-raised md-mini" style="color:rgb(63,81,181)">
+      <md-icon md-svg-src="img/ic_add_circle_black_24px.svg" aria-label="Add checklist" class="svg-main-color"></md-icon>
+    </md-button>
+  </div>
+  <md-card>
+    <md-card-content layout="row">
+      <div layout-align="center center" class="md-title" style="text-align:center">No checklists. Click 'Add' to create one</div>
+    </md-card-content>
+    
+  </md-card>
+  <md-list ui-sortable="sortableOptions" ng-model="checklists" ng-show="checklists && checklists.length">
+    <md-list-item ng-repeat="checklist in checklists" ng-mouseenter="checklist.chosen=true" ng-mouseleave="checklist.chosen=false">
+      <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
+      <p style="margin-right:24px" editable-text="checklist.title"></p>
+      <md-checkbox ng-model="checklist.selected" class="md-secondary"></md-checkbox>
+    </md-list-item>
+  </md-list>
+</md-content>

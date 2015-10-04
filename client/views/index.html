@@ -30,10 +30,11 @@
   <script src="/js/controllers/library_controller.js"></script>
   <script src="/js/controllers/checklist_controller.js"></script>
   <script src="/js/controllers/signup_controller.js"></script>
+  <script src="/js/controllers/login_controller.js"></script>
 </head>
 
 <body ng-app="pusherApp">
-  <div style="width:800px;margin:auto" ng-controller="ToolbarCtrl">
+  <div style="width:800px;margin:auto" ng-controller="ToolbarCtrl as ctrl">
     <md-content>
       <md-toolbar>
         <div class="md-toolbar-tools">
@@ -48,12 +49,26 @@
             <md-icon md-svg-icon="img/ic_apps_white_24px.svg"></md-icon>
             Library
           </md-button> -->
-          <md-button class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">
-            LOGIN
-          </md-button>
+          <md-button ng-show="!currentUser" class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">LOGIN</md-button>
+          <md-menu>
+            <md-button aria-label="User profile" class="md-icon-button" ng-mouseenter="ctrl.openMenu($mdOpenMenu, $event)" style="width:200px">
+              <md-icon md-menu-origin md-svg-src="img/ic_account_circle_white_24px.svg"></md-icon>
+              {{currentUser.username}}
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button ng-href="#/profile">
+                  PROFILE
+                </md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button ng-click="ctrl.logout()">LOGOUT</md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
         </div>
       </md-toolbar>
-
       <div ng-view></div>
     </md-content>
   </div>

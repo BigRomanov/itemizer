@@ -73,11 +73,12 @@ exports.show = function(req, res) {
  * List of checklists
  */
 exports.all = function(req, res) {
+  console.log("Find all checklists");
   Checklist.find().sort('-created').populate('creator', 'username').exec(function(err, checklists) {
     if (err) {
       res.status(500).json(err);
     } else {
-      res.status(200).json(checklist);
+      res.status(200).json(checklists);
     }
   });
 };

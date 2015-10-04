@@ -19,3 +19,8 @@ a {
   /* IE 10+ */
   user-select: none;
   /* Likely future */ }
+
+
+  .svg-main-color svg {
+    fill: rgb(63,81,181);
+  }
