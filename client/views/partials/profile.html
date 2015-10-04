@@ -10,9 +10,12 @@
       <input ng-model="user.username" name="username" required>
     </md-input-container>
   </div>
-  <div layout="row">
+  <p class="md-subhead" style="font-size:12px">Organizations:  </p>
+
     
-  <div layout="row" style="width:100%">
+    <md-chips ng-model="user.organizations" style="width:100%"></md-chips>
+
+  <div layout="row" style="width:100%;margin-top:50px">
     <md-button type="sublit" ng-disabled="profileForm.username.$dirty && profileForm.username.$invalid ||
   profileForm.email.$dirty && profileForm.email.$invalid" class="md-raised md-primary" style="width:100px;margin:auto" layout-align="center center" ng-click="updateProfile">Update</md-button>
   </div>
