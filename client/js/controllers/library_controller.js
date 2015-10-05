@@ -10,7 +10,9 @@ app.controller('LibraryCtrl', function($scope, $http, Checklists, $location, $ro
 
   $scope.edit = function(checklist) {
     console.log("Edit checklist: " + checklist._id);
-    $location.path('#/checklist/' + checklist._id);
+    var path = 'checklist/' + checklist._id + '/edit';
+    console.log(path)
+    $location.path(path);
   };
 
   $scope.newChecklist = function() {
