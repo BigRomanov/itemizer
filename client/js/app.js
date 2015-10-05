@@ -11,9 +11,9 @@ app.config(['$routeProvider',
       templateUrl: '/views/partials/library.html',
       controller: 'LibraryCtrl'
     }).
-    when('/checklists/:id', {
-      templateUrl: '/views/partials/checklist.html',
-      controller: 'ChecklistCtrl'
+    when('/checklist/:id/edit', {
+      templateUrl: '/views/partials/checklist_editor.html',
+      controller: 'ChecklistEditorCtrl'
     }).
     when('/signup', {
       templateUrl: 'partials/signup.html',

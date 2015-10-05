@@ -66,7 +66,13 @@ exports.destroy = function(req, res) {
  * Show a checklist
  */
 exports.show = function(req, res) {
-  res.status(200).json(checklist);
+  Checklist.load(req.id, function(err, checklist) {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(checklist);
+    }
+  });
 };
 
 /**
