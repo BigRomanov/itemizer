@@ -41,7 +41,7 @@ app.controller('LibraryCtrl', function($scope, $http, Checklists, $location, $ro
     $http.post('/api/checklists', $scope.checklist, {}).then(function(response) {
       console.log("Checklist saved successfully", response);
       var id = response.data._id;
-      $location.path("#/checklist/" + id);
+      $location.path("checklist/" + id+ "/edit");
     }, function(response) {
       // TODO: Add proper error reporting
       console.log("Checklist save failed", response);

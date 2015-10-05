@@ -32,12 +32,12 @@ module.exports = function(app) {
   app.get('/api/checklists', checklists.all);
   app.post('/api/checklists', auth.ensureAuthenticated, checklists.create);
   app.get('/api/checklists/:checklistId', checklists.show);
-  app.put('/api/checklists/:checlistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.update);
+  app.put('/api/checklists/:checklistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.update);
   app.delete('/api/checklists/:checlistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.destroy);
 
   //Setting up the blogId param
   app.param('blogId', blogs.blog);
-  app.param('checlistId', checklists.checklist)
+  app.param('checklistId', checklists.checklist)
 
   // Angular Routes
   app.get('/partials/*', function(req, res) {

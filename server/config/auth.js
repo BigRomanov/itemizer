@@ -4,7 +4,11 @@
  *  Route middleware to ensure user is authenticated.
  */
 exports.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
+  console.log("ensureAuthenticated");
+  if (req.isAuthenticated()) { 
+    console.log("authenticated");
+    return next(); 
+  }
   res.send(401);
 }
 
@@ -22,9 +26,13 @@ exports.blog = {
 
 exports.checklist = {
   hasAuthorization: function(req, res, next) {
-    if (req.checklist.creator._id.toString() !== req.user._id.toString()) {
+    console.log("hasAuthorization");
+    console.log(req.checklist);
+    console.log(req.user);
+    if (req.checklist.creator.toString() !== req.user._id.toString()) {
       return res.send(403);
     }
+    console.log("authorized");
     next();
   }
 };

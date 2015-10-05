@@ -1,11 +1,13 @@
 <md-content ng-init="init()" layout="column">
   <!-- Toolbar -->
-  <div ng-hide="adding" class="lock-size" layout="row" layout-align="start center" style="padding:10px 0">
-    <md-button aria-label="Add" ng-click="createNewChecklist()" layout-align="start center" class="md-fab md-raised md-mini" style="color:rgb(63,81,181)">
+  <div ng-hide="adding" class="lock-size" layout="row" style="padding:10px 0">
+    <md-button aria-label="Add" ng-click="saveChecklist()" layout-align="start center" class="md-raised">
       <md-icon md-svg-src="img/ic_add_circle_black_24px.svg" aria-label="New Checklist" class="svg-main-color"></md-icon>
-      <md-tooltip>
-        New Checklist
-      </md-tooltip>
+      Save
+    </md-button>
+    <md-button aria-label="Delete" ng-click="deleteChecklist()" layout-align="end center" class="md-warn">
+      <md-icon md-svg-src="img/ic_add_circle_black_24px.svg" aria-label="New Checklist" class="svg-main-color"></md-icon>
+      Delete
     </md-button>
   </div>
   

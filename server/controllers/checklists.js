@@ -35,14 +35,21 @@ exports.create = function(req, res) {
  * Update a checklist
  */
 exports.update = function(req, res) {
-  var checklist = req.checklist;
-  checklist.title = req.body.title;
-  checklist.items = req.body.items;
-  checklist.save(function(err) {
+  
+  Checklist.findById(req.params.checklistId, function(err, checklist) {
     if (err) {
       res.status(500).json(err);
-    } else {
-      res.status(200).json(checklist);
+    } 
+    else {
+      // Copy all fields
+      checklist.title = req.body.title;
+      checklist.save(function(err) {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          res.status(200).json(checklist);
+        }
+      });
     }
   });
 };

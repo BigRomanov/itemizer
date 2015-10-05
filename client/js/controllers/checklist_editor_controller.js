@@ -13,4 +13,16 @@ app.controller('ChecklistEditorCtrl', ['$scope', '$routeParams', 'Checklists', f
       $scope.loading = false;
     });
   }
+
+  $scope.saveChecklist = function() {
+    Checklists.update({id:$scope.checklist._id}, $scope.checklist);
+  }
+
+  $scope.deleteChecklist = function() {
+    // TODO: Add confirmation
+    Checklists.delete({checklistId:id}, function(checklist) {
+      console.log("Checklist deleted", checklist);
+      $location.path('library');
+    });
+  }
 }]);
