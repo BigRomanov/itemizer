@@ -1,27 +1,44 @@
 app.controller('LibraryCtrl', function ($scope, $http, Checklists, $location, $routeParams, $rootScope) {
+  $scope.init = function() {
+    $scope.adding = false;
+  }
+
   $scope.find = function() {
+      $scope.loading=true;
       Checklists.query(function(checklists) {
         $scope.checklists = checklists;
+        $scope.loading = false;
       });
     };
 
-  $scope.createNewChecklist = function() {
-    $scope.newChecklist = {title:"", steps:[]};
-    $scope.newStep = {};
-    $scope.editing = true;
+  $scope.newChecklist = function() {
+    $scope.checklist = {title:"", steps:[]};
+    $scope.adding = true;
   }
 
-  $scope.saveNewChecklist = function() {
-    $scope.editing = false;
-    $scope.checklists.unshift($scope.newChecklist);
+  $scope.cancelNewChecklist = function() {
+    // Reset new step
+    $scope.checklist = {title:"", steps:[]};
+    $scope.adding = false;
+  }
+
+  $scope.addChecklist = function() {
+    $scope.adding = false;
+    $scope.checklists.unshift($scope.checklist);
 
     console.log($scope.checklists);
 
-    // Send to server
+    $http.post('/api/checklists', $scope.checklist, {}).then(function(response) {
+      console.log("Checklist saved successfully", response);
+    }, function(response) {
+      console.log("Checklist save failed", response);
+    });
   }
 
   $scope.addStep = function() {
     $scope.newChecklist.steps.push($scope.newStep);
     $scope.newStep = {};
   }
+
+  $scope.init();
 });

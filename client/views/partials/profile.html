@@ -1,23 +1,20 @@
 <md-content layout-padding layout="column" layout-sm="column">
-<form  name="profileForm" novalidate>
-  <div layout="row">
-    <md-input-container style="width:50%">
-      <label>Email</label>
-      <input ng-model="user.email" name="email" type="email" disabled>
-    </md-input-container>
-    <md-input-container style="width:50%">
-      <label>Username</label>
-      <input ng-model="user.username" name="username" required>
-    </md-input-container>
-  </div>
-  <p class="md-subhead" style="font-size:12px">Organizations:  </p>
-
-    
+  <form name="profileForm" novalidate>
+    <div layout="row">
+      <md-input-container style="width:50%">
+        <label>Email</label>
+        <input ng-model="user.email" name="email" type="email" disabled>
+      </md-input-container>
+      <md-input-container style="width:50%">
+        <label>Username</label>
+        <input ng-model="user.username" name="username" required>
+      </md-input-container>
+    </div>
+    <p class="md-subhead" style="font-size:12px">Organizations: </p>
     <md-chips ng-model="user.organizations" style="width:100%"></md-chips>
-
-  <div layout="row" style="width:100%;margin-top:50px">
-    <md-button type="sublit" ng-disabled="profileForm.username.$dirty && profileForm.username.$invalid ||
+    <div layout="row" style="width:100%;margin-top:50px">
+      <md-button type="sublit" ng-disabled="profileForm.username.$dirty && profileForm.username.$invalid ||
   profileForm.email.$dirty && profileForm.email.$invalid" class="md-raised md-primary" style="width:100px;margin:auto" layout-align="center center" ng-click="updateProfile">Update</md-button>
-  </div>
-</form>
+    </div>
+  </form>
 </md-content>

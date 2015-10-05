@@ -1,49 +1,37 @@
 <md-content ng-init="find()" layout="column">
   <!-- Toolbar -->
-  <div class="lock-size" layout="row" layout-align="start center" style="padding:10px 0">
-    <md-button aria-label="Add" ng-click="createNewChecklist()" layout-align="start center" class="md-fab md-raised md-mini" style="color:rgb(63,81,181)">
+  <div ng-show="loading" layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+
+  <div ng-hide="adding || loading" class="lock-size" layout="row" layout-align="start center" style="padding:10px 0">
+    <md-button aria-label="Add" ng-click="newChecklist()" layout-align="start center" class="md-raised md-mini" style="color:rgb(63,81,181)">
       <md-icon md-svg-src="img/ic_add_circle_black_24px.svg" aria-label="New Checklist" class="svg-main-color"></md-icon>
-      <md-tooltip>
-        New Checklist
-      </md-tooltip>
+      Add checklist
     </md-button>
   </div>
   <!-- No checklists card -->
-  <md-card ng-show="!editing && (!checklists || !checklists.length)" style="margin-top:50px">
+  <md-card ng-show="!loading && !adding && (!checklists || !checklists.length)" style="margin-top:50px">
     <md-card-content layout="row">
       <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No checklists. Click 'Add' to create one</p>
     </md-card-content>
   </md-card>
   <!-- Editor -->
-  <div ng-show="editing" layout="column">
-    <!-- Checlist data -->
+  <div ng-show="adding" layout="column">
     <div layout="row" style="margin-top:20px">
       <md-input-container class="md-icon-float" style="width:90%">
         <label>Checklist title</label>
         <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
-        <input ng-model="newChecklist.title" type="text">
+        <input ng-model="checklist.title" type="text" focus-on="adding">
       </md-input-container>
+      <md-button class="md-primary" ng-click="cancelNewChecklist()" aria-label="Cancel">
+        <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
+      </md-button>
     </div>
-    <!-- Step list -->
-    <md-list ui-sortable="sortableOptions" ng-model="newChecklist.steps">
-      <md-list-item ng-repeat="step in newChecklist.steps">
-        <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
-        <p style="margin-right:24px" editable-text="step.title"></p>
-      </md-list-item>
-    </md-list>
-    <!-- New step editor -->
-    <div layout="row">
-      <md-input-container class="md-icon-float" style="width:90%">
-        <label>Step title</label>
-        <md-icon md-svg-src="img/ic_label_black_24px.svg" class="name"></md-icon>
-        <input ng-model="newStep.title" type="text">
-      </md-input-container>
-      <md-button class="md-primary" ng-click="addStep()">Add step</md-button>
-    </div>
-    <md-button class="md-primary" ng-click="saveNewChecklist()">Create checklist</md-button>
+    <md-button class="md-primary" ng-click="addChecklist()">Create checklist</md-button>
   </div>
   <!-- Checjklist list -->
-  <div ng-show="checklists && checklists.length">
+  <div ng-show="!loading && !adding && checklists && checklists.length">
     <div style="width:100%;border-bottom:1px solid #ccc"></div>
     <md-list ui-sortable="sortableOptions" ng-model="checklists">
       <md-list-item ng-repeat="checklist in checklists">

@@ -51,8 +51,11 @@
             Library
           </md-button> -->
           <md-button ng-show="!currentUser && !ctrl.inLogin()" class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">LOGIN</md-button>
-          <md-menu>
-            <md-button ng-show="currentUser" aria-label="User profile" class="md-icon-button" ng-mouseenter="ctrl.openMenu($mdOpenMenu, $event)" style="width:200px">
+          <md-button ng-show="currentUser" class="md-fab md-mini md-primary md-hue2" ng-href="#/library" aria-label="Library">
+              <md-icon md-svg-src="img/ic_library_books_white_24px.svg">
+            </md-button>
+          <md-menu ng-show="currentUser"> 
+            <md-button aria-label="User profile" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)" style="width:200px">
               <md-icon md-menu-origin md-svg-src="img/ic_account_circle_white_24px.svg"></md-icon>
               {{currentUser.username}}
             </md-button>
