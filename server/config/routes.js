@@ -53,7 +53,7 @@ module.exports = function(app) {
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)
   app.param('projectId', projects.project)
-  app.param('taskId', task.task)
+  app.param('taskId', tasks.task)
 
   // Angular Routes
   app.get('/partials/*', function(req, res) {

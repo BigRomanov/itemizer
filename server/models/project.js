@@ -37,9 +37,6 @@ ProjectSchema.statics = {
   }
 };
 
-/**
- * Methods
- */
 
 ProjectSchema.statics.findByTitle = function (title, callback) {
   return this.find({ title: title }, callback);

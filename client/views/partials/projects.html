@@ -10,7 +10,7 @@
       Add Project
     </md-button>
   </div>
-  <!-- No checklists card -->
+  <!-- No projects card -->
   <md-card ng-show="!loading && !adding && (!projects || !projects.length)" style="margin-top:50px">
     <md-card-content layout="row">
       <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No projects. Click 'Add' to create one</p>
@@ -28,17 +28,18 @@
         <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
       </md-button>
     </div>
-    <md-button class="md-primary" ng-click="addChecklist()">Create project</md-button>
+    <md-button class="md-primary" ng-click="addProject()">Create project</md-button>
   </div>
-  <!-- Checjklist list -->
-  <div ng-show="!loading && !adding && checklists && checklists.length">
+  <!-- Project   list -->
+  <div ng-show="!loading && !adding && projects && projects.length">
     <div style="width:100%;border-bottom:1px solid #ccc"></div>
-    <md-list ui-sortable="sortableOptions" ng-model="checklists">
-      <md-list-item ng-repeat="checklist in checklists">
+    <md-list ui-sortable="sortableOptions" ng-model="projects">
+      <md-list-item ng-repeat="project in projects">
         <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
-        <p style="margin-right:24px" ng-bind="checklist.title"></p>
-        <md-button class="md-primary" ng-click="edit(checklist)">
-          <md-icon md-svg-src="img/ic_mode_edit_black_24px.svg" aria-label="Edit checklist" class="md-secondary md-hue-3"></md-icon>
+        <p style="margin-right:24px" ng-bind="project.title"></p>
+        <md-button class="md-primary" ng-click="edit(project)">
+          <md-icon md-svg-src="img/ic_content_paste_black_24px.svg" aria-label="Edit project" class="md-secondary md-hue-3"></md-icon>
+          <md-tooltip>View project</md-tooltip>
         </md-button>
       </md-list-item>
     </md-list>

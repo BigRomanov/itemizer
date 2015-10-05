@@ -5,7 +5,18 @@ app.config(['$routeProvider',
     $routeProvider.
     when('/home', {
       templateUrl: '/views/partials/home.html',
-      controller: 'HomeCtrl'
+      controller: 'HomeCtrl',
+      resolve: {
+        "check": function($location, $rootScope) {
+          if ($rootScope.currentUser) {
+            $location.path('dashboard'); //redirect user to home.
+          }
+        }
+      }
+    }).
+    when('/dashboard', {
+      templateUrl: '/views/partials/dashboard.html',
+      controller: 'DashboardCtrl'
     }).
     when('/library', {
       templateUrl: '/views/partials/library.html',
@@ -14,6 +25,10 @@ app.config(['$routeProvider',
     when('/projects', {
       templateUrl: '/views/partials/projects.html',
       controller: 'ProjectsCtrl'
+    }).
+    when('/project/:id', {
+      templateUrl: '/views/partials/project.html',
+      controller: 'ProjectCtrl'
     }).
     when('/checklist/:id/edit', {
       templateUrl: '/views/partials/checklist_editor.html',

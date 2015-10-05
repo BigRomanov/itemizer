@@ -2,7 +2,7 @@
 
 app.factory('Projects', function ($resource) {
     return $resource('api/projects/:projectId', {
-      checklistId: '@_id'
+      projectId: '@_id'
     }, {
       update: {
         method: 'PUT'

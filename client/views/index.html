@@ -28,6 +28,7 @@
   <script src="/js/services/user.js"></script>
   <script src="/js/controllers/toolbar_controller.js"></script>
   <script src="/js/controllers/home_controller.js"></script>
+  <script src="/js/controllers/dashboard_controller.js"></script>
   <script src="/js/controllers/library_controller.js"></script>
   <script src="/js/controllers/checklist_controller.js"></script>
   <script src="/js/controllers/projects_controller.js"></script>
@@ -42,23 +43,18 @@
   <div style="width:800px;margin:auto" ng-controller="ToolbarCtrl as ctrl">
     <md-content>
       <md-toolbar>
-        <div class="md-toolbar-tools">
-          <md-button class="md-icon-button" aria-label="Settings" ng-href="#/home">
-            <md-icon md-svg-icon="img/ic_home_white_24px.svg"></md-icon>
-          </md-button>
+        <div class="md-toolbar-tools" >
+          <md-icon md-svg-src="img/ic_reorder_white_24px.svg"></md-icon>
           <h2>
-          <span style="font-weight:bold">ITEMIZER</span>
-        </h2>
+            <span style="font-weight:bold">ITEMIZER</span>
+          </h2>
           <span flex></span>
-          <!-- <md-button class="md-icon-button" aria-label="Library" style="width:100px" ng-href="#/library">
-            <md-icon md-svg-icon="img/ic_apps_white_24px.svg"></md-icon>
-            Library
-          </md-button> -->
           <md-button ng-show="!currentUser && !ctrl.inLogin()" class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">LOGIN</md-button>
-          <md-button ng-show="currentUser" class="md-fab md-mini md-primary md-hue2" ng-href="#/library" aria-label="Library">
-              <md-icon md-svg-src="img/ic_library_books_white_24px.svg">
-            </md-button>
-          <md-menu ng-show="currentUser"> 
+          <md-button ng-show="currentUser" class="md-fab md-mini md-primary md-hue2" ng-href="#/dashboard" aria-label="Library">
+            <md-icon md-svg-src="img/ic_dashboard_white_24px.svg">
+              <md-tooltip>Dashboard</md-tooltip>
+          </md-button>
+          <md-menu ng-show="currentUser">
             <md-button aria-label="User profile" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)" style="width:200px">
               <md-icon md-menu-origin md-svg-src="img/ic_account_circle_white_24px.svg"></md-icon>
               {{currentUser.username}}
