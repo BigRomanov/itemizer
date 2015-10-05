@@ -37,7 +37,9 @@
       <md-list-item ng-repeat="checklist in checklists">
         <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
         <p style="margin-right:24px" ng-bind="checklist.title"></p>
-        <md-icon md-svg-src="img/ic_mode_edit_black_24px.svg" ng-click="edit(checklist)" aria-label="Edit checklist" class="md-secondary md-hue-3"></md-icon>
+        <md-button class="md-primary" ng-click="edit(checklist)">
+          <md-icon md-svg-src="img/ic_mode_edit_black_24px.svg" aria-label="Edit checklist" class="md-secondary md-hue-3"></md-icon>
+        </md-button>
       </md-list-item>
     </md-list>
   </div>

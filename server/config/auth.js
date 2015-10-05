@@ -29,7 +29,7 @@ exports.checklist = {
     console.log("hasAuthorization");
     console.log(req.checklist);
     console.log(req.user);
-    if (req.checklist.creator.toString() !== req.user._id.toString()) {
+    if (req.checklist.creator._id.toString() !== req.user._id.toString()) {
       return res.send(403);
     }
     console.log("authorized");

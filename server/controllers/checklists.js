@@ -7,9 +7,9 @@ var mongoose = require('mongoose'),
  * Find checklist by id
  */
 exports.checklist = function(req, res, next, id) {
-  Checklist.findById(id, function(err, checklist) {
+  Checklist.load(id, function(err, checklist) {
     if (err) return next(err);
-    if (!checklist) return next(new Error('Failed to load blog ' + id));
+    if (!checklist) return next(new Error('Failed to load checklist ' + id));
     req.checklist = checklist;
     next();
   });
@@ -58,6 +58,7 @@ exports.update = function(req, res) {
  * Delete a checklist
  */
 exports.destroy = function(req, res) {
+  console.log("Destroy")
   var checklist = req.checklist;
 
   checklist.remove(function(err) {

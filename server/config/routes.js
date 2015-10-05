@@ -27,17 +27,33 @@ module.exports = function(app) {
   app.put('/api/blogs/:blogId', auth.ensureAuthenticated, auth.blog.hasAuthorization, blogs.update);
   app.delete('/api/blogs/:blogId', auth.ensureAuthenticated, auth.blog.hasAuthorization, blogs.destroy);
 
-  // Checklist Routes
   var checklists = require('../controllers/checklists');
   app.get('/api/checklists', checklists.all);
   app.post('/api/checklists', auth.ensureAuthenticated, checklists.create);
   app.get('/api/checklists/:checklistId', checklists.show);
   app.put('/api/checklists/:checklistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.update);
-  app.delete('/api/checklists/:checlistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.destroy);
+  app.delete('/api/checklists/:checklistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.destroy);
+
+  var projects = require('../controllers/projects');
+  app.get('/api/projects', projects.all);
+  app.post('/api/projects', auth.ensureAuthenticated, projects.create);
+  app.get('/api/projects/:projectId', projects.show);
+  app.put('/api/projects/:projectId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, projects.update);
+  app.delete('/api/projects/:projectId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, projects.destroy);
+
+  var tasks = require('../controllers/tasks');
+  app.get('/api/tasks', tasks.all);
+  app.post('/api/tasks', auth.ensureAuthenticated, tasks.create);
+  app.get('/api/tasks/:taskId', tasks.show);
+  app.put('/api/tasks/:taskId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, tasks.update);
+  app.delete('/api/tasks/:taskId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, tasks.destroy);
+
 
   //Setting up the blogId param
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)
+  app.param('projectId', projects.project)
+  app.param('taskId', task.task)
 
   // Angular Routes
   app.get('/partials/*', function(req, res) {

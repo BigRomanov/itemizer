@@ -20,7 +20,7 @@ app.controller('ChecklistEditorCtrl', ['$scope', '$routeParams', 'Checklists', f
 
   $scope.deleteChecklist = function() {
     // TODO: Add confirmation
-    Checklists.delete({checklistId:id}, function(checklist) {
+    Checklists.delete({id:$scope.checklist._id}, function(checklist) {
       console.log("Checklist deleted", checklist);
       $location.path('library');
     });
