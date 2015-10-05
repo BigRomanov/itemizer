@@ -11,6 +11,10 @@ app.config(['$routeProvider',
       templateUrl: '/views/partials/library.html',
       controller: 'LibraryCtrl'
     }).
+    when('/projects', {
+      templateUrl: '/views/partials/projects.html',
+      controller: 'ProjectsCtrl'
+    }).
     when('/checklist/:id/edit', {
       templateUrl: '/views/partials/checklist_editor.html',
       controller: 'ChecklistEditorCtrl'

@@ -15,7 +15,10 @@ app.controller('ChecklistEditorCtrl', ['$scope', '$routeParams', 'Checklists', f
   }
 
   $scope.saveChecklist = function() {
-    Checklists.update({id:$scope.checklist._id}, $scope.checklist);
+    Checklists.update({id:$scope.checklist._id}, $scope.checklist, function() {
+      console.log("Callback called");
+    });
+    $location.path('library');
   }
 
   $scope.deleteChecklist = function() {
