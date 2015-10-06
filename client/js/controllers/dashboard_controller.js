@@ -17,6 +17,10 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
     $timeout.cancel($scope.onNav);
   }
 
+  $scope.edit = function(project) {
+    $location.path('/project/' + project._id);
+  }
+
   // Sidenav toggle
   $scope.toggleNav = buildToggler('right');
   /**
@@ -39,6 +43,9 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
   $scope.dayFormat = "d";
   $scope.selectedDate = null;
   $scope.firstDayOfWeek = 0; // First day of the week, 0 for Sunday, 1 for Monday, etc.
+  $scope.direction = 'horizontal';
+  $scope.dayFormat = $scope.direction === "vertical" ? "EEEE, MMMM d" : "d";
+  
   $scope.setDirection = function(direction) {
     $scope.direction = direction;
     $scope.dayFormat = direction === "vertical" ? "EEEE, MMMM d" : "d";

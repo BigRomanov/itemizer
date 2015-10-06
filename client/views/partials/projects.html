@@ -4,9 +4,8 @@
     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
   </div>
 
-  <div ng-hide="adding || loading" class="lock-size" layout="row" layout-align="start center" style="padding:10px 0">
-    <md-button aria-label="Add" ng-click="newProject()" layout-align="start center" class="md-raised md-mini" style="color:rgb(63,81,181)">
-      <md-icon md-svg-src="img/ic_add_circle_black_24px.svg" aria-label="New Project" class="svg-main-color"></md-icon>
+  <div ng-hide="adding || loading" class="lock-size" layout="row" layout-align="end center" style="padding:10px 0">
+    <md-button aria-label="Add" ng-click="newProject()" class="md-no-ink">
       Add Project
     </md-button>
   </div>

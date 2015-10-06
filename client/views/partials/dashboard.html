@@ -1,8 +1,13 @@
 <md-content ng-init="init()" layout="col">
   <div layout="row" style="width:100%">
-    <md-tabs md-dynamic-height md-border-bottom style="width:98%">
+    <md-tabs md-dynamic-height md-border-bottom style="width:100%">
       <md-tab label="projects">
         <md-content layout="column" class="md-padding" style="min-height:300px">
+        <div layout="row" style="width:100%" layout-align="end end">
+          <md-button class="md-primary" aria-label="Add project" ng-click="addProject()">
+            Add project
+          </md-button>
+        </div>
           <!-- No projects card -->
           <md-card ng-show="!loading && (!projects || !projects.length)" style="margin-top:50px">
             <md-card-content layout="row">
@@ -13,7 +18,7 @@
           <div ng-show="!loading && projects && projects.length">
             <md-list ui-sortable="sortableOptions" ng-model="projects">
               <md-list-item ng-repeat="project in projects">
-                <md-whiteframe class="md-whiteframe-z1" flex="100" layout="column" layout-align="start center" style="width:100%;margin-bottom:5px">
+                <md-whiteframe class="md-whiteframe-z1" flex="100" layout="column" layout-align="start center" style="width:100%;margin-bottom:20px">
                   <div layout="row" style="width:100%">
                     <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
                     <p style="margin-right:24px" ng-bind="project.title"></p>
@@ -47,31 +52,31 @@
       </md-tab>
       <md-tab label="calendar">
         <md-content class="md-padding">
-          <calendar-md flex layout layout-fill calendar-direction="direction" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="firstDayOfWeek" data-start-month="8" data-start-year="2014" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
+          <calendar-md flex layout layout-fill calendar-direction="horizontal" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="0" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
           </calendar-md>
         </md-content>
       </md-tab>
     </md-tabs>
-    <div style="background-color:rgb(63,81,181);height:100%;width:2%;position:absolute" ng-click="toggleNav()" ng-mouseenter="openNav()" ng-mouseleave="cancelNav()"></div>
-  </div>
-  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    <!-- <div style="background-color:#fff;border-left:1px solid #eee;height:100%;width:8%;position:absolute;padding-top:50px" layout="column" layout-align="start center">
+      <md-button class="md-fab md-mini md-primary" aria-label="Add project" ng-href="#/projects">
+        <md-icon md-svg-src="img/ic_add_circle_white_24px.svg"></md-icon>
+      </md-button>
+    </div>
+  </div> -->
+  <!-- <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" style="min-width:80px;width:80px">
     <div ng-controller="NavCtrl">
-      <md-toolbar class="md-theme-light" layout="row">
-        <h1 class="md-toolbar-tools">Options</h1>
+      <md-toolbar class="md-theme-light" layout="row" >
         <md-button ng-click="close()" class="md-no-ink" aria-label="Close">
           <md-icon md-svg-src="img/ic_close_white_24px.svg"></md-icon>
         </md-button>
       </md-toolbar>
-      <md-content layout-padding>
-        <form>
-          <md-input-container>
-            <label for="testInput">Test input</label>
-            <input type="text" id="testInput" ng-model="data" md-autofocus>
-          </md-input-container>
-        </form>
+      <md-content>
+        <md-button ng-click="close()" class="md-no-ink" aria-label="Close" style="width:60px;margin:auto">
+          <md-icon md-svg-src="img/ic_close_black_24px.svg"></md-icon>
+        </md-button>
       </md-content>
     </div>
-  </md-sidenav>
+  </md-sidenav> -->
   <!-- Project selector -->
   <!-- <md-input-container style="width:300px">
     <label>Select project</label>
