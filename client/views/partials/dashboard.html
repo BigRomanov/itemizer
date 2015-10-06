@@ -1,30 +1,89 @@
 <md-content ng-init="init()" layout="col">
   <div layout="row" style="width:100%">
-  <md-tabs md-dynamic-height md-border-bottom style="width:98%">
-    <md-tab label="projects">
-      <md-content class="md-padding" style="min-height:300px">
-        <p>Projects</p>
-      </md-content>
-    </md-tab>
-    <md-tab label="tasks">
-      <md-content class="md-padding" style="min-height:300px">
-        <p>Tasks</p>
-      </md-content>
-    </md-tab>
-    <md-tab label="calendar">
-      <md-content class="md-padding">
-        <calendar-md flex layout layout-fill calendar-direction="direction" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="firstDayOfWeek" data-start-month="8" data-start-year="2014" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
-        </calendar-md>
-      </md-content>
-    </md-tab>
-  </md-tabs>
-  <div style="background-color:rgb(63,81,181);height:100%;width:2%;position:absolute" ng-click="toggleNav()"></div>
+    <md-tabs md-dynamic-height md-border-bottom style="width:98%">
+      <md-tab label="projects">
+        <md-content layout="column" class="md-padding" style="min-height:300px">
+          <!-- No projects card -->
+          <md-card ng-show="!loading && (!projects || !projects.length)" style="margin-top:50px">
+            <md-card-content layout="row">
+              <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No projects. Click 'Add' to create one</p>
+            </md-card-content>
+          </md-card>
+          <!-- Project   list -->
+          <div ng-show="!loading && projects && projects.length">
+            <md-list ui-sortable="sortableOptions" ng-model="projects">
+              <md-list-item ng-repeat="project in projects">
+                <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
+                <p style="margin-right:24px" ng-bind="project.title"></p>
+                <md-button class="md-primary" ng-click="edit(project)">
+                  <md-icon md-svg-src="img/ic_content_paste_black_24px.svg" aria-label="Edit project" class="md-secondary md-hue-3"></md-icon>
+                  <md-tooltip>View project</md-tooltip>
+                </md-button>
+              </md-list-item>
+            </md-list>
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="tasks">
+        <md-content class="md-padding" style="min-height:300px">
+          <div ng-cloak>
+            <md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+              <md-grid-tile class="gray" md-rowspan="3" md-colspan="2" md-colspan-sm="1">
+                <md-grid-tile-footer>
+                  <h3>#1: (3r x 2c)</h3>
+                </md-grid-tile-footer>
+              </md-grid-tile>
+              <md-grid-tile class="green">
+                <md-grid-tile-footer>
+                  <h3>#2: (1r x 1c)</h3>
+                </md-grid-tile-footer>
+              </md-grid-tile>
+              <md-grid-tile class="yellow">
+                <md-grid-tile-footer>
+                  <h3>#3: (1r x 1c)</h3>
+                </md-grid-tile-footer>
+              </md-grid-tile>
+              <md-grid-tile class="blue" md-rowspan="2">
+                <md-grid-tile-footer>
+                  <h3>#4: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+              </md-grid-tile>
+              <md-grid-tile class="red" md-rowspan="2" md-colspan="2" md-colspan-sm="1">
+                <md-grid-tile-footer>
+                  <h3>#5: (2r x 2c)</h3>
+                </md-grid-tile-footer>
+              </md-grid-tile>
+              <md-grid-tile class="green" md-rowspan="2">
+                <md-grid-tile-footer>
+                  <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+              </md-grid-tile>
+            </md-grid-list>
+
+            <!-- <md-whiteframe ng-repeat="project in projects" class="md-whiteframe-z2" flex="25" layout layout-align="center center">
+              <span>{{project.title}}</span>
+              <md-button class="md-primary" ng-click="edit(project)">
+                <md-icon md-svg-src="img/ic_content_paste_black_24px.svg" aria-label="Edit project" class="md-secondary md-hue-3"></md-icon>
+                <md-tooltip>View project</md-tooltip>
+              </md-button>
+            </md-whiteframe> -->
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="calendar">
+        <md-content class="md-padding">
+          <calendar-md flex layout layout-fill calendar-direction="direction" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="firstDayOfWeek" data-start-month="8" data-start-year="2014" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
+          </calendar-md>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+    <div style="background-color:rgb(63,81,181);height:100%;width:2%;position:absolute" ng-click="toggleNav()" ng-mouseenter="openNav()" ng-mouseleave="cancelNav()"></div>
   </div>
-  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" >
+  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
     <div ng-controller="NavCtrl">
       <md-toolbar class="md-theme-light" layout="row">
         <h1 class="md-toolbar-tools">Options</h1>
-        <md-button ng-click="close()" class="md-no-ink">
+        <md-button ng-click="close()" class="md-no-ink" aria-label="Close">
           <md-icon md-svg-src="img/ic_close_white_24px.svg"></md-icon>
         </md-button>
       </md-toolbar>
@@ -32,14 +91,12 @@
         <form>
           <md-input-container>
             <label for="testInput">Test input</label>
-            <input type="text" id="testInput"
-                   ng-model="data" md-autofocus>
+            <input type="text" id="testInput" ng-model="data" md-autofocus>
           </md-input-container>
         </form>
-        
       </md-content>
-      </div>
-    </md-sidenav>
+    </div>
+  </md-sidenav>
   <!-- Project selector -->
   <!-- <md-input-container style="width:300px">
     <label>Select project</label>

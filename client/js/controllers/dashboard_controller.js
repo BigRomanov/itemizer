@@ -9,6 +9,14 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
     });
   }
 
+  $scope.openNav = function() {
+    $scope.onNav = $timeout($scope.toggleNav, 500);
+  }
+
+  $scope.cancelNav = function() {
+    $timeout.cancel($scope.onNav);
+  }
+
   // Sidenav toggle
   $scope.toggleNav = buildToggler('right');
   /**

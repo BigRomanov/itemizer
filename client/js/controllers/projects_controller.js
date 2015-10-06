@@ -41,4 +41,6 @@ app.controller('ProjectsCtrl', function($scope, $http, Projects, $location, $rou
   $scope.edit = function(project) {
     $location.path('/project/' + project._id);
   }
+
+  $scope.init();
 });
