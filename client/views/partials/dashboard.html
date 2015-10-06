@@ -30,4 +30,7 @@
   <div ng-show="loading" layout="row" layout-sm="column" layout-align="space-around">
     <md-progress-linear md-mode="indeterminate"></md-progress-linear>
   </div>
+  <calendar-md flex layout layout-fill calendar-direction="direction" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="firstDayOfWeek" 
+    data-start-month="8" data-start-year="2014" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
+  </calendar-md>
 </md-content>

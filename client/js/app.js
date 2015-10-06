@@ -1,4 +1,5 @@
-var app = angular.module('pusherApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize', 'ngMaterial', 'ui.sortable', 'gg.editableText']);
+var app = angular.module('pusherApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize', 
+  'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar']);
 
 app.config(['$routeProvider', 
   function($routeProvider) {
