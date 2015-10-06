@@ -106,7 +106,7 @@ app.use(function(err, req, res, next) {
 
 //module.exports = app;
 var debug = require('debug')('pusher:server');
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '80');
 app.set('port', port);
 
 /**
