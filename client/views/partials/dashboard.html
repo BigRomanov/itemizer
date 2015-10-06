@@ -1,12 +1,13 @@
-<md-content ng-init="init()" layout="row">
-  <md-tabs md-dynamic-height md-border-bottom style="width:100%">
+<md-content ng-init="init()" layout="col">
+  <div layout="row" style="width:100%">
+  <md-tabs md-dynamic-height md-border-bottom style="width:98%">
     <md-tab label="projects">
-      <md-content class="md-padding">
+      <md-content class="md-padding" style="min-height:300px">
         <p>Projects</p>
       </md-content>
     </md-tab>
     <md-tab label="tasks">
-      <md-content class="md-padding">
+      <md-content class="md-padding" style="min-height:300px">
         <p>Tasks</p>
       </md-content>
     </md-tab>
@@ -17,6 +18,28 @@
       </md-content>
     </md-tab>
   </md-tabs>
+  <div style="background-color:rgb(63,81,181);height:100%;width:2%;position:absolute" ng-click="toggleNav()"></div>
+  </div>
+  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" >
+    <div ng-controller="NavCtrl">
+      <md-toolbar class="md-theme-light" layout="row">
+        <h1 class="md-toolbar-tools">Options</h1>
+        <md-button ng-click="close()" class="md-no-ink">
+          <md-icon md-svg-src="img/ic_close_white_24px.svg"></md-icon>
+        </md-button>
+      </md-toolbar>
+      <md-content layout-padding>
+        <form>
+          <md-input-container>
+            <label for="testInput">Test input</label>
+            <input type="text" id="testInput"
+                   ng-model="data" md-autofocus>
+          </md-input-container>
+        </form>
+        
+      </md-content>
+      </div>
+    </md-sidenav>
   <!-- Project selector -->
   <!-- <md-input-container style="width:300px">
     <label>Select project</label>

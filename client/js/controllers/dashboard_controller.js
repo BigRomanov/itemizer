@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function($scope, Projects) {
+app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, $mdUtil, $log) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.loading = true;
@@ -8,6 +8,23 @@ app.controller('DashboardCtrl', function($scope, Projects) {
       $scope.loading = false;
     });
   }
+
+  // Sidenav toggle
+  $scope.toggleNav = buildToggler('right');
+  /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+    function buildToggler(navID) {
+      var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+              .toggle()
+              .then(function () {
+                $log.debug("toggle " + navID + " is done");
+              });
+          },200);
+      return debounceFn;
+    }
 
 
   // Calendar view
@@ -38,4 +55,11 @@ app.controller('DashboardCtrl', function($scope, Projects) {
   };
 
 
-});
+}).controller('NavCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      $mdSidenav('right').close()
+        .then(function () {
+          $log.debug("close RIGHT is done");
+        });
+    };
+  });
