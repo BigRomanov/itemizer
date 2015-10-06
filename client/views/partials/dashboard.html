@@ -1,36 +1,47 @@
-<md-content ng-init="init()" layout="column">
-  <div layout="row">
-    <md-fab-speed-dial md-open="false" md-direction="right" style="margin-top:5px">
-      <md-fab-trigger class="align-with-text">
-        <md-button aria-label="menu" class="md-fab md-primary md-mini ">
-          <md-icon md-svg-src="img/ic_chevron_right_white_24px.svg"></md-icon>
-        </md-button>
-      </md-fab-trigger>
-      <md-fab-actions class="md-toolbar-tools">
-        <md-button aria-label="Projects" class="md-icon-button" style="width:100px" ng-href="#/projects">
-          <md-icon md-svg-src="img/ic_assignment_black_24px.svg"></md-icon>
-          Projects
-        </md-button>
-        <md-button aria-label="Projects" class="md-icon-button" style="width:100px" ng-href="#/projects">
-          <md-icon md-svg-src="img/ic_assignment_ind_black_24px.svg"></md-icon>
-          My Tasks
-        </md-button>
-      </md-fab-actions>
-    </md-fab-speed-dial>
-    <span flex></span>
-    <md-input-container style="width:300px">
-      <label>Select project</label>
-      <md-select ng-model="project">
-        <md-option ng-repeat="project in projects" ng-value="project.title">
-          {{project.title}}
-        </md-option>
-      </md-select>
-    </md-input-container>
-  </div>
+<md-content ng-init="init()" layout="row">
+  <md-tabs md-dynamic-height md-border-bottom style="width:100%">
+    <md-tab label="projects">
+      <md-content class="md-padding">
+        <p>Projects</p>
+      </md-content>
+    </md-tab>
+    <md-tab label="tasks">
+      <md-content class="md-padding">
+        <p>Tasks</p>
+      </md-content>
+    </md-tab>
+    <md-tab label="calendar">
+      <md-content class="md-padding">
+        <calendar-md flex layout layout-fill calendar-direction="direction" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="firstDayOfWeek" data-start-month="8" data-start-year="2014" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
+        </calendar-md>
+      </md-content>
+    </md-tab>
+  </md-tabs>
+  <!-- Project selector -->
+  <!-- <md-input-container style="width:300px">
+    <label>Select project</label>
+    <md-select ng-model="project">
+      <md-option ng-repeat="project in projects" ng-value="project.title">
+        {{project.title}}
+      </md-option>
+    </md-select>
+  </md-input-container> -->
+  <!-- <div layout="row" style>
+    <md-button aria-label="Projects" class="md-icon-button" style="width:100px;margin-top:10px" ng-href="#/projects">
+      <md-icon md-svg-src="img/ic_assignment_black_24px.svg"></md-icon>
+      Projects
+    </md-button>
+    <md-button aria-label="Projects" class="md-icon-button" style="width:100px;margin-top:10px" ng-href="#/projects">
+      <md-icon md-svg-src="img/ic_assignment_ind_black_24px.svg"></md-icon>
+      My Tasks
+    </md-button>
+    <md-button aria-label="Projects" class="md-icon-button" style="width:110px;margin-top:10px" ng-href="#/projects">
+      <md-icon md-svg-src="img/ic_today_black_24px.svg"></md-icon>
+      Calendar
+    </md-button>
+    <span flex></span> -->
+  <!-- </div> -->
   <div ng-show="loading" layout="row" layout-sm="column" layout-align="space-around">
     <md-progress-linear md-mode="indeterminate"></md-progress-linear>
   </div>
-  <calendar-md flex layout layout-fill calendar-direction="direction" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="firstDayOfWeek" 
-    data-start-month="8" data-start-year="2014" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
-  </calendar-md>
 </md-content>
