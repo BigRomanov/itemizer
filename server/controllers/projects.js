@@ -3,7 +3,7 @@
 var mongoose = require('mongoose'),
   Project = mongoose.model('Project');
 
-exports.project = function(req, res, next, id) {
+exports.load = function(req, res, next, id) {
   Project.load(id, function(err, project) {
     if (err) return next(err);
     if (!project) return next(new Error('Failed to load project ' + id));
@@ -34,6 +34,7 @@ exports.update = function(req, res) {
     else {
       // Copy all fields
       project.title = req.body.title;
+      project.tasks = req.body.tasks;
       project.save(function(err) {
         if (err) {
           res.status(500).json(err);
@@ -71,7 +72,6 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  
   Project.find().sort('-created').populate('creator', 'username').exec(function(err, projects) {
     if (err) {
       res.status(500).json(err);

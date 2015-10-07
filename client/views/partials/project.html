@@ -7,6 +7,20 @@
     <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No tasks. Click 'Add' to create one</p>
   </md-card-content>
 </md-card>
+<!-- Editor -->
+<div ng-show="adding" layout="column">
+  <div layout="row" style="margin-top:20px">
+    <md-input-container class="md-icon-float" style="width:90%">
+      <label>Enter task</label>
+      <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
+      <input ng-model="task.title" type="text" focus-on="adding" on-enter="addTask()">
+    </md-input-container>
+    <md-button class="md-primary" ng-click="cancelNewTask()" aria-label="Cancel">
+      <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
+    </md-button>
+  </div>
+  <md-button class="md-primary" ng-click="addTask()">Add</md-button>
+</div>
 <!-- Task   list -->
 <div ng-show="!loading && !adding && project.tasks && project.tasks.length">
   <md-list ui-sortable="sortableOptions" ng-model="project.tasks">
@@ -15,7 +29,8 @@
       <p style="margin-right:24px" ng-bind="task.title"></p>
     </md-list-item>
   </md-list>
+  
 </div>
-<md-button class="md-primary" ng-click="addTask()">
+<md-button class="md-primary" ng-click="newTask()" ng-show="!adding">
   Add task
 </md-button>

@@ -1,8 +1,9 @@
-var app = angular.module('pusherApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize', 
-  'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar']);
+var app = angular.module('pusherApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize',
+  'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar'
+]);
 
-app.config(['$routeProvider', 
-  function($routeProvider) {
+app.config(['$routeProvider', '$httpProvider',
+  function($routeProvider, $httpProvider) {
     $routeProvider.
     when('/home', {
       templateUrl: '/views/partials/home.html',
@@ -57,14 +58,29 @@ app.config(['$routeProvider',
     otherwise({
       redirectTo: '/home'
     });
+
+    $httpProvider.interceptors.push(function($q) {
+
+      return {
+
+        'responseError': function(rejection) {
+
+          var defer = $q.defer();
+
+          if (rejection.status == 401) {
+            // TODO: Add correct redirect to an original destination
+            window.location = '/#/login'; //?redirectUrl=' + Base64.encode(document.URL);
+          }
+
+          defer.reject(rejection);
+
+          return defer.promise;
+
+        }
+      };
+    });
   }
 ]).
-config(function($mdThemingProvider) {
-  // Configure a dark theme with primary foreground yellow
-  $mdThemingProvider.theme('docs-dark', 'default')
-    .primaryPalette('yellow')
-    .dark();
-}).
 run(function($rootScope, $location, Auth) {
 
   //watching the value of the currentUser variable.
@@ -77,8 +93,8 @@ run(function($rootScope, $location, Auth) {
   });
 
   // On catching 401 errors, redirect to the login page.
-  $rootScope.$on('event:auth-loginRequired', function() {
-    $location.path('/login');
-    return false;
-  });
+  // $rootScope.$on('event:auth-loginRequired', function() {
+  //   $location.path('/login');
+  //   return false;
+  // });
 });

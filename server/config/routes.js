@@ -38,22 +38,12 @@ module.exports = function(app) {
   app.get('/api/projects', projects.all);
   app.post('/api/projects', auth.ensureAuthenticated, projects.create);
   app.get('/api/projects/:projectId', projects.show);
-  app.put('/api/projects/:projectId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, projects.update);
-  app.delete('/api/projects/:projectId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, projects.destroy);
+  app.put('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.update);
+  app.delete('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.destroy);
 
-  var tasks = require('../controllers/tasks');
-  app.get('/api/tasks', tasks.all);
-  app.post('/api/tasks', auth.ensureAuthenticated, tasks.create);
-  app.get('/api/tasks/:taskId', tasks.show);
-  app.put('/api/tasks/:taskId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, tasks.update);
-  app.delete('/api/tasks/:taskId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, tasks.destroy);
-
-
-  //Setting up the blogId param
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)
-  app.param('projectId', projects.project)
-  app.param('taskId', tasks.task)
+  app.param('projectId', projects.load);
 
   // Angular Routes
   app.get('/partials/*', function(req, res) {

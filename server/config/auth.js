@@ -36,3 +36,16 @@ exports.checklist = {
     next();
   }
 };
+
+exports.project = {
+  hasAuthorization: function(req, res, next) {
+    console.log("hasAuthorization for project");
+    console.log(req.project);
+    console.log(req.user);
+    if (req.project.creator._id.toString() !== req.user._id.toString()) {
+      return res.send(403);
+    }
+    console.log("authorized");
+    next();
+  }
+};

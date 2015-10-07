@@ -38,6 +38,8 @@ app.set('views', path.join(__dirname, './client/views'));
 app.engine('html', require('ejs').renderFile);
 //app.set('view engine', 'jade');
 
+app.set('env', 'development');
+
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'client', 'favicon.ico')));
 app.use(logger('dev'));
@@ -78,7 +80,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render('error.html', {
       message: err.message,
       error: err
     });
