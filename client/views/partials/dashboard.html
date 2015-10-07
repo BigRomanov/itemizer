@@ -23,8 +23,8 @@
                     <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
                     <p style="margin-right:24px" ng-bind="project.title"></p>
                     <p flex></p>
-                    <md-button class="md-primary" ng-click="edit(project)">
-                      <md-icon md-svg-src="img/ic_content_paste_black_24px.svg" aria-label="Edit project" class="md-secondary md-hue-3"></md-icon>
+                    <md-button class="md-primary" ng-href="#/project/{{project._id}}">
+                      <md-icon md-svg-src="img/ic_content_paste_black_24px.svg" aria-label="View project" class="md-secondary md-hue-3"></md-icon>
                       <md-tooltip>View project</md-tooltip>
                     </md-button>
                   </div>

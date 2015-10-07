@@ -1,0 +1,21 @@
+<div layout="row">
+  <h2>{{project.title}}</h2>
+</div>
+<!-- No projects card -->
+<md-card ng-show="!loading && !adding && (!project.tasks || !project.tasks.length)" style="margin-top:50px">
+  <md-card-content layout="row">
+    <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No tasks. Click 'Add' to create one</p>
+  </md-card-content>
+</md-card>
+<!-- Task   list -->
+<div ng-show="!loading && !adding && project.tasks && project.tasks.length">
+  <md-list ui-sortable="sortableOptions" ng-model="project.tasks">
+    <md-list-item ng-repeat="task in project.tasks">
+      <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
+      <p style="margin-right:24px" ng-bind="task.title"></p>
+    </md-list-item>
+  </md-list>
+</div>
+<md-button class="md-primary" ng-click="addTask()">
+  Add task
+</md-button>

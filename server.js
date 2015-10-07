@@ -20,11 +20,6 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var config = require('./server/config/config');
 
-//var routes = require('./server/config/routes');
-
-// var routes = require('./routes/index');
-// var users = require('./routes/users');
-
 var app = express();
 
 // Connect to database
@@ -65,9 +60,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use('/', routes);
-// app.use('/users', users);
-
 
 //Bootstrap routes
 require('./server/config/routes')(app);
@@ -104,82 +96,84 @@ app.use(function(err, req, res, next) {
 });
 
 
-//module.exports = app;
-var debug = require('debug')('pusher:server');
-var port = normalizePort(process.env.PORT || '80');
-app.set('port', port);
+module.exports = app;
 
-/**
- * Create HTTP server.
- */
 
-var server = http.createServer(app);
+// var debug = require('debug')('pusher:server');
+// var port = normalizePort(process.env.PORT || '80');
+// app.set('port', port);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+// /**
+//  * Create HTTP server.
+//  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+// var server = http.createServer(app);
 
-/**
- * Normalize a port into a number, string, or false.
- */
+// /**
+//  * Listen on provided port, on all network interfaces.
+//  */
 
-function normalizePort(val) {
-  var port = parseInt(val, 10);
+// server.listen(port);
+// server.on('error', onError);
+// server.on('listening', onListening);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+// /**
+//  * Normalize a port into a number, string, or false.
+//  */
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+// function normalizePort(val) {
+//   var port = parseInt(val, 10);
 
-  return false;
-}
+//   if (isNaN(port)) {
+//     // named pipe
+//     return val;
+//   }
 
-/**
- * Event listener for HTTP server "error" event.
- */
+//   if (port >= 0) {
+//     // port number
+//     return port;
+//   }
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+//   return false;
+// }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+// /**
+//  * Event listener for HTTP server "error" event.
+//  */
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
+// function onError(error) {
+//   if (error.syscall !== 'listen') {
+//     throw error;
+//   }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
+//   var bind = typeof port === 'string'
+//     ? 'Pipe ' + port
+//     : 'Port ' + port;
 
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+//   // handle specific listen errors with friendly messages
+//   switch (error.code) {
+//     case 'EACCES':
+//       console.error(bind + ' requires elevated privileges');
+//       process.exit(1);
+//       break;
+//     case 'EADDRINUSE':
+//       console.error(bind + ' is already in use');
+//       process.exit(1);
+//       break;
+//     default:
+//       throw error;
+//   }
+// }
+
+// /**
+//  * Event listener for HTTP server "listening" event.
+//  */
+
+// function onListening() {
+//   var addr = server.address();
+//   var bind = typeof addr === 'string'
+//     ? 'pipe ' + addr
+//     : 'port ' + addr.port;
+//   debug('Listening on ' + bind);
+// }
 
