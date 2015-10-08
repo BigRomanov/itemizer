@@ -50,6 +50,13 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
     });
 
     _task.edit = true;
+    $scope.editing = true;
+  }
+
+  $scope.saveTask = function(task) {
+    task.edit = false;
+    $scope.editing = false;
+    $scope.update();
   }
 
   $scope.newTask = function() {
@@ -58,12 +65,17 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
     });
     var newTask = {edit:true}
     $scope.project.tasks.push(newTask);
+    $scope.editing = true;
   }
 
-  $scope.cancelNewTask = function() {
-    $scope.task = {};
-    $scope.adding = false; 
+  $scope.cancelEditTask = function(task) {
+    if (!task.title && !task.description) {
+      $scope.deleteTask(task);
+    }
+    task.edit = false;
+    $scope.editing = false; 
   }
+
 
   $scope.addTask = function() {
 
@@ -71,11 +83,12 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
     $scope.project.$update();
   }
 
-  $scope.delete = function(task) {
+  $scope.deleteTask = function(task) {
     $log.log("Delete task", task);
     var idx = $scope.project.tasks.indexOf(task);
     $scope.project.tasks.splice(idx,1);
     $scope.update();
+    $scope.editing = false;
   }
 
   $scope.showConfirm = function(ev, task) {
@@ -88,7 +101,7 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
           .ok('Yes')
           .cancel('No');
     $mdDialog.show(confirm).then(function() {
-      $scope.delete(task);
+      $scope.deleteTask(task);
     }, function() {
       // nothing to do
     });

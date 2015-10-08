@@ -39,7 +39,7 @@
           <div style="width:100%" layout="row" layout-align="start center">
             <md-icon class="itemHandle" layout-align="start center" md-svg-src="img/vert.svg" class="s24" style="margin-right:20px" aria-label="Move"></md-icon>
             <md-input-container md-no-float style="padding-bottom:2px;width:100%">
-              <input ng-model="task.title" ng-class="{complete: task.complete==true}" placeholder="Enter task title" on-enter="update()" on-esc="cancelEditTitle(task)">
+              <input ng-model="task.title" ng-class="{complete: task.complete==true}" placeholder="Enter task title" on-enter="update()" on-esc="cancelEditTitle(task)" focus-on="task.edit">
             </md-input-container>
             <p flex></p>
             <md-button class="md-icon-button" ng-click="complete(task,true)" ng-hide="task.complete">
@@ -51,7 +51,7 @@
             <md-button class="md-icon-button" ng-click="editTask(task)" ng-hide="task.edit==true">
               <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
             </md-button>
-            <md-button class="md-icon-button" ng-click="task.edit=false" ng-show="task.edit==true">
+            <md-button class="md-icon-button" ng-click="cancelEditTask(task)" ng-show="task.edit==true">
               <md-icon md-svg-src="img/ic_close_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
             </md-button>
           </div>
@@ -64,7 +64,7 @@
               </md-input-container>
             </div>
             <div layout="row">
-              <md-button class="md-raised" ng-click="update()">
+              <md-button class="md-raised" ng-click="saveTask(task)">
                 Save task
               </md-button>
               <md-button class="md-raised md-warn" layout-align="end center" ng-click="showConfirm($event, task)">
@@ -77,7 +77,7 @@
       </md-list>
     </div>
     <div layout="row" layout-align="end end" style="width:100%;margin-top:20px">
-      <md-button class="md-raised md-primary" ng-click="newTask()" ng-show="!adding" layout="end end">
+      <md-button class="md-raised md-primary" ng-click="newTask()" ng-show="!editing" layout="end end">
         New task
       </md-button>
     </div>
