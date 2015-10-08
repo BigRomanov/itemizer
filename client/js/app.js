@@ -1,4 +1,4 @@
-var app = angular.module('pusherApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize',
+var app = angular.module('pusherApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize', 'ngMessages',
   'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar', 'contenteditable', 'angularMoment'
 ]);
 

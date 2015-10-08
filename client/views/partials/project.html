@@ -38,9 +38,14 @@
           <!-- Task summary -->
           <div style="width:100%" layout="row" layout-align="start center">
             <md-icon class="itemHandle" layout-align="start center" md-svg-src="img/vert.svg" class="s24" style="margin-right:20px" aria-label="Move"></md-icon>
+            <form name="taskForm">
             <md-input-container md-no-float style="padding-bottom:2px;width:100%">
-              <input ng-model="task.title" ng-class="{complete: task.complete==true}" placeholder="Enter task title" on-enter="update()" on-esc="cancelEditTitle(task)" focus-on="task.edit">
+              <input required name="taskTitle" ng-model="task.title" ng-class="{complete: task.complete==true}" placeholder="Enter task title" on-enter="update()" on-esc="cancelEditTitle(task)" focus-on="task.edit">
+              <div ng-messages="task.title.$error">
+                <div ng-message="required">This is required.</div>
+              </div>
             </md-input-container>
+            </form>
             <p flex></p>
             <md-button class="md-icon-button" ng-click="complete(task,true)" ng-hide="task.complete">
               <md-icon md-svg-src="img/ic_check_box_outline_blank_black_24px.svg" aria-label="Mark done" class="md-secondary md-hue-3"></md-icon>
