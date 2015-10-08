@@ -31,9 +31,13 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
     item.prevTitle = item.title;
   }
 
-  $scope.saveTitle = function(item) {
-    // TODO: We always save the entire project at this point. Reconsider
+  $scope.update = function() {
     $scope.project.$update();
+  }
+
+  $scope.complete = function(task, complete) {
+    task.complete = complete;
+    $scope.update();
   }
 
   $scope.cancelEditTitle = function(item) {
@@ -62,7 +66,6 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
   }
 
   $scope.addTask = function() {
-    $scope.adding = false;
 
     $scope.project.tasks.push($scope.task);
     $scope.project.$update();

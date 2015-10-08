@@ -10,3 +10,7 @@ a {
     text-decoration: line-through;
     fill: #94d31b; 
 }
+
+.complete_task svg {
+  fill: #009900;
+}

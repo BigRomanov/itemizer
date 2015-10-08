@@ -9,7 +9,7 @@ var ProjectSchema = new Schema({
   tasks: [{  
     title: String,
     description: String,
-    done: Boolean
+    complete: Boolean
   }],
   slug: {
     type: String,
