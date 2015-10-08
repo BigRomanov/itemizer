@@ -46,17 +46,23 @@
 </head>
 
 <body ng-app="pusherApp">
-  <div style="width:800px;margin:auto" ng-controller="ToolbarCtrl as ctrl">
+  <div style="width:100%;margin:auto" ng-controller="ToolbarCtrl as ctrl">
     <md-content>
       <md-toolbar>
-        <div class="md-toolbar-tools" >
-          <md-icon md-svg-src="img/ic_reorder_white_24px.svg"></md-icon>
-          <h2>
-            <span style="font-weight:bold">ITEMIZER</span>
-          </h2>
-          <span flex></span>
+        <div class="md-toolbar-tools" layout="row">
+          <div layout-align="start center" layout="row">
+            <md-icon md-svg-src="img/ic_reorder_white_24px.svg"></md-icon>
+            <h2><span style="font-weight:bold">ITEMIZER</span></h2>
+          </div>
+          <!-- <div flex></div> -->
+          <div layout-align="center center" layout="row" style="width:100%">
+          <md-button ng-show="currentUser" layout-align="center center" class="md-primary md-hue2" ng-href="#/dashboard" aria-label="Dashboard">
+            <md-icon md-svg-src="img/dashboard.png"></md-icon>
+              Dashboard
+          </md-button>
+          </div>
+
           <md-button ng-show="!currentUser && !ctrl.inLogin()" class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">LOGIN</md-button>
-          
           <md-menu ng-show="currentUser">
             <md-button aria-label="User profile" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)" style="width:200px">
               <md-icon md-menu-origin md-svg-src="img/ic_account_circle_white_24px.svg"></md-icon>
@@ -74,13 +80,10 @@
               </md-menu-item>
             </md-menu-content>
           </md-menu>
-          <md-button ng-show="currentUser" class="md-fab md-mini md-primary md-hue2" ng-href="#/dashboard" aria-label="Library">
-            <md-icon md-svg-src="img/ic_dashboard_white_24px.svg">
-              <md-tooltip>Dashboard</md-tooltip>
-          </md-button>
+          
         </div>
       </md-toolbar>
-      <div ng-view></div>
+      <div ng-view style="width:800px;margin:auto"></div>
     </md-content>
   </div>
 </body>

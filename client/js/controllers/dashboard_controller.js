@@ -1,20 +1,41 @@
-app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, $mdUtil, $log) {
+app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.loading = true;
     Projects.query(function(projects) {
-      console.log("Loading projects", projects);
+      $log.log("Loading projects", projects);
       $scope.projects = projects;
       $scope.loading = false;
     });
   }
 
-  $scope.openNav = function() {
-    $scope.onNav = $timeout($scope.toggleNav, 500);
+  $scope.newProject = function() {
+    $scope.project = {
+      title: "",
+      tasks: []
+    };
+    $scope.adding = true;
   }
 
-  $scope.cancelNav = function() {
-    $timeout.cancel($scope.onNav);
+  $scope.cancelNewProject = function() {
+    $scope.project = {
+      title: "",
+      steps: []
+    };
+    $scope.adding = false;
+  }
+
+  $scope.addProject = function() {
+    $scope.adding = false;
+
+    $http.post('/api/projects', $scope.project, {}).then(function(response) {
+      $log.log("Project created");
+      $scope.projects.unshift($scope.project);
+      
+    }, function(response) {
+      // TODO: Add proper error reporting
+      $log.log("Project save failed", response);
+    });
   }
 
   $scope.edit = function(project) {
@@ -68,13 +89,4 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
     // that particular date here.
     return "<p></p>";
   };
-
-
-}).controller('NavCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function () {
-      $mdSidenav('right').close()
-        .then(function () {
-          $log.debug("close RIGHT is done");
-        });
-    };
-  });
+});

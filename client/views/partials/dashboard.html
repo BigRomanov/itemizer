@@ -4,18 +4,32 @@
       <md-tab label="projects">
         <md-content layout="column" class="md-padding" style="min-height:300px">
         <div layout="row" style="width:100%" layout-align="end end">
-          <md-button class="md-primary" aria-label="Add project" ng-click="addProject()">
+          <md-button class="md-primary" aria-label="Add project" ng-click="newProject()">
             Add project
           </md-button>
         </div>
           <!-- No projects card -->
-          <md-card ng-show="!loading && (!projects || !projects.length)" style="margin-top:50px">
+          <md-card ng-show="!loading && !adding && (!projects || !projects.length)" style="margin-top:50px">
             <md-card-content layout="row">
               <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No projects. Click 'Add' to create one</p>
             </md-card-content>
           </md-card>
+           <!-- Editor -->
+          <div ng-show="adding" layout="column">
+            <div layout="row" style="margin-top:20px">
+              <md-input-container class="md-icon-float" style="width:90%">
+                <label>Project title</label>
+                <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
+                <input ng-model="project.title" type="text" focus-on="adding">
+              </md-input-container>
+              <md-button class="md-primary" ng-click="cancelNewProject()" aria-label="Cancel">
+                <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
+              </md-button>
+            </div>
+            <md-button class="md-primary" ng-click="addProject()">Create project</md-button>
+          </div>
           <!-- Project   list -->
-          <div ng-show="!loading && projects && projects.length">
+          <div ng-show="!loading && !adding && projects && projects.length">
             <md-list ui-sortable="sortableOptions" ng-model="projects">
               <md-list-item ng-repeat="project in projects">
                 <md-whiteframe class="md-whiteframe-z1" flex="100" layout="column" layout-align="start center" style="width:100%;margin-bottom:20px">

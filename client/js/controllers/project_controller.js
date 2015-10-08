@@ -1,17 +1,32 @@
-app.controller('ProjectCtrl', function ($scope, $routeParams, Projects) {
+app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
   $scope.init = function() {
     $scope.adding = false;
+    $scope.editingTitle = false;
     $scope.loading = true;
-    console.log("Load project with id", $routeParams.id)
+    
     Projects.get({projectId:$routeParams.id}, function(project) {
-      console.log("Loaded project", project);
+      $log.log("Loaded project", project);
       $scope.project = project;
       $scope.loading = false;
     });
   }
 
+  $scope.editTitle = function() {
+    $scope.prevTitle = $scope.project.title;
+    $scope.editingTitle = true;
+  }
+
+  $scope.saveTitle = function() {
+    $scope.editingTitle = false;
+    $scope.project.$update();
+  }
+
+  $scope.cancelEditTitle = function() {
+    $scope.project.title = $scope.prevTitle;
+    $scope.editingTitle = false;
+  }
+
   $scope.newTask = function() {
-    console.log("newTask");
     $scope.task = {};
     $scope.adding = true;
   }
@@ -22,15 +37,9 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects) {
   }
 
   $scope.addTask = function() {
-    console.log("addTask", $scope.task);
     $scope.adding = false;
 
-    console.log("aaaaaa", $scope.project.tasks);
     $scope.project.tasks.push($scope.task);
-    $scope.project.title = "Updated title";
-    console.log("aaaaaa 222", $scope.project.tasks, $scope.project);
-
-    console.log("Updating project", $scope.project);
     $scope.project.$update();
   }
 
