@@ -23,32 +23,37 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
     }
   };
 
-  $scope.test = function() {
-    $log.log("aaaaaaa");
-  }
-
   $scope.searchTextChange = function(term) {
     $log.log("Search for:", term);
   }
 
-  $scope.editTitle = function() {
-    $scope.prevTitle = $scope.project.title;
-    // $scope.editingTitle = true;
+  $scope.editTitle = function(item) {
+    item.prevTitle = item.title;
   }
 
-  $scope.saveTitle = function() {
-    // $scope.editingTitle = false;
+  $scope.saveTitle = function(item) {
+    // TODO: We always save the entire project at this point. Reconsider
     $scope.project.$update();
   }
 
-  $scope.cancelEditTitle = function() {
-    $scope.project.title = $scope.prevTitle;
-    // $scope.editingTitle = false;
+  $scope.cancelEditTitle = function(item) {
+    item.title = item.prevTitle;
+  }
+
+  $scope.editTask = function(_task) {
+    _.each($scope.project.tasks, function(task) {
+      task.edit = false;
+    });
+
+    _task.edit = true;
   }
 
   $scope.newTask = function() {
-    $scope.task = {};
-    $scope.adding = true;
+    _.each($scope.project.tasks, function(task) {
+      task.edit = false;
+    });
+    var newTask = {edit:true}
+    $scope.project.tasks.push(newTask);
   }
 
   $scope.cancelNewTask = function() {
