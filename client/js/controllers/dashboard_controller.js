@@ -5,6 +5,13 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
     Projects.query(function(projects) {
       $log.log("Loading projects", projects);
       $scope.projects = projects;
+
+      _.each($scope.projects, function(project) {
+        project.unfinished = _.reduce(project.tasks, function(memo, task){ 
+          if (task.complete) return memo; 
+          else return memo + 1; }, 0);
+      });
+
       $scope.loading = false;
     });
   }
