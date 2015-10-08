@@ -3,12 +3,18 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
     $scope.adding = false;
     $scope.editingTitle = false;
     $scope.loading = true;
+
+    $scope.search = {}
     
     Projects.get({projectId:$routeParams.id}, function(project) {
       $log.log("Loaded project", project);
       $scope.project = project;
       $scope.loading = false;
     });
+  }
+
+  $scope.searchTextChange = function(term) {
+    $log.log("Search for:", term);
   }
 
   $scope.updateProject = function() {
