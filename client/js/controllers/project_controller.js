@@ -11,19 +11,23 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
     });
   }
 
+  $scope.updateProject = function() {
+    $log.log("updateProject");
+  }
+
   $scope.editTitle = function() {
     $scope.prevTitle = $scope.project.title;
-    $scope.editingTitle = true;
+    // $scope.editingTitle = true;
   }
 
   $scope.saveTitle = function() {
-    $scope.editingTitle = false;
+    // $scope.editingTitle = false;
     $scope.project.$update();
   }
 
   $scope.cancelEditTitle = function() {
     $scope.project.title = $scope.prevTitle;
-    $scope.editingTitle = false;
+    // $scope.editingTitle = false;
   }
 
   $scope.newTask = function() {

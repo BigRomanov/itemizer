@@ -4,11 +4,17 @@
   <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
   
   <div layout="row" style="width:100%">
-    <h2 ng-hide="editingTitle" ng-click="editTitle()" style="cursor:pointer">{{project.title}}</h2>
+    <div style="font-size:20px;font-weight:400;padding:2px" ng-blur="saveTitle()" on-enter="saveTitle()" on-esc="cancelEditTitle()" ng-focus="editTitle()" contenteditable="true"
+        ng-model="project.title"
+        strip-br="true"
+        strip-tags="true"></div>
+
+    <!-- Old editor -->
+    <!-- <h2 ng-hide="editingTitle" ng-click="editTitle()" style="cursor:pointer">{{project.title}}</h2> -->
     <!-- <md-button ng-hide="editingTitle" class="md-no-ink" ng-click="editTitle()" style="width:20px">
       <md-icon md-svg-src="img/ic_edit_black_18px.svg" aria-label="Edit title" class="md-secondary md-hue-3"></md-icon>
     </md-button> -->
-    <div style="margin-top:10px;width:100%" layout="row" ng-show="editingTitle">
+    <!-- <div style="margin-top:10px;width:100%" layout="row" ng-show="editingTitle">
       <md-input-container class="md-icon-float" style="width:90%">
         <label>Project title</label>
         <input ng-model="project.title" type="text" focus-on="editingTitle" on-enter="saveTitle()">
@@ -19,8 +25,9 @@
       <md-button class="md-fab md-warn md-mini" ng-click="cancelEditTitle()">
         <md-icon md-svg-src="img/ic_close_white_24px.svg" aria-label="Edit title" class="md-secondary md-hue-3"></md-icon>
       </md-button>
-    </div>
+    </div>-->
   </div>
+
   <!-- No projects card -->
   <md-card ng-show="!loading && !adding && (!project.tasks || !project.tasks.length)" style="margin-top:50px">
     <md-card-content layout="row">
