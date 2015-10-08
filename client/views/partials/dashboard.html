@@ -43,7 +43,12 @@
                     </md-button>
                   </div>
                   <div layout="row" flex layout-align="start start" style="text-align:left;width:100%;padding:0 10px">
-                    <p flex>{{project.unfinished}} open tasks</p>
+                    <p flex><ng-pluralize count="project.unfinished"
+                      when="{'0': 'No open tasks',
+                     'one': '1 open task',
+                     'other': '{} open tasks'}">
+                    </ng-pluralize></p>
+                    <!-- <p flex>{{project.unfinished}} open tasks</p> -->
                     <p>Created <span am-time-ago="project.created"></span></p>
                   </div>
                 </md-whiteframe>
