@@ -49,7 +49,7 @@
               <md-icon md-svg-src="img/ic_check_box_black_24px.svg" aria-label="Undo" class="md-secondary md-hue-3"></md-icon>
             </md-button>
             <md-button class="md-icon-button" ng-click="editTask(task)" ng-hide="task.edit==true">
-              <md-icon md-svg-src="img/ic_assignment_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
+              <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
             </md-button>
             <md-button class="md-icon-button" ng-click="task.edit=false" ng-show="task.edit==true">
               <md-icon md-svg-src="img/ic_close_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
@@ -67,7 +67,7 @@
               <md-button class="md-raised" ng-click="update()">
                 Save task
               </md-button>
-              <md-button class="md-raised md-warn" layout-align="end center" ng-click="deleteTask(task)">
+              <md-button class="md-raised md-warn" layout-align="end center" ng-click="showConfirm($event, task)">
                 Delete task
               </md-button>
             </div>

@@ -35,15 +35,16 @@
                 <md-whiteframe class="md-whiteframe-z1" flex="100" layout="column" layout-align="start center" style="width:100%;margin-bottom:20px">
                   <div layout="row" style="width:100%">
                     <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
-                    <p style="margin-right:24px" ng-bind="project.title"></p>
+                    <p style="margin-right:24px;font-weight:bold" ng-bind="project.title"></p>
                     <p flex></p>
-                    <md-button class="md-primary" ng-href="#/project/{{project._id}}">
+                    <md-button class="md-icon-button md-primary" ng-href="#/project/{{project._id}}">
                       <md-icon md-svg-src="img/ic_content_paste_black_24px.svg" aria-label="View project" class="md-secondary md-hue-3"></md-icon>
                       <md-tooltip>View project</md-tooltip>
                     </md-button>
                   </div>
                   <div layout="row" flex layout-align="start start" style="text-align:left;width:100%;padding:0 10px">
                     <p flex>{{project.unfinished}} open tasks</p>
+                    <p>Created <span am-time-ago="project.created"></span></p>
                   </div>
                 </md-whiteframe>
               </md-list-item>

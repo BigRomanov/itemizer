@@ -1,5 +1,5 @@
 var app = angular.module('pusherApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize',
-  'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar', 'contenteditable'
+  'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar', 'contenteditable', 'angularMoment'
 ]);
 
 app.config(['$routeProvider', '$httpProvider',

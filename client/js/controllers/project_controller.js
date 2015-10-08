@@ -1,4 +1,4 @@
-app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
+app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $mdDialog) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.editingTitle = false;
@@ -70,6 +70,29 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
     $scope.project.tasks.push($scope.task);
     $scope.project.$update();
   }
+
+  $scope.delete = function(task) {
+    $log.log("Delete task", task);
+    var idx = $scope.project.tasks.indexOf(task);
+    $scope.project.tasks.splice(idx,1);
+    $scope.update();
+  }
+
+  $scope.showConfirm = function(ev, task) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to delete this task?')
+          .content(task.title)
+          .ariaLabel('Delete confirmation')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      $scope.delete(task);
+    }, function() {
+      // nothing to do
+    });
+  };
 
   $scope.init();
   

@@ -26,6 +26,7 @@
     "angular-ui-sortable": "~0.13.4",
     "jquery": "~2.1.4",
     "material-calendar": "~0.2.6",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular-moment": "~0.10.3"
   }
 }
