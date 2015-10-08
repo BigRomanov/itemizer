@@ -76,10 +76,15 @@
     <!-- Task   list -->
     <div ng-show="!loading && project.tasks && project.tasks.length" style="width:100%">
       <md-list ui-sortable="sortableOptions" ng-model="project.tasks">
-        <md-list-item ng-repeat="task in project.tasks" >
+        <md-list-item ng-repeat="task in project.tasks">
           <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
-          <p style="margin-right:24px" ng-bind="task.title"></p>
-          <md-checkbox ng-model="task.complete" layout-align="end center" class="md-secondary"></md-checkbox>
+          
+            <p ng-click="test()" style="margin-right:24px" ng-bind="task.title" ng-class="{complete: task.complete==true}"></p>
+          
+          <md-button class="md-icon-button" ng-click="task.complete=true">
+            <md-icon md-svg-src="img/ic_done_black_24px.svg" aria-label="Edit title" class="md-secondary md-hue-3"></md-icon>
+          </md-button>
+          <!-- <md-checkbox ng-model="task.complete" layout-align="end center" class="md-secondary"></md-checkbox> -->
         </md-list-item>
       </md-list>
     </div>

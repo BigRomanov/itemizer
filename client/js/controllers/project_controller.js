@@ -13,12 +13,22 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log) {
     });
   }
 
-  $scope.searchTextChange = function(term) {
-    $log.log("Search for:", term);
+  $scope.sortableOptions = {
+    update: function(e, ui) {$log.log("Update called");},
+    handle: '.itemHandle',
+    stop:function(e, ui) {
+      $log.log("Stop called");
+      $log.log($scope.project.tasks);
+      $scope.project.$update();
+    }
+  };
+
+  $scope.test = function() {
+    $log.log("aaaaaaa");
   }
 
-  $scope.updateProject = function() {
-    $log.log("updateProject");
+  $scope.searchTextChange = function(term) {
+    $log.log("Search for:", term);
   }
 
   $scope.editTitle = function() {
