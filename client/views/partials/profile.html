@@ -1,5 +1,5 @@
 <md-content layout-padding layout="column" layout-sm="column">
-<md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
+  <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
   <form name="profileForm" novalidate>
     <div layout="row">
       <md-input-container style="width:50%">
@@ -15,17 +15,15 @@
   profileForm.email.$dirty && profileForm.email.$invalid" class="md-raised md-primary" style="width:100px;margin:auto" layout-align="center center" ng-click="updateProfile()">Update</md-button> -->
     </div>
   </form>
-  <div layout="row"  ng-hide="adding">
-    <p class="md-no-sticky" style="padding-left:0">Organizations:</p>
+  <div layout="row" ng-hide="adding">
+    <p class="md-no-sticky" style="padding-left:0">Teams:</p>
     <p flex></p>
-    <md-button class="md-raised md-primary" ng-click="newOrganization()" layout="end center">
-      New organization
+    <md-button class="md-raised md-primary" ng-click="newTeam()" layout="end center">
+      New team
     </md-button>
   </div>
-  
   <md-list ng-cloak>
-    
-    <md-list-item ng-repeat="org in organizations">
+    <md-list-item ng-repeat="org in teams">
       <md-whiteframe class="md-whiteframe-z1" flex="100" style="padding:20px" layout="row" layout-align="start start">
         <p> {{ org.title }} </p>
       </md-whiteframe>
@@ -33,12 +31,11 @@
   </md-list>
   <div layout="row" layout-align="start center" ng-show="adding">
     <md-input-container style="width:50%">
-      <label>Organization name</label>
-      <input ng-model="organization.title" focus-on="adding">
+      <label>Team name</label>
+      <input ng-model="team.title" focus-on="adding">
     </md-input-container>
-    <md-button class="md-raised md-primary" ng-click="addOrganization()" layout="end end">
+    <md-button class="md-raised md-primary" ng-click="addTeam()" layout="end end">
       Add
     </md-button>
   </div>
-  
 </md-content>

@@ -51,7 +51,6 @@ ProjectSchema.methods.expressiveQuery = function (creator, date, callback) {
 }
 
 
-
 function slugGenerator (options){
   options = options || {};
   var key = options.key || 'title';

@@ -43,17 +43,17 @@ module.exports = function(app) {
   app.put('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.update);
   app.delete('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.destroy);
 
-  var organizations = require('../controllers/organizations');
-  app.get('/api/organizations', organizations.all);
-  app.post('/api/organizations', auth.ensureAuthenticated, organizations.create);
-  app.get('/api/organizations/:organizationId', organizations.show);
-  app.put('/api/organizations/:organizationId', auth.ensureAuthenticated, auth.organization.hasAuthorization, organizations.update);
-  app.delete('/api/organizations/:organizationId', auth.ensureAuthenticated, auth.organization.hasAuthorization, organizations.destroy);
+  var teams = require('../controllers/teams');
+  app.get('/api/teams', teams.all);
+  app.post('/api/teams', auth.ensureAuthenticated, teams.create);
+  app.get('/api/teams/:teamId', teams.show);
+  app.put('/api/teams/:teamId', auth.ensureAuthenticated, auth.team.hasAuthorization, teams.update);
+  app.delete('/api/teams/:teamId', auth.ensureAuthenticated, auth.team.hasAuthorization, teams.destroy);
 
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)
   app.param('projectId', projects.load);
-  app.param('organizationId', organizations.load);
+  app.param('teamId', teams.load);
 
   // Angular Routes
   app.get('/partials/*', function(req, res) {

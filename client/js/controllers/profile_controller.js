@@ -1,34 +1,34 @@
-app.controller('ProfileCtrl', function ($scope, $rootScope, Organizations, $http, $log) {
+app.controller('ProfileCtrl', function ($scope, $rootScope, Teams, $http, $log) {
   $scope.user = $rootScope.currentUser;
 
   $scope.init = function() {
     $scope.adding = false;
     $scope.loading = true;
-    Organizations.query(function(organizations) {
-      $scope.organizations = organizations;
+    Teams.query(function(teams) {
+      $scope.teams = teams;
       $scope.loading = false;
     });
   }
 
   $scope.init();
 
-  $scope.newOrganization = function() {
-    $scope.organization = {}
+  $scope.newTeam = function() {
+    $scope.team = {}
     $scope.adding = true;
   }
 
-  $scope.addOrganization = function() {
+  $scope.addTeam = function() {
     $scope.adding = false;
 
-    $log.log("Adding organization", $scope.organization);
+    $log.log("Adding team", $scope.team);
 
-    $http.post('/api/organizations', $scope.organization, {}).then(function(response) {
-      $log.log("Organization added");
-      $scope.organizations.unshift($scope.organization);
+    $http.post('/api/teams', $scope.team, {}).then(function(response) {
+      $log.log("Team added");
+      $scope.teams.unshift($scope.team);
       
     }, function(response) {
       // TODO: Add proper error reporting
-      $log.log("Organization save failed", response);
+      $log.log("Team save failed", response);
     });
   }
 

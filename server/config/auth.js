@@ -42,9 +42,9 @@ exports.project = {
   }
 };
 
-exports.organization = {
+exports.team = {
   hasAuthorization: function(req, res, next) {
-    if (req.organization.creator._id.toString() !== req.user._id.toString()) {
+    if (req.team.creator._id.toString() !== req.user._id.toString()) {
       return res.send(403);
     }
     next();
