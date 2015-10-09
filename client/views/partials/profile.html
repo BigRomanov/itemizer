@@ -7,14 +7,17 @@
       </md-input-container>
       <md-input-container style="width:50%">
         <label>Username</label>
-        <input ng-model="user.username" name="username" required>
+        <input ng-model="user.username" name="username" disable>
       </md-input-container>
-    </div>
-    <p class="md-subhead" style="font-size:12px">Organizations: </p>
-    <md-chips ng-model="user.organizations" style="width:100%"></md-chips>
-    <div layout="row" style="width:100%;margin-top:50px">
-      <md-button type="sublit" ng-disabled="profileForm.username.$dirty && profileForm.username.$invalid ||
-  profileForm.email.$dirty && profileForm.email.$invalid" class="md-raised md-primary" style="width:100px;margin:auto" layout-align="center center" ng-click="updateProfile">Update</md-button>
+        <!-- TODO: Add backend and frontend support for updating username -->
+        <!-- <md-button type="sublit" ng-disabled="profileForm.username.$dirty && profileForm.username.$invalid ||
+  profileForm.email.$dirty && profileForm.email.$invalid" class="md-raised md-primary" style="width:100px;margin:auto" layout-align="center center" ng-click="updateProfile()">Update</md-button> -->
     </div>
   </form>
+  <md-list ng-cloak>
+  <md-subheader class="md-no-sticky">Organizations</md-subheader>
+    <md-list-item ng-repeat="org in organizations">
+      <p> {{ org.title }} </p>
+    </md-list-item>
+</md-list>
 </md-content>

@@ -9,6 +9,8 @@ module.exports = function(app) {
   app.post('/auth/users', users.create);
   app.get('/auth/users/:userId', users.show);
 
+  // TODO: Add option to update username
+
   // Check if username is available
   // todo: probably should be a query on users
   app.get('/auth/check_username/:username', users.exists);
@@ -41,9 +43,17 @@ module.exports = function(app) {
   app.put('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.update);
   app.delete('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.destroy);
 
+  var organizations = require('../controllers/organizations');
+  app.get('/api/organizations', organizations.all);
+  app.post('/api/organizations', auth.ensureAuthenticated, organizations.create);
+  app.get('/api/organizations/:organizationId', organizations.show);
+  app.put('/api/organizations/:organizationId', auth.ensureAuthenticated, auth.organization.hasAuthorization, organizations.update);
+  app.delete('/api/organizations/:organizationId', auth.ensureAuthenticated, auth.organization.hasAuthorization, organizations.destroy);
+
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)
   app.param('projectId', projects.load);
+  app.param('organizationId', organizations.load);
 
   // Angular Routes
   app.get('/partials/*', function(req, res) {
