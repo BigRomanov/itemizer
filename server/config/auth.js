@@ -26,26 +26,27 @@ exports.blog = {
 
 exports.checklist = {
   hasAuthorization: function(req, res, next) {
-    console.log("hasAuthorization");
-    console.log(req.checklist);
-    console.log(req.user);
     if (req.checklist.creator._id.toString() !== req.user._id.toString()) {
       return res.send(403);
     }
-    console.log("authorized");
     next();
   }
 };
 
 exports.project = {
   hasAuthorization: function(req, res, next) {
-    console.log("hasAuthorization for project");
-    console.log(req.project);
-    console.log(req.user);
     if (req.project.creator._id.toString() !== req.user._id.toString()) {
       return res.send(403);
     }
-    console.log("authorized");
+    next();
+  }
+};
+
+exports.organization = {
+  hasAuthorization: function(req, res, next) {
+    if (req.organization.creator._id.toString() !== req.user._id.toString()) {
+      return res.send(403);
+    }
     next();
   }
 };

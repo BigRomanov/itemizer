@@ -33,7 +33,7 @@ exports.create = function (req, res, next) {
 exports.show = function (req, res, next) {
   var userId = req.params.userId;
 
-  User.findById(ObjectId(userId), function (err, user).populate() {
+  User.findById(ObjectId(userId)).populate('organizations').exec(function (err, user) {
     if (err) {
       return next(new Error('Failed to load User'));
     }
