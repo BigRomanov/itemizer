@@ -23,9 +23,13 @@
     </md-button>
   </div>
   <md-list ng-cloak>
-    <md-list-item ng-repeat="org in teams">
+    <md-list-item ng-repeat="team in teams">
       <md-whiteframe class="md-whiteframe-z1" flex="100" style="padding:20px" layout="row" layout-align="start start">
-        <p> {{ org.title }} </p>
+        <p> {{ team.title }} </p>
+        <p flex></p>
+        <md-button class="md-no-ink md-primary" ng-href="#/team/{{team._id}}" layout="end center">
+          View
+        </md-button>
       </md-whiteframe>
     </md-list-item>
   </md-list>

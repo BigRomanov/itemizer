@@ -13,12 +13,14 @@ app.controller('ProfileCtrl', function ($scope, $rootScope, Teams, $http, $log) 
   $scope.init();
 
   $scope.newTeam = function() {
-    $scope.team = {}
+    $scope.team = {title:"", members:[]}
     $scope.adding = true;
   }
 
   $scope.addTeam = function() {
     $scope.adding = false;
+
+    $scope.team.members.push($scope.user._id);
 
     $log.log("Adding team", $scope.team);
 

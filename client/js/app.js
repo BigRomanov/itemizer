@@ -32,6 +32,10 @@ app.config(['$routeProvider', '$httpProvider',
       templateUrl: '/views/partials/project.html',
       controller: 'ProjectCtrl'
     }).
+    when('/team/:id', {
+      templateUrl: '/views/partials/team.html',
+      controller: 'TeamCtrl'
+    }).
     when('/checklist/:id/edit', {
       templateUrl: '/views/partials/checklist_editor.html',
       controller: 'ChecklistEditorCtrl'

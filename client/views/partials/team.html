@@ -1,0 +1,25 @@
+<md-content layout-padding layout column>
+  <!-- Actions -->
+  <div layout="row" ng-hide="inviting" style="width:100%">
+    <md-button md-no-ink aria-label="Invite members" ng-click="inviting=true" layout-align="end center">
+      Invite members
+    </md-button>
+  </div>
+  <div ng-show="inviting" style="width:60%;" layout="column">
+    <div ng-repeat="invitee in invitees" layout="column">
+      <md-input-container md-no-float style="padding:10px;width:100%" >
+        <input type="email" required ng-model="invitee.email" placeholder="Enter email" on-enter="inviteAnother()" on-esc="cancelInvite()" focus-on="inviting" ng-disabled="!$last">
+      </md-input-container>
+      <!-- Buttons -->
+      <div layout="row" style="width:100%" ng-show="$last">
+        <md-button md-no-ink aria-label="Invite another" ng-click="inviteAnother()" ng-disabled="!invitee.email">
+          Invite another
+        </md-button>
+        <p flex></p>
+        <md-button class="md-raised md-primary" aria-label="Send invites" ng-click="sendInvites()" layout-align="end center">
+          Send invites
+        </md-button>
+      </div>
+    </div>
+  </div>
+</md-content>
