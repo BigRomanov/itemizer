@@ -36,9 +36,7 @@ var pass = require('./server/config/pass');
 // view engine setup
 app.set('views', path.join(__dirname, './client/views'));
 app.engine('html', require('ejs').renderFile);
-//app.set('view engine', 'jade');
 
-app.set('env', 'development');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'client', 'favicon.ico')));
@@ -64,7 +62,15 @@ app.use(passport.session());
 
 
 //Bootstrap routes
-require('./server/config/routes')(app);
+
+require('./server/config/production_routes')(app);
+// if (app.get('env') === 'development') {
+//   require('./server/config/routes')(app);
+// }
+
+// if (app.get('env') === 'production') {
+//   require('./server/config/production_routes')(app);
+// }
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -102,7 +108,7 @@ module.exports = app;
 
 
 var debug = require('debug')('pusher:server');
-var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**

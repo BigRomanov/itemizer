@@ -1,4 +1,4 @@
-var app = angular.module('pusherApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize', 'ngMessages',
+var app = angular.module('itemizerApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize', 'ngMessages',
   'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar', 'contenteditable', 'angularMoment'
 ]);
 
@@ -63,7 +63,7 @@ app.config(['$routeProvider', '$httpProvider',
       redirectTo: '/home'
     });
 
-    $httpProvider.interceptors.push(function($q) {
+    $httpProvider.interceptors.push(function($location, $q) {
 
       return {
 
@@ -71,7 +71,8 @@ app.config(['$routeProvider', '$httpProvider',
 
           var defer = $q.defer();
 
-          if (rejection.status == 401) {
+          console.log($location.path());
+          if (rejection.status == 401  && $location.path().indexOf("#/home") == -1) {
             // TODO: Add correct redirect to an original destination
             window.location = '/#/login'; //?redirectUrl=' + Base64.encode(document.URL);
           }

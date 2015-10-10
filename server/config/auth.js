@@ -9,7 +9,7 @@ exports.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
     console.log("authenticated");
     return next(); 
   }
-  res.send(401);
+  res.sendStatus(401);
 }
 
 /**
@@ -18,7 +18,7 @@ exports.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
 exports.blog = {
   hasAuthorization: function(req, res, next) {
     if (req.blog.creator._id.toString() !== req.user._id.toString()) {
-      return res.send(403);
+      return res.sendStatus(403);
     }
     next();
   }
@@ -27,7 +27,7 @@ exports.blog = {
 exports.checklist = {
   hasAuthorization: function(req, res, next) {
     if (req.checklist.creator._id.toString() !== req.user._id.toString()) {
-      return res.send(403);
+      return res.sendStatus(403);
     }
     next();
   }
@@ -36,7 +36,7 @@ exports.checklist = {
 exports.project = {
   hasAuthorization: function(req, res, next) {
     if (req.project.creator._id.toString() !== req.user._id.toString()) {
-      return res.send(403);
+      return res.sendStatus(403);
     }
     next();
   }
@@ -45,7 +45,7 @@ exports.project = {
 exports.team = {
   hasAuthorization: function(req, res, next) {
     if (req.team.creator._id.toString() !== req.user._id.toString()) {
-      return res.send(403);
+      return res.sendStatus(403);
     }
     next();
   }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Itemizer</title>
+  <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css?v=1.1.1">
+  <link rel="stylesheet" href="/bower_components/angular-editable-text/dist/angular-editable-text.css?v=1.1.1">
+  <link rel="stylesheet" href="/css/angular-material-calendar.css">
+  <link rel="stylesheet" href="/css/style.css?v=1.1.1">
+  <script src="/bower_components/underscore/underscore.js"></script>
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/bower_components/jquery-ui/jquery-ui.js"></script>
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-resource/angular-resource.js"></script>
+  <script src="/bower_components/angular-route/angular-route.js"></script>
+  <script src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/bower_components/angular-aria/angular-aria.js"></script>
+  <script src="/bower_components/angular-material/angular-material.js"></script>
+  <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="/bower_components/angular-messages/angular-messages.js"></script>
+  <script src="/bower_components/angular-ui-sortable/sortable.js"></script>
+  <script src="/bower_components/angular-editable-text/dist/angular-editable-text.js"></script>
+  <script src="/bower_components/material-calendar/dist/angular-material-calendar.js"></script>
+  <script src="/bower_components/angular-contenteditable/angular-contenteditable.js"></script>
+  <script src="/bower_components/moment/moment.js"></script>
+  <script src="/bower_components/angular-moment/angular-moment.js"></script>
+  <script src="/js/controllers/landing_controller.js"></script>
+  <style>
+  ::-webkit-input-placeholder {
+    color: red;
+    font-size: 20px;
+  }
+  
+  :-moz-placeholder {
+    /* Firefox 18- */
+    font-size: 20px;
+    color: red;
+  }
+  
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    color: red;
+    font-size: 20px;
+  }
+  
+  :-ms-input-placeholder {
+    color: red;
+    font-size: 20px;
+  }
+  </style>
+</head>
+
+<body ng-app="app">
+  <div ng-controller="LandingCtrl" style="width:100%;margin:auto">
+    <md-content>
+      <md-toolbar>
+        <div class="md-toolbar-tools" layout="row">
+          <div layout-align="start center" layout="row">
+            <h2><span style="font-weight:bold">ITEMIZER</span></h2>
+          </div>
+        </div>
+      </md-toolbar>
+      <div style="width:100%;min-height:800px;margin:auto;background-image:url(img/landing.jpg)" layout="column">
+        <div style="padding:40px;color:white">
+          <h1 style="text-align:left">Task Management. Made Simple!</h1>
+          <h3 style="text-align:left">We are currently in private beta</h3>
+        </div>
+        <div style="padding:40px;padding-top:0;color:white" layout="row">
+          <form name="registrationForm" style="width:300px">
+            <md-input-container md-no-float style="width:300px;margin-top:10px">
+              <input required autofocus style="color:white;font-size:20px;" type="email" name="registrationEmail" ng-model="registrationEmail" ng-pattern="/^.+@.+\..+$/" />
+              <div ng-messages="registrationForm.registrationEmail.$error" role="alert">
+                <div ng-message-exp="['required', 'pattern']">
+                  Please enter valid email to register
+                </div>
+              </div>
+            </md-input-container>
+            
+          </form>
+          <md-button class="md-raised md-primary" style="height:30px;" ng-click="register()">Register</md-button>
+        </div>
+      </div>
+    </md-content>
+  </div>
+</body>
+
+</html>
