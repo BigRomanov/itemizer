@@ -1,0 +1,8 @@
+{
+  "name": "Itemizer",
+  "description": "Simple task management system",
+  "repository": "https://github.com/BigRomanov/itemizer",
+  "logo": "http://itemizerapp.herokuapp.com/img/ic_apps_black_24px.svg",
+  "keywords": ["simple", "task", "management"],
+  "image": "heroku/nodejs"
+}

@@ -1,9 +1,9 @@
 {
-  "name": "pusher",
+  "name": "itemizer",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server.js"
   },
   "dependencies": {
     "angular": "^1.4.6",
@@ -24,5 +24,18 @@
     "passport-local": "~0.1.6",
     "serve-favicon": "~2.3.0",
     "underscore": "^1.5.2"
-  }
+  },
+  "engines": {
+    "node": "0.12.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BigRomanov/itemizer"
+  },
+  "keywords": [
+    "task",
+    "management",
+    "simple"
+  ],
+  "license": "Custom"
 }
