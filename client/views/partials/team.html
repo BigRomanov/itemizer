@@ -7,12 +7,19 @@
   </div>
   <div ng-show="inviting" style="width:60%;" layout="column">
     <div ng-repeat="invitee in invitees" layout="column">
-      <md-input-container md-no-float style="padding:10px;width:100%" >
-        <input type="email" required ng-model="invitee.email" placeholder="Enter email" on-enter="inviteAnother()" on-esc="cancelInvite()" focus-on="inviting" ng-disabled="!$last">
-      </md-input-container>
+      <form name="inviteForm">
+        <md-input-container md-no-float style="padding:10px;width:100%">
+          <input type="email" required name="inviteeEmail" ng-pattern="/^.+@.+\..+$/" ng-model="invitee.email" placeholder="Enter email" on-enter="inviteAnother()" on-esc="cancelInvite()" focus-on="inviting" ng-disabled="!$last">
+          <div ng-messages="inviteForm.inviteeEmail.$error" role="alert">
+            <div ng-message-exp="['required', 'pattern']">
+              Your email must look like an e-mail address.
+            </div>
+          </div>
+        </md-input-container>
+      </form>
       <!-- Buttons -->
       <div layout="row" style="width:100%" ng-show="$last">
-        <md-button md-no-ink aria-label="Invite another" ng-click="inviteAnother()" ng-disabled="!invitee.email">
+        <md-button md-no-ink aria-label="Invite another" ng-click="inviteAnother()">
           Invite another
         </md-button>
         <p flex></p>

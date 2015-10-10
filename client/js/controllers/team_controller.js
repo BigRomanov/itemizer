@@ -3,7 +3,7 @@ app.controller('TeamCtrl', function($scope, $routeParams, Teams, $log, $mdDialog
     $scope.loading = true;
     $scope.inviting = false;
     $scope.invitees = [{
-      email: ""
+      email: "lala"
     }];
     $scope.search = {}
 
@@ -29,23 +29,18 @@ app.controller('TeamCtrl', function($scope, $routeParams, Teams, $log, $mdDialog
   };
 
 
-  $scope.sendInvitations = function() {
+  $scope.sendInvites = function() {
     $scope.inviting = false;
+    var invites = _.filter($scope.invitees, function(invitee) {
+      return invitee.email != "";
+    });
+
+    $log.log(invites);
   }
 
   $scope.inviteAnother = function() {
-    $scope.invitees.push({
-      email: ""
-    });
+    $scope.invitees.push({});
   }
-
-
-  $scope.$watchCollection(
-    "invitees",
-    function(newValue, oldValue) {
-      $log.log(newValue, oldValue);
-    }
-  );
 
   $scope.init();
 
