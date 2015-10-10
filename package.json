@@ -23,6 +23,6 @@
     "passport": "~0.1.15",
     "passport-local": "~0.1.6",
     "serve-favicon": "~2.3.0",
-    "underscore": "~1.5.2"
+    "underscore": "^1.5.2"
   }
 }

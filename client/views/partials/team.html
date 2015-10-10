@@ -1,4 +1,11 @@
-<md-content layout-padding layout column>
+<md-content layout-padding layout="column">
+    <div class="md-toolbar-tools">
+      <h3>
+        <span>Team: {{team.title}}</span>
+      </h3>
+    </div>
+    </md-toolbar>
+  <!-- <div style="width:100%"></div> -->
   <!-- Actions -->
   <div layout="row" ng-hide="inviting" style="width:100%">
     <md-button md-no-ink aria-label="Invite members" ng-click="inviting=true" layout-align="end center">

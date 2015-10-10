@@ -2,7 +2,7 @@
 
 app.factory('Teams', function($resource) {
   return $resource('api/teams/:teamId', {
-    projectId: '@_id'
+    teamId: '@_id'
   }, {
     update: {
       method: 'PUT'

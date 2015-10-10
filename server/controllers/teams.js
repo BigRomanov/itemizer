@@ -1,7 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-  Team = mongoose.model('Team');
+var _ = require('underscore');
+var mongoose = require('mongoose');
+var Team = mongoose.model('Team');
 
 exports.load = function(req, res, next, id) {
   Team.load(id, function(err, team) {
@@ -33,8 +34,10 @@ exports.update = function(req, res) {
     } 
     else {
       // Copy all fields
-      team.title = req.body.title;
-      team.tasks = req.body.tasks;
+      team = _.extend(team, req.body);
+      // team.title = req.body.title;
+      // team.invites = req.body.invites;
+      // team.members = req.body.members;
       team.save(function(err) {
         if (err) {
           res.status(500).json(err);

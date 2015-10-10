@@ -3,7 +3,9 @@ app.controller('TeamCtrl', function($scope, $routeParams, Teams, $log, $mdDialog
     $scope.loading = true;
     $scope.inviting = false;
     $scope.invitees = [{
-      email: "lala"
+      email: "",
+      invited: Date.now(),
+      status: "pending"
     }];
     $scope.search = {}
 
@@ -16,30 +18,23 @@ app.controller('TeamCtrl', function($scope, $routeParams, Teams, $log, $mdDialog
     });
   }
 
-  $scope.sortableOptions = {
-    update: function(e, ui) {
-      $log.log("Update called");
-    },
-    handle: '.itemHandle',
-    stop: function(e, ui) {
-      $log.log("Stop called");
-      $log.log($scope.project.tasks);
-      $scope.project.$update();
-    }
-  };
-
-
   $scope.sendInvites = function() {
     $scope.inviting = false;
     var invites = _.filter($scope.invitees, function(invitee) {
-      return invitee.email != "";
+      return invitee.email;
     });
 
-    $log.log(invites);
+    $log.log("Inviting", invites);
+    $scope.team.invites = invites;
+    $scope.team.$update();
   }
 
   $scope.inviteAnother = function() {
-    $scope.invitees.push({});
+    $scope.invitees.push({
+      email: "",
+      invited: Date.now(),
+      status: "pending"
+    });
   }
 
   $scope.init();
