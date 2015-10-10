@@ -63,7 +63,7 @@ app.use(passport.session());
 
 //Bootstrap routes
 
-
+//require('./server/config/production_routes')(app);
 if (app.get('env') === 'development') {
   require('./server/config/routes')(app);
 }
