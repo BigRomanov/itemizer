@@ -1,4 +1,4 @@
-app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $mdDialog) {
+app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $mdDialog, $location) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.editingTitle = false;
@@ -39,6 +39,24 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
     $scope.editing = false;
     $scope.update(); 
   }
+
+  $scope.deleteProject = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to delete this project?')
+          .content($scope.project.title)
+          .ariaLabel('Delete confirmation')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      $scope.project.$delete();
+      console.log("Go to dashboard");
+      $location.path("#/dashboard");
+    }, function() {
+      // nothing to do
+    });
+  };
 
   $scope.complete = function(task, complete) {
     task.complete = complete;
