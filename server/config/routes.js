@@ -51,10 +51,18 @@ module.exports = function(app) {
   app.put('/api/teams/:teamId', auth.ensureAuthenticated, auth.team.hasAuthorization, teams.update);
   app.delete('/api/teams/:teamId', auth.ensureAuthenticated, auth.team.hasAuthorization, teams.destroy);
 
+  var teams = require('../controllers/artivities');
+  app.get('/api/artivities', artivities.all);
+  app.post('/api/artivities', auth.ensureAuthenticated, artivities.create);
+  app.get('/api/artivities/:activityId', artivities.show);
+  app.put('/api/artivities/:activityId', auth.ensureAuthenticated, auth.activity.hasAuthorization, artivities.update);
+  app.delete('/api/artivities/:activityId', auth.ensureAuthenticated, auth.activity.hasAuthorization, artivities.destroy);
+
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)
   app.param('projectId', projects.load);
   app.param('teamId', teams.load);
+  app.param('activityId', activities.load);
 
   // Angular Routes
   app.get('/partials/*', function(req, res) {

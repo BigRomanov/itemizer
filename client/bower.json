@@ -18,16 +18,17 @@
     "angular-aria": "~1.4.6",
     "angular-contenteditable": "~0.3.8",
     "angular-cookies": "~1.4.7",
+    "angular-cryptography": "~1.0.1",
     "angular-editable-text": "~1.1.2",
     "angular-material": "~0.11.0",
+    "angular-messages": "~1.4.7",
+    "angular-moment": "~0.10.3",
     "angular-resource": "~1.4.7",
     "angular-route": "~1.4.7",
     "angular-sanitize": "~1.4.7",
     "angular-ui-sortable": "~0.13.4",
     "jquery": "~2.1.4",
     "material-calendar": "~0.2.6",
-    "underscore": "~1.8.3",
-    "angular-moment": "~0.10.3",
-    "angular-messages": "~1.4.7"
+    "underscore": "~1.8.3"
   }
 }

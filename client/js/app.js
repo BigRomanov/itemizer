@@ -1,9 +1,12 @@
 var app = angular.module('itemizerApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngSanitize', 'ngMessages',
-  'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar', 'contenteditable', 'angularMoment'
+  'ngMaterial', 'ui.sortable', 'gg.editableText', 'materialCalendar', 'contenteditable', 'angularMoment','mdo-angular-cryptography'
 ]);
 
-app.config(['$routeProvider', '$httpProvider',
-  function($routeProvider, $httpProvider) {
+app.config(['$routeProvider', '$httpProvider', '$cryptoProvider',
+  function($routeProvider, $httpProvider, $cryptoProvider) {
+    // Initialize internal password for cryptography
+    $cryptoProvider.setCryptographyKey('1t3m1z3rr');
+
     $routeProvider.
     when('/home', {
       templateUrl: '/views/partials/home.html',
