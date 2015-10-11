@@ -11,6 +11,7 @@ module.exports = function(app) {
 
   // TODO: Add option to update username
 
+
   // Check if username is available
   // todo: probably should be a query on users
   app.get('/auth/check_username/:username', users.exists);

@@ -15,8 +15,9 @@ app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
           if (!err) {
             $location.path('/');
           } else {
+            console.log(err);
             angular.forEach(err.errors, function(error, field) {
-              form[field].$setValidity('mongoose', false);
+              $scope.form[field].$setValidity('mongoose', false);
               $scope.errors[field] = error.type;
             });
             $scope.error.other = err.message;
