@@ -63,14 +63,14 @@ app.use(passport.session());
 
 //Bootstrap routes
 
-require('./server/config/production_routes')(app);
-// if (app.get('env') === 'development') {
-//   require('./server/config/routes')(app);
-// }
+//require('./server/config/production_routes')(app);
+if (app.get('env') === 'development') {
+  require('./server/config/routes')(app);
+}
 
-// if (app.get('env') === 'production') {
-//   require('./server/config/production_routes')(app);
-// }
+if (app.get('env') === 'production') {
+  require('./server/config/production_routes')(app);
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
