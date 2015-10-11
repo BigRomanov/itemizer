@@ -8,7 +8,6 @@ exports.create = function(req, res) {
 
   br.save(function(err) {
     if (err) {
-      console.log(err);
       if (err.code == 11000) { // duplicate key, not and error
         res.cookie('registered',1, { maxAge: 900000, httpOnly: true });
         res.status(200).json(br);

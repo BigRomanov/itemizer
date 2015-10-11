@@ -35,6 +35,11 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
     $scope.project.$update();
   }
 
+  $scope.updateTitle = function() {
+    $scope.editing = false;
+    $scope.update(); 
+  }
+
   $scope.complete = function(task, complete) {
     task.complete = complete;
     $scope.update();

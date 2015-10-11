@@ -19,10 +19,29 @@
   </md-whiteframe>
   <md-whiteframe class="md-whiteframe-z1" flex="100" style="padding:20px" layout="column" layout-align="start start">
     <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
-    <div layout="row" style="width:100%">
+    <div ng-hide="editing" layout="row" style="width:100%">
+      <p> <span style="font-weight:bold">{{project.title}}</span> </p>
+      <p flex></p>
+      <md-fab-speed-dial md-open="false" md-direction="left" ng-class="md-fling">
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-primary md-mini">
+            <md-icon md-svg-src="img/ic_settings_white_18px.svg"></md-icon>
+          </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+          <md-button aria-label="Delete" class="md-fab md-warn md-mini">
+            <md-icon md-svg-src="img/ic_delete_white_18px.svg" aria-label="Delete"></md-icon>
+          </md-button>
+          <md-button aria-label="Edit" class="md-fab md-raised md-mini" ng-click="editing=true">
+            <md-icon md-svg-src="img/ic_edit_black_18px.svg" aria-label="Edit"></md-icon>
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>
+    </div>
+    <div ng-show="editing" layout="row" style="width:100%">
       <md-input-container md-no-float style="padding-bottom:2px;width:100%">
         <label>Project</label>
-        <input ng-model="project.title" placeholder="Enter project title" on-enter="saveTitle(project)" on-esc="cancelEditTitle(project)" ng-blur="saveTitle(project)" style="font-weight:bold">
+        <input ng-model="project.title" focus-on="editing" placeholder="Enter project title" on-focus="editTitle(project)" on-esc="cancelEditTitle(project)" on-enter="updateTitle()" ng-blur="updateTitle()" style="font-weight:bold">
       </md-input-container>
     </div>
     <!-- No projects card -->

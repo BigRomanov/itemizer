@@ -36,8 +36,8 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
     $scope.adding = false;
 
     $http.post('/api/projects', $scope.project, {}).then(function(response) {
-      $log.log("Project created");
-      $scope.projects.unshift($scope.project);
+      $log.log("Project created", response);
+      $scope.projects.unshift(response.data);
       
     }, function(response) {
       // TODO: Add proper error reporting
