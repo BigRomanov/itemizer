@@ -19,7 +19,7 @@
           <input type="email" required name="inviteeEmail" ng-pattern="/^.+@.+\..+$/" ng-model="invitee.email" placeholder="Enter email" on-enter="inviteAnother()" on-esc="cancelInvite()" focus-on="inviting" ng-disabled="!$last">
           <div ng-messages="inviteForm.inviteeEmail.$error" role="alert">
             <div ng-message-exp="['required', 'pattern']">
-              Your email must look like an e-mail address.
+              Please enter valid email address
             </div>
           </div>
         </md-input-container>

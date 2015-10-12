@@ -1,35 +1,30 @@
 <md-content layout-padding class="autoScroll" style="margin-top:20px">
-<md-card>
-  <form layout="column"  layout-align="center center" class="form-signin" name="form" ng-submit="login(form)" novalidate>
-    <md-input-container style="width:50%;padding-bottom:0">
-      <!-- Use floating placeholder instead of label -->
-      <md-icon md-svg-icon="img/ic_email_black_24px.svg" class="email"></md-icon>
-      <input ng-model="user.email" type="email" placeholder="Email" ng-required="true" autofocus on-focus mongoose-error autofocus>
-    </md-input-container>
-    <!-- <p class="help-block" ng-show="form.email.$error.mongoose">
-          {{ errors.email }}
-        </p> -->
-    <md-input-container md-no-float style="width:50%;padding-bottom:0">
-      <md-icon md-svg-icon="img/ic_lock_black_24px.svg" style="display:inline-block;"></md-icon>
-      <input ng-model="user.password" type="password" placeholder="Password">
-    </md-input-container>
-    <!--   <p class="help-block" ng-show="form.password.$error.mongoose">
-          {{ errors.password }}
-        </p> -->
-    <div layout="row" >
-      <md-button class="md-noink" style="font-size:10px" ng-href="#/signup">forgot password?</md-button>
-    </div>
-    <!-- <div class="form-group has-error">
-      <p class="help-block">{{ error.other }}</p>
-    </div> -->
-    <div layout="column" style="margin-top:20px">
-      <div layout="row" layout-align="center center">
-        <md-button class="md-raised md-primary" style="width:100px" type="submit">Enter</md-button>
+  <md-card>
+    <form name="loginForm" layout="column" layout-align="center center" class="form-signin" ng-submit="login(form)" novalidate>
+      <md-input-container style="width:50%;padding-bottom:0">
+        <!-- Use floating placeholder instead of label -->
+        <md-icon md-svg-icon="img/ic_email_black_24px.svg" class="email"></md-icon>
+        <input ng-model="user.email" name="email" type="email" required ng-pattern="/^.+@.+\..+$/" placeholder="Email" autofocus on-focus autofocus>
+      </md-input-container>
+      <md-input-container md-no-float style="width:50%;padding-bottom:0">
+        <md-icon md-svg-icon="img/ic_lock_black_24px.svg" style="display:inline-block;"></md-icon>
+        <input ng-model="user.password" name="password" type="password" placeholder="Password">
+      </md-input-container>
+
+      <div layout="row" layout-align="end center" style="width:400px">
+        <md-button class="md-noink" style="font-size:10px" ng-href="#/signup">forgot password?</md-button>
       </div>
-      <div layout="row" layout-align="center center" style="margin-top:50px">
-        <md-button class="md-noink" ng-href="#/signup">No account...   Sign up</md-button>
+      <div ng-show="error" layout="row" layout-align="center center" style="background-color:white;color:rgb(244,67,54);height:20px;width:400px;padding:4px">
+        <p>Invalid username or password</p>
       </div>
-    </div>
-  </form>
-</md-card>
+      <div layout="column" style="margin-top:20px">
+        <div layout="row" layout-align="center center">
+          <md-button class="md-raised md-primary" style="width:100px" type="submit">Enter</md-button>
+        </div>
+        <div layout="row" layout-align="center center" style="margin-top:50px">
+          <md-button class="md-noink" ng-href="#/signup">No account... Sign up</md-button>
+        </div>
+      </div>
+    </form>
+  </md-card>
 </md-content>

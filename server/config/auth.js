@@ -50,3 +50,12 @@ exports.team = {
     next();
   }
 };
+
+exports.activity = {
+  hasAuthorization: function(req, res, next) {
+    if (req.activity.creator._id.toString() !== req.user._id.toString()) {
+      return res.sendStatus(403);
+    }
+    next();
+  }
+};

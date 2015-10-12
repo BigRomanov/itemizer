@@ -71,11 +71,11 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  Activity.find().sort('-created').populate('creator', 'username').exec(function(err, activitys) {
+  Activity.find().sort('-created').populate('creator', 'username').exec(function(err, activities) {
     if (err) {
       res.status(500).json(err);
     } else {
-      res.status(200).json(activitys);
+      res.status(200).json(activities);
     }
   });
 };

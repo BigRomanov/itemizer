@@ -1,26 +1,18 @@
 'use strict';
 
 app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
-    $scope.error = {};
     $scope.user = {};
-
+    $scope.error = false;
     $scope.login = function(form) {
       Auth.login('password', {
           'email': $scope.user.email,
           'password': $scope.user.password
         },
         function(err) {
-          $scope.errors = {};
-
           if (!err) {
             $location.path('/');
           } else {
-            console.log(err);
-            angular.forEach(err.errors, function(error, field) {
-              $scope.form[field].$setValidity('mongoose', false);
-              $scope.errors[field] = error.type;
-            });
-            $scope.error.other = err.message;
+            $scope.error = true;
           }
       });
     };
