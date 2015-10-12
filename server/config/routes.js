@@ -58,11 +58,19 @@ module.exports = function(app) {
   app.put('/api/activities/:activityId', auth.ensureAuthenticated, auth.activity.hasAuthorization, activities.update);
   app.delete('/api/activities/:activityId', auth.ensureAuthenticated, auth.activity.hasAuthorization, activities.destroy);
 
+  var team_invites = require('../controllers/team_invites');
+  app.get('/api/team_invites', team_invites.all);
+  app.post('/api/team_invites', auth.ensureAuthenticated, team_invites.create);
+  app.get('/api/team_invites/:inviteId', team_invites.show);
+  app.put('/api/team_invites/:inviteId', auth.ensureAuthenticated, auth.activity.hasAuthorization, team_invites.update);
+  app.delete('/api/team_invites/:inviteId', auth.ensureAuthenticated, auth.activity.hasAuthorization, team_invites.destroy);
+
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)
   app.param('projectId', projects.load);
   app.param('teamId', teams.load);
   app.param('activityId', activities.load);
+  app.param('inviteId', team_invites.load);
 
   // Angular Routes
   app.get('/partials/*', function(req, res) {
