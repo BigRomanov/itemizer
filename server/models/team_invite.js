@@ -13,7 +13,7 @@ var TeamInviteSchema = new Schema({
   creator: {
     type: Schema.ObjectId,
     ref: 'User'
-  }
+  },
   status: String,
   created: Date,
   updated: [Date]

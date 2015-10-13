@@ -32,7 +32,8 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
   }
 
   $scope.update = function() {
-    $scope.project.$update();
+    if ($scope.project)
+      $scope.project.$update();
   }
 
   $scope.updateTitle = function() {

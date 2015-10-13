@@ -53,7 +53,50 @@
     <!-- Task   list -->
     <div ng-show="!loading && project.tasks && project.tasks.length" style="width:100%">
       <md-list ui-sortable="sortableOptions" ng-model="project.tasks">
-        <md-list-item ng-repeat="task in project.tasks" layout="column">
+        <md-subheader class="md-no-sticky">Active tasks</md-subheader>
+        <md-list-item ng-repeat="task in project.tasks | filter:{complete: '!true'}" layout="column">
+          <!-- Task summary -->
+          <div style="width:100%" layout="row" layout-align="start center">
+            <md-icon class="itemHandle" layout-align="start center" md-svg-src="img/vert.svg" class="s24" style="margin-right:20px" aria-label="Move"></md-icon>
+            <md-input-container md-no-float style="padding-bottom:2px;width:100%">
+              <input required name="taskTitle" ng-model="task.title" ng-class="{complete: task.complete==true}" placeholder="Enter task title" on-enter="update()" on-esc="cancelEditTitle(task)" focus-on="task.edit">
+            </md-input-container>
+            
+            <p flex></p>
+            <md-button class="md-icon-button" ng-click="complete(task,true)" ng-hide="task.complete">
+              <md-icon md-svg-src="img/ic_check_box_outline_blank_black_24px.svg" aria-label="Mark done" class="md-secondary md-hue-3"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button complete_task" ng-click="complete(task,false)" ng-show="task.complete">
+              <md-icon md-svg-src="img/ic_check_box_black_24px.svg" aria-label="Undo" class="md-secondary md-hue-3"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="editTask(task)" ng-hide="task.edit==true">
+              <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="cancelEditTask(task)" ng-show="task.edit==true">
+              <md-icon md-svg-src="img/ic_close_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
+            </md-button>
+          </div>
+          <!-- Details editor -->
+          <div ng-show="task.edit==true" layout="column" style="width:90%">
+            <div layout="row">
+              <md-input-container flex>
+                <label>Description</label>
+                <textarea ng-model="task.description" columns="1" md-maxlength="150"></textarea>
+              </md-input-container>
+            </div>
+            <div layout="row">
+              <md-button class="md-raised" ng-click="saveTask(task)">
+                Save task
+              </md-button>
+              <md-button class="md-raised md-warn" layout-align="end center" ng-click="showConfirm($event, task)">
+                Delete task
+              </md-button>
+            </div>
+          </div>
+          <!-- <md-checkbox ng-model="task.complete" layout-align="end center" class="md-secondary"></md-checkbox> -->
+        </md-list-item>
+        <md-subheader class="md-no-sticky">Completed tasks</md-subheader>
+        <md-list-item ng-repeat="task in project.tasks | filter:{complete: true}" layout="column">
           <!-- Task summary -->
           <div style="width:100%" layout="row" layout-align="start center">
             <md-icon class="itemHandle" layout-align="start center" md-svg-src="img/vert.svg" class="s24" style="margin-right:20px" aria-label="Move"></md-icon>
