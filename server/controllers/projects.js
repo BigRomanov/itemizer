@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var mongoose = require('mongoose'),
   Project = mongoose.model('Project');
 
@@ -33,8 +34,9 @@ exports.update = function(req, res) {
     } 
     else {
       // Copy all fields
-      project.title = req.body.title;
-      project.tasks = req.body.tasks;
+      project = _.extend(project, req.body);
+      // project.title = req.body.title;
+      // project.tasks = req.body.tasks;
       project.save(function(err) {
         if (err) {
           res.status(500).json(err);
@@ -47,7 +49,6 @@ exports.update = function(req, res) {
 };
 
 exports.destroy = function(req, res) {
-  console.log("Destroy")
   var project = req.project;
 
   project.remove(function(err) {
@@ -61,9 +62,7 @@ exports.destroy = function(req, res) {
 
 exports.show = function(req, res) {
   Project.findById(req.params.projectId, function(err, project) {
-    console.log(err, project);
     if (err) {
-      console.log(err);
       res.status(500).json(err);
     } else {
       res.status(200).json(project);

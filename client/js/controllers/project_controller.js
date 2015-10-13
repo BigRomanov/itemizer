@@ -9,6 +9,16 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
     
     Projects.get({projectId:$routeParams.id}, function(project) {
       $log.log("Loaded project", project);
+      $log.log(typeof project.tasks[0].due_date, project.tasks[0].due_date);
+      
+
+      // Parse dates, consider doing this with interceptor
+      _.each(project.tasks, function(task) {
+        task.due_date = new Date(task.due_date);
+      });
+
+      $log.log(typeof project.tasks[0].due_date);
+
       $scope.project = project;
       $scope.loading = false;
     });
@@ -33,6 +43,7 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
   }
 
   $scope.update = function() {
+    console.log("Updating project");
     if ($scope.project)
       $scope.project.$update();
   }

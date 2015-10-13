@@ -9,7 +9,13 @@ var ProjectSchema = new Schema({
   tasks: [{  
     title: String,
     description: String,
-    complete: Boolean
+    complete: Boolean,
+    due_date: Date,
+    assignee: {
+      type: Schema.ObjectId,
+      ref: 'User'
+    },
+    assigned_to:String
   }],
   slug: {
     type: String,
