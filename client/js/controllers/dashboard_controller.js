@@ -7,9 +7,12 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
       $scope.projects = projects;
 
       _.each($scope.projects, function(project) {
-        project.unfinished = _.reduce(project.tasks, function(memo, task){ 
-          if (task.complete) return memo; 
-          else return memo + 1; }, 0);
+        console.log(project.tasks, project.tasks.length);
+        if (project.tasks.length > 0) {
+          project.unfinished = _.reduce(project.tasks, function(memo, task){ 
+            if (task && task.complete) return memo; 
+            else return memo + 1; }, 0);
+        }
       });
 
       $scope.loading = false;

@@ -3,6 +3,7 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
     $scope.adding = false;
     $scope.editingTitle = false;
     $scope.loading = true;
+    $scope.show_completed = false;
 
     $scope.search = {}
     
