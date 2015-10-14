@@ -42,6 +42,15 @@ exports.project = {
   }
 };
 
+exports.task = {
+  hasAuthorization: function(req, res, next) {
+    if (req.task.creator._id.toString() !== req.user._id.toString()) {
+      return res.sendStatus(403);
+    }
+    next();
+  }
+};
+
 exports.team = {
   hasAuthorization: function(req, res, next) {
     if (req.team.creator._id.toString() !== req.user._id.toString()) {

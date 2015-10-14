@@ -44,6 +44,13 @@ module.exports = function(app) {
   app.put('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.update);
   app.delete('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.destroy);
 
+  var tasks = require('../controllers/tasks');
+  app.get('/api/tasks', tasks.all);
+  app.post('/api/tasks', auth.ensureAuthenticated, tasks.create);
+  app.get('/api/tasks/:taskId', tasks.show);
+  app.put('/api/projects/:taskId', auth.ensureAuthenticated, auth.task.hasAuthorization, tasks.update);
+  app.delete('/api/tasks/:taskId', auth.ensureAuthenticated, auth.task.hasAuthorization, tasks.destroy);
+
   var teams = require('../controllers/teams');
   app.get('/api/teams', teams.all);
   app.post('/api/teams', auth.ensureAuthenticated, teams.create);
