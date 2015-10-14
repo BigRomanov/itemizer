@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('Projects', function($resource) {
+app.factory('Project', function($resource) {
   return $resource('api/projects/:projectId', {
     projectId: '@_id'
   }, {

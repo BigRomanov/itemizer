@@ -1,8 +1,8 @@
-app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('DashboardCtrl', function($scope, Project,$timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.loading = true;
-    Projects.query(function(projects) {
+    Project.query(function(projects) {
       $log.log("Loading projects", projects);
       $scope.projects = projects;
 

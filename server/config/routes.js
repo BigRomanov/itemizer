@@ -48,7 +48,7 @@ module.exports = function(app) {
   app.get('/api/tasks', tasks.all);
   app.post('/api/tasks', auth.ensureAuthenticated, tasks.create);
   app.get('/api/tasks/:taskId', tasks.show);
-  app.put('/api/projects/:taskId', auth.ensureAuthenticated, auth.task.hasAuthorization, tasks.update);
+  app.put('/api/tasks/:taskId', auth.ensureAuthenticated, auth.task.hasAuthorization, tasks.update);
   app.delete('/api/tasks/:taskId', auth.ensureAuthenticated, auth.task.hasAuthorization, tasks.destroy);
 
   var teams = require('../controllers/teams');
@@ -75,6 +75,7 @@ module.exports = function(app) {
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)
   app.param('projectId', projects.load);
+  app.param('taskId', tasks.load);
   app.param('teamId', teams.load);
   app.param('activityId', activities.load);
   app.param('inviteId', team_invites.load);

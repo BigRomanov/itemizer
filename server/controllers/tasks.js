@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 /**
  * Find task by id
  */
-exports.task = function(req, res, next, id) {
+exports.load = function(req, res, next, id) {
   Task.load(id, function(err, task) {
     if (err) return next(err);
     if (!task) return next(new Error('Failed to load task ' + id));

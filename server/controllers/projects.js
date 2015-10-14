@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 
 exports.load = function(req, res, next, id) {
   Project.load(id, function(err, project) {
+    console.log(err);
     if (err) return next(err);
     if (!project) return next(new Error('Failed to load project ' + id));
     req.project = project;
@@ -35,10 +36,6 @@ exports.update = function(req, res) {
     else {
       // Copy all fields
       project = _.extend(project, req.body);
-      console.log(req.body);
-      console.log(project.tasks[0]);
-      // project.title = req.body.title;
-      // project.tasks = req.body.tasks;
       project.save(function(err) {
         if (err) {
           res.status(500).json(err);
@@ -63,7 +60,9 @@ exports.destroy = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  Project.findById(req.params.projectId, function(err, project) {
+  console.log("aaaaaaa");
+  Project.findById(req.params.projectId).populate('creator tasks').exec(function(err, project) {
+    console.log(err);
     if (err) {
       res.status(500).json(err);
     } else {
@@ -74,6 +73,7 @@ exports.show = function(req, res) {
 
 exports.all = function(req, res) {
   Project.find().sort('-created').populate('creator tasks').exec(function(err, projects) {
+    console.log(err);
     if (err) {
       res.status(500).json(err);
     } else {

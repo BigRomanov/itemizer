@@ -1,4 +1,4 @@
-app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projects, $log, $mdDialog, $location) {
+app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Project, Task, $log, $mdDialog, $location) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.editingTitle = false;
@@ -7,17 +7,13 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
 
     $scope.search = {}
     
-    Projects.get({projectId:$routeParams.id}, function(project) {
+    Project.get({projectId:$routeParams.id}, function(project) {
       $log.log("Loaded project", project);
-      $log.log(typeof project.tasks[0].due_date, project.tasks[0].due_date);
-      
 
       // Parse dates, consider doing this with interceptor
       _.each(project.tasks, function(task) {
         task.due_date = new Date(task.due_date);
       });
-
-      $log.log(typeof project.tasks[0].due_date);
 
       $scope.project = project;
       $scope.loading = false;
@@ -95,38 +91,31 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
   $scope.saveTask = function(task) {
     task.edit = false;
     $scope.editing = false;
-    $scope.update();
+    task.$save();
   }
 
   $scope.newTask = function() {
     _.each($scope.project.tasks, function(task) {
       task.edit = false;
     });
-    var newTask = {edit:true}
+    var newTask = new Task();
+    newTask.edit = true;
     $scope.project.tasks.push(newTask);
     $scope.editing = true;
   }
 
   $scope.cancelEditTask = function(task) {
     if (!task.title && !task.description) {
-      $scope.deleteTask(task);
+        var idx = $scope.project.tasks.indexOf(task);
+        $scope.project.tasks.splice(idx,1);
+        $scope.editing = false;
     }
     task.edit = false;
     $scope.editing = false; 
   }
-
-
-  $scope.addTask = function() {
-
-    $scope.project.tasks.push($scope.task);
-    $scope.project.$update();
-  }
-
+  
   $scope.deleteTask = function(task) {
-    $log.log("Delete task", task);
-    var idx = $scope.project.tasks.indexOf(task);
-    $scope.project.tasks.splice(idx,1);
-    $scope.update();
+    task.$delete();
     $scope.editing = false;
   }
 
