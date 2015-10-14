@@ -15,7 +15,13 @@ var ProjectSchema = new Schema({
       type: Schema.ObjectId,
       ref: 'User'
     },
-    assigned_to:String
+    assigned_to:String,
+
+    completed_date: Date,
+    completed_by: {
+      type: Schema.ObjectId,
+      ref: 'User'
+    }
   }],
   slug: {
     type: String,

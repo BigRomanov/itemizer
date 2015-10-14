@@ -1,4 +1,4 @@
-app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $mdDialog, $location) {
+app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projects, $log, $mdDialog, $location) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.editingTitle = false;
@@ -73,6 +73,10 @@ app.controller('ProjectCtrl', function ($scope, $routeParams, Projects, $log, $m
 
   $scope.complete = function(task, complete) {
     task.complete = complete;
+    if (task.complete) {
+      task.completed_date = new Date().toISOString();
+      task.completed_by = $rootScope.currentUser;
+    }
     $scope.update();
   }
 

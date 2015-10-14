@@ -35,6 +35,8 @@ exports.update = function(req, res) {
     else {
       // Copy all fields
       project = _.extend(project, req.body);
+      console.log(req.body);
+      console.log(project.tasks[0]);
       // project.title = req.body.title;
       // project.tasks = req.body.tasks;
       project.save(function(err) {
