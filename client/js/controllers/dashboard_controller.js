@@ -6,14 +6,20 @@ app.controller('DashboardCtrl', function($scope, Project,$timeout, $mdSidenav, $
       $log.log("Loading projects", projects);
       $scope.projects = projects;
 
+      // Task accumulator
+      $scope.tasks = [];
+
       _.each($scope.projects, function(project) {
-        console.log(project.tasks, project.tasks.length);
-        if (project.tasks.length > 0) {
+        if (project.tasks && project.tasks.length > 0) {
+          $log.log(project.tasks)
+          $scope.tasks = $scope.tasks.concat(project.tasks);
           project.unfinished = _.reduce(project.tasks, function(memo, task){ 
             if (task && task.complete) return memo; 
             else return memo + 1; }, 0);
         }
       });
+
+      $log.log("Loading tasks", $scope.tasks);
 
       $scope.loading = false;
     });

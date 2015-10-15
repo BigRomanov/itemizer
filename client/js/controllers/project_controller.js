@@ -11,13 +11,22 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
       $log.log("Loaded project", project);
 
       // Parse dates, consider doing this with interceptor
-      _.each(project.tasks, function(task) {
-        task.due_date = new Date(task.due_date);
-      });
+
+      $scope.fixDates(project);
 
       $scope.project = project;
       $scope.loading = false;
     });
+  }
+
+  $scope.fixDates = function(project) {
+    _.each(project.tasks, function(task) {
+        if (!task.due_date) 
+          task.due_date = new Date();
+
+        if (typeof task.due_date == 'string')
+          task.due_date = new Date(task.due_date);
+      });
   }
 
   $scope.sortableOptions = {
@@ -40,8 +49,10 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
 
   $scope.update = function() {
     console.log("Updating project");
-    if ($scope.project)
+    if ($scope.project) {
       $scope.project.$update();
+      $scope.fixDates($scope.project);
+    }
   }
 
   $scope.updateTitle = function() {
