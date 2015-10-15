@@ -73,7 +73,7 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  Project.find().sort('-created').populate('creator tasks').exec(function(err, projects) {
+  Project.find().sort('-created').populate('creator', 'username').exec(function(err, projects) {
     if (err) {
       res.status(500).json(err);
     } else {

@@ -49,6 +49,7 @@ exports.update = function(req, res) {
 };
 
 exports.destroy = function(req, res) {
+  console.log("Destroy")
   var task = req.task;
 
   task.remove(function(err) {
@@ -73,7 +74,7 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  Task.find().sort('-created').populate('creator assignee completed_by').exec(function(err, tasks) {
+  Task.find().sort('-created').populate('creator', 'username').exec(function(err, tasks) {
     if (err) {
       res.status(500).json(err);
     } else {

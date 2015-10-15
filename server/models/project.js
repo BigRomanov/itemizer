@@ -6,10 +6,23 @@ var mongoose = require('mongoose'),
 
 var ProjectSchema = new Schema({
   title: String, 
-  tasks: [{
+  tasks: [{  
+    title: String,
+    description: String,
+    complete: Boolean,
+    due_date: Date,
+    assignee: {
       type: Schema.ObjectId,
-      ref: 'Task'
-    }],
+      ref: 'User'
+    },
+    assigned_to:String,
+
+    completed_date: Date,
+    completed_by: {
+      type: Schema.ObjectId,
+      ref: 'User'
+    }
+  }],
   slug: {
     type: String,
     lowercase: true,

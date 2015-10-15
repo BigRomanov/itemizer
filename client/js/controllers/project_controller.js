@@ -75,6 +75,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
           .cancel('No');
     $mdDialog.show(confirm).then(function() {
       $scope.project.$delete();
+      console.log("Go to dashboard");
       $location.path("#/dashboard");
     }, function() {
       // nothing to do
