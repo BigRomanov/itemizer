@@ -1,8 +1,8 @@
 'use strict';
 
-app.factory('Task', function($resource) {
+app.factory('Tasks', function($resource) {
   return $resource('api/tasks/:taskId', {
-    taskId: '@_id'
+    projectId: '@_id'
   }, {
     update: {
       method: 'PUT'
