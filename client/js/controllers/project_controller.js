@@ -9,29 +9,20 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
     
     Projects.get({projectId:$routeParams.id}, function(project) {
       $log.log("Loaded project", project);
-      $log.log(typeof project.tasks[0].due_date, project.tasks[0].due_date);
-      
-
-      // Parse dates, consider doing this with interceptor
-
-      $scope.fixDates(project);
-
-      $log.log(typeof project.tasks[0].due_date);
-
       $scope.project = project;
       $scope.loading = false;
     });
   }
 
-  $scope.fixDates = function(project) {
-    _.each(project.tasks, function(task) {
-        if (!task.due_date) 
-          task.due_date = new Date();
+  // $scope.fixDates = function(project) {
+  //   _.each(project.tasks, function(task) {
+  //       if (!task.due_date) 
+  //         task.due_date = new Date();
 
-        if (typeof task.due_date == 'string')
-          task.due_date = new Date(task.due_date);
-      });
-  }
+  //       if (typeof task.due_date == 'string')
+  //         task.due_date = new Date(task.due_date);
+  //     });
+  // }
 
   $scope.sortableOptions = {
     update: function(e, ui) {$log.log("Update called");},
@@ -55,7 +46,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
     console.log("Updating project");
     if ($scope.project) {
       $scope.project.$update();
-      $scope.fixDates($scope.project);
+      //$scope.fixDates($scope.project);
     }
   }
 

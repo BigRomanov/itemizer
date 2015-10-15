@@ -9,12 +9,24 @@ app.factory('Projects', function($resource) {
       interceptor: {
         response: parseResponseDates
       },
-      isArray:true
+      isArray: true
     },
     get: {
-      method: 'GET', 
-      interceptor: {
-        response: parseResponseDates
+      method: 'GET',
+      transformResponse: function(data, headers) {
+        console.log("transforming", data);
+        var project = angular.fromJson(data);
+        console.log("zzzzz", project.tasks);
+        _.each(project.tasks, function(task) {
+          console.log("aaaa", task);
+          if (task.due_date) {
+            task.due_date = new Date(task.due_date);
+          }
+
+          console.log("parsed", task);
+        });
+        
+        return project;
       }
     },
     update: {
@@ -35,30 +47,16 @@ function fixProjectDates(project) {
 }
 
 function parseResponseDates(response) {
-  
   var data = response.data;
-  console.log("zzzzzzzz", data);
 
   if (data.constructor === Array) {
     console.log("array");
     _.each(data, function(project) {
       fixProjectDates(project);
     });
-  }
-  else {
-    console.log('project');
+  } else {
     fixProjectDates(data);
   }
 
-  // for (key in data) {
-  //   if (!data.hasOwnProperty(key) && // don't parse prototype or non-string props
-  //     toString.call(data[key]) !== '[object String]') continue;
-  //   value = Date.parse(data[key]); // try to parse to date
-  //   if (value !== NaN) {
-  //     console.log("aaaaaaa", key, value);
-  //     data[key] = value;
-  //   }
-  // }
-  console.log(response);
-  return response;
+  return response.data;
 }
