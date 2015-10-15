@@ -95,6 +95,14 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
     $scope.editing = true;
   }
 
+  $scope.cancelEditTask = function(task) {
+    if (!task.title && !task.description) {
+      $scope.deleteTask(task);
+    }
+    task.edit = false;
+    $scope.editing = false; 
+  }
+
   $scope.saveTask = function(task) {
     task.edit = false;
     $scope.editing = false;
@@ -110,13 +118,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
     $scope.editing = true;
   }
 
-  $scope.cancelEditTask = function(task) {
-    if (!task.title && !task.description) {
-      $scope.deleteTask(task);
-    }
-    task.edit = false;
-    $scope.editing = false; 
-  }
+
 
 
   $scope.addTask = function() {

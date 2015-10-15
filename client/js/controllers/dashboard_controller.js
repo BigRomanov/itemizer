@@ -2,6 +2,7 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
   $scope.init = function() {
     $scope.adding = false;
     $scope.loading = true;
+    $scope.currentTask = null;
     Projects.query(function(projects) {
       $log.log("Loading projects", projects);
       $scope.projects = projects;
@@ -74,6 +75,34 @@ app.controller('DashboardCtrl', function($scope, Projects,$timeout, $mdSidenav, 
           },200);
       return debounceFn;
     }
+
+  // Tasklist view
+  $scope.editTask = function(_task) {
+    if ($scope.currentTask) {
+      $scope.currentTask.edit = false;
+    }
+
+    $scope.currentTask = _task;
+
+    _task.edit = true;
+    $scope.editing = true;
+  }
+
+  $scope.cancelEditTask = function(task) {
+    if (!task.title && !task.description) {
+      $scope.deleteTask(task);
+    }
+    $scope.currentTask.edit = false;
+    $scope.currentTask = null;
+    task.edit = false;
+    $scope.editing = false; 
+  }
+
+  $scope.saveTask = function(task) {
+    task.edit = false;
+    $scope.editing = false;
+    $scope.update();
+  }
 
 
   // Calendar view
