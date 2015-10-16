@@ -91,13 +91,16 @@
                       <label>Description</label>
                       <textarea ng-model="task.description" columns="1" md-maxlength="150"></textarea>
                     </md-input-container>
-                    <md-select ng-model="task.priority" md-placeholder="Priority">
-                      <md-option ng-value="0">Super important</md-option>
-                      <md-option ng-value="1">Important</md-option>
-                      <md-option ng-value="2">Should be done</md-option>
-                      <md-option ng-value="3">Optional</md-option>
-                      <md-option ng-value="4">If time permits</md-option>
-                    </md-select>
+                    <md-input-container>
+                      <label>Priority</label>
+                      <md-select ng-model="task.priority" md-placeholder="Priority" arial-label="Priority">
+                        <md-option ng-value="0">Super important</md-option>
+                        <md-option ng-value="1">Important</md-option>
+                        <md-option ng-value="2">Should be done</md-option>
+                        <md-option ng-value="3">Optional</md-option>
+                        <md-option ng-value="4">If time permits</md-option>
+                      </md-select>
+                    </md-input-container>
                   </div>
                   <div layout="row">
                     <div style="padding-top:25px">Due:</div>

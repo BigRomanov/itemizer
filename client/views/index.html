@@ -3,12 +3,10 @@
 
 <head>
   <title>Itemizer</title>
-  
   <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css?v=1.1.1">
   <link rel="stylesheet" href="/bower_components/angular-editable-text/dist/angular-editable-text.css?v=1.1.1">
   <link rel="stylesheet" href="/css/angular-material-calendar.css">
   <link rel="stylesheet" href="/css/style.css?v=1.1.1">
-
   <script src="/bower_components/underscore/underscore.js"></script>
   <script src="/bower_components/jquery/dist/jquery.js"></script>
   <script src="/bower_components/jquery-ui/jquery-ui.js"></script>
@@ -29,7 +27,6 @@
   <script src="/bower_components/angular-moment/angular-moment.js"></script>
   <script src="/bower_components/cryptojslib/rollups/aes.js"></script>
   <script src="/bower_components/angular-cryptography/mdo-angular-cryptography.js"></script>
-  
   <script src="/js/app.js"></script>
   <script src="/js/directives/directives.js"></script>
   <script src="/js/directives/ui-directives.js"></script>
@@ -60,17 +57,15 @@
       <md-toolbar>
         <div class="md-toolbar-tools" layout="row">
           <div layout-align="start center" layout="row">
-
             <h2><span style="font-weight:bold">ITEMIZER</span></h2>
           </div>
           <!-- <div flex></div> -->
           <div layout-align="center center" layout="row" style="width:100%">
-          <md-button ng-show="currentUser" layout-align="center center" class="md-primary md-hue2" ng-href="#/dashboard" aria-label="Dashboard">
-            <md-icon md-svg-src="img/ic_apps_white_24px.svg"></md-icon>
+            <md-button ng-show="currentUser" layout-align="center center" class="md-primary md-hue2" ng-href="#/dashboard" aria-label="Dashboard">
+              <md-icon md-svg-src="img/ic_apps_white_24px.svg"></md-icon>
               Dashboard
-          </md-button>
+            </md-button>
           </div>
-
           <md-button ng-show="!currentUser && !ctrl.inLogin()" class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">LOGIN</md-button>
           <md-menu ng-show="currentUser">
             <md-button aria-label="User profile" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)" style="width:200px">
@@ -78,18 +73,29 @@
               {{currentUser.username}}
             </md-button>
             <md-menu-content width="4">
+            <md-menu-item>
+                <md-input-container>
+                  <label style="color:white">Team</label>
+                  <md-select ng-model="team" style="color:white">
+                    <md-option ng-repeat="team in teams" value="{{team.title}}">
+                      {{team.title}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
               <md-menu-item>
                 <md-button ng-href="#/profile">
                   PROFILE
                 </md-button>
               </md-menu-item>
+              
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
                 <md-button ng-click="ctrl.logout()">LOGOUT</md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>
-          
         </div>
       </md-toolbar>
       <div ng-view style="width:800px;margin:auto"></div>

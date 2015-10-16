@@ -27,6 +27,10 @@
       <md-whiteframe class="md-whiteframe-z1" flex="100" style="padding:20px" layout="row" layout-align="start start">
         <p> {{ team.title }} </p>
         <p flex></p>
+        <md-button ng-show="user.currentTeam.id != team._id" class="md-no-ink md-primary" ng-click="setCurrent(team)" layout="end center">
+          Set current
+        </md-button>
+        <p ng-show="user.currentTeam.id == team._id">CURRENT</p>
         <md-button class="md-no-ink md-primary" ng-href="#/team/{{team._id}}" layout="end center">
           View
         </md-button>

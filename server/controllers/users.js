@@ -45,6 +45,39 @@ exports.show = function (req, res, next) {
   });
 };
 
+exports.setTeam = function (req, res, next) {
+  var userId = req.body.userId;
+  var teamId = req.body.teamId;
+  var teamTitle = req.body.teamTitle; 
+
+  console.log(req.body);
+  console.log(userId, teamId, teamTitle);
+
+  User.update({_id:userId},{currentTeam:{id:teamId, title:teamTitle}}, function (err) {
+    if (err) {
+      console.log(err);
+      return next(new Error('Failed to load User'));
+    }
+    else {
+      res.status(200);
+    }
+    // if (user) {
+    //   console.log("Found user ")
+    //   user.currentTeam = {id:teamId, title:teamTitle}
+    //   user.save(function(err) {
+    //     console.log(err);
+    //     if (err) {
+    //       res.status(500).json(err);
+    //     } else {
+    //       res.status(200).json(user);
+    //     }
+    //   });
+    // } else {
+    //   res.status(404).send('USER_NOT_FOUND')
+    // }
+  });
+};
+
 /**
  *  Username exists
  *  returns {exists}

@@ -17,6 +17,17 @@ app.controller('ProfileCtrl', function ($scope, $rootScope, Teams, $http, $log) 
     $scope.adding = true;
   }
 
+  $scope.setCurrent = function(team) {
+    $http.post('/user/team', {userId:$scope.user._id, teamId:team._id, teamTitle: team.title}).then(function(response) {
+      $log.log("Team set as current");
+      $scope.user.currentTeam = {id:team._id, title: team.title};
+      
+    }, function(response) {
+      // TODO: Add proper error reporting
+      $log.log("Unable to set team as current", response);
+    });
+  }
+
   $scope.addTeam = function() {
     $scope.adding = false;
 

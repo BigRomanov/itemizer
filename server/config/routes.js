@@ -9,6 +9,8 @@ module.exports = function(app) {
   app.post('/auth/users', users.create);
   app.get('/auth/users/:userId', users.show);
 
+  app.post('/user/team', users.setTeam);
+
   // TODO: Add option to update username
 
 
