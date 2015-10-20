@@ -14,3 +14,9 @@ a {
 .complete_task svg {
   fill: #009900;
 }
+
+md-input-container > md-select {
+  flex: 1;
+  order: 2;
+  margin: 0;
+}

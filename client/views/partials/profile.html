@@ -18,9 +18,20 @@
   <div layout="row" ng-hide="adding">
     <p class="md-no-sticky" style="padding-left:0">Teams:</p>
     <p flex></p>
-    <md-button class="md-raised md-primary" ng-click="newTeam()" layout="end center">
-      New team
-    </md-button>
+    <md-button class="md-raised md-primary" ng-click="newTeam()" layout="end center">Add team</md-button>
+  </div>
+  <div ng-show="adding" layout="column">
+    <div layout="row" style="margin-top:20px">
+      <md-input-container class="md-icon-float" style="width:90%">
+        <label>Team title</label>
+        <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
+        <input ng-model="newTeam.title" type="text" focus-on="adding" on-enter="addTeam()">
+      </md-input-container>
+      <md-button class="md-primary" ng-click="cancelNewTeam()" aria-label="Cancel">
+        <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
+      </md-button>
+    </div>
+    <md-button class="md-primary" ng-click="addTeam()">Add team</md-button>
   </div>
   <md-list ng-cloak>
     <md-list-item ng-repeat="team in teams">
@@ -37,13 +48,4 @@
       </md-whiteframe>
     </md-list-item>
   </md-list>
-  <div layout="row" layout-align="start center" ng-show="adding">
-    <md-input-container style="width:50%">
-      <label>Team name</label>
-      <input ng-model="team.title" focus-on="adding">
-    </md-input-container>
-    <md-button class="md-raised md-primary" ng-click="addTeam()" layout="end end">
-      Add
-    </md-button>
-  </div>
 </md-content>

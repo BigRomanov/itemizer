@@ -1,10 +1,16 @@
-app.controller('ToolbarCtrl', function($scope, $location, Auth, Teams) {
+app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Teams) {
   $scope.init = function() {
     // Load list of teams use belongs to
-    Teams.query(function(teams) {
-      $scope.teams = teams;
-      console.log("Teams:", teams);
-    });
+    if (!$rootScope.teams) {
+      Teams.query(function(teams) {
+        $rootScope.teams = teams;
+        $scope.loading = false;
+      });
+    }
+
+    $scope.user = $rootScope.currentUser;
+    $scope.team = $scope.user.currentTeam.id;
+    console.log($scope.user, $scope.team);
   }
 
   $scope.init();

@@ -59,22 +59,9 @@ exports.setTeam = function (req, res, next) {
       return next(new Error('Failed to load User'));
     }
     else {
-      res.status(200);
+      console.log("Current team set successfully")
+      res.status(200).json({currentTeam:{id:teamId, title:teamTitle}});
     }
-    // if (user) {
-    //   console.log("Found user ")
-    //   user.currentTeam = {id:teamId, title:teamTitle}
-    //   user.save(function(err) {
-    //     console.log(err);
-    //     if (err) {
-    //       res.status(500).json(err);
-    //     } else {
-    //       res.status(200).json(user);
-    //     }
-    //   });
-    // } else {
-    //   res.status(404).send('USER_NOT_FOUND')
-    // }
   });
 };
 

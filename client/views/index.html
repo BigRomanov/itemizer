@@ -73,12 +73,12 @@
               {{currentUser.username}}
             </md-button>
             <md-menu-content width="4">
-            <md-menu-item>
-                <md-input-container>
+              <md-menu-item>
+                <md-input-container class="md-input-has-value">
                   <label style="color:white">Team</label>
                   <md-select ng-model="team" style="color:white">
-                    <md-option ng-repeat="team in teams" value="{{team.title}}">
-                      {{team.title}}
+                    <md-option ng-repeat="team in teams" value="{{team._id}}">
+                      Team: {{team.title}}
                     </md-option>
                   </md-select>
                 </md-input-container>
@@ -89,7 +89,6 @@
                   PROFILE
                 </md-button>
               </md-menu-item>
-              
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
                 <md-button ng-click="ctrl.logout()">LOGOUT</md-button>
