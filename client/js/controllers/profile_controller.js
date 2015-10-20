@@ -3,25 +3,27 @@ app.controller('ProfileCtrl', function ($scope, $rootScope, Teams, $http, $log) 
 
   $scope.init = function() {
     $scope.adding = false;
-    $scope.loading = true;
-
-    if ($rootScope.teams) {
+    
+    if (!$rootScope.teams) {
+      $scope.loading = true;
       Teams.query(function(teams) {
         $rootScope.teams = teams;
         $scope.loading = false;
+
+        $rootScope.team = $rootScope.currentUser.currentTeam;
+        console.log("aaaaa", $rootScope.teams, $rootScope.team);
       });
+      
     }
   }
 
   $scope.init();
-
   
 
   $scope.setCurrent = function(team) {
     
     $http.post('/user/team', {userId:$scope.user._id, teamId:team._id, teamTitle: team.title}).then(function(response) {
-      $log.log("Team set as current");
-      $scope.user.currentTeam = {id:team._id, title: team.title};
+      $rootScope.team = {id:team._id, title: team.title};
       
     }, function(response) {
       // TODO: Add proper error reporting

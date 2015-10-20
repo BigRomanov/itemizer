@@ -1,51 +1,58 @@
 <md-content layout-padding layout="column" layout-sm="column">
   <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
-  <form name="profileForm" novalidate>
-    <div layout="row">
-      <md-input-container style="width:50%">
-        <label>Email</label>
-        <input ng-model="user.email" name="email" type="email" disabled>
-      </md-input-container>
-      <md-input-container style="width:50%">
-        <label>Username</label>
-        <input ng-model="user.username" name="username" disable>
-      </md-input-container>
-      <!-- TODO: Add backend and frontend support for updating username -->
-      <!-- <md-button type="sublit" ng-disabled="profileForm.username.$dirty && profileForm.username.$invalid ||
+  <md-whiteframe class="md-whiteframe-z1" flex="100" style="padding:20px" layout="column" layout-align="start start">
+    <form name="profileForm" novalidate>
+      <div layout="row">
+        <md-input-container style="width:50%">
+          <label>Email</label>
+          <input ng-model="user.email" name="email" type="email" disabled>
+        </md-input-container>
+        <md-input-container style="width:50%">
+          <label>Username</label>
+          <input ng-model="user.username" name="username" disable>
+        </md-input-container>
+        <!-- TODO: Add backend and frontend support for updating username -->
+        <!-- <md-button type="sublit" ng-disabled="profileForm.username.$dirty && profileForm.username.$invalid ||
   profileForm.email.$dirty && profileForm.email.$invalid" class="md-raised md-primary" style="width:100px;margin:auto" layout-align="center center" ng-click="updateProfile()">Update</md-button> -->
-    </div>
-  </form>
-  <div layout="row" ng-hide="adding">
-    <p class="md-no-sticky" style="padding-left:0">Teams:</p>
-    <p flex></p>
-    <md-button class="md-raised md-primary" ng-click="newTeam()" layout="end center">Add team</md-button>
-  </div>
-  <div ng-show="adding" layout="column">
-    <div layout="row" style="margin-top:20px">
-      <md-input-container class="md-icon-float" style="width:90%">
-        <label>Team title</label>
-        <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
-        <input ng-model="newTeam.title" type="text" focus-on="adding" on-enter="addTeam()">
-      </md-input-container>
-      <md-button class="md-primary" ng-click="cancelNewTeam()" aria-label="Cancel">
-        <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
-      </md-button>
-    </div>
-    <md-button class="md-primary" ng-click="addTeam()">Add team</md-button>
-  </div>
-  <md-list ng-cloak>
-    <md-list-item ng-repeat="team in teams">
-      <md-whiteframe class="md-whiteframe-z1" flex="100" style="padding:20px" layout="row" layout-align="start start">
-        <p> {{ team.title }} </p>
-        <p flex></p>
-        <md-button ng-show="user.currentTeam.id != team._id" class="md-no-ink md-primary" ng-click="setCurrent(team)" layout="end center">
-          Set current
-        </md-button>
-        <p ng-show="user.currentTeam.id == team._id">CURRENT</p>
-        <md-button class="md-no-ink md-primary" ng-href="#/team/{{team._id}}" layout="end center">
-          View
-        </md-button>
-      </md-whiteframe>
-    </md-list-item>
-  </md-list>
+      </div>
+    </form>
+  </md-whiteframe>
+  <md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Teams">
+      <md-content layout="column" class="md-padding" style="min-height:300px;padding:20px 0px">
+        <div layout="row" ng-hide="adding">
+          <p flex></p>
+          <md-button class="md-raised md-primary" ng-click="newTeam()" layout="end center">Add team</md-button>
+        </div>
+        <div ng-show="adding" layout="column">
+          <div layout="row" style="margin-top:20px">
+            <md-input-container class="md-icon-float" style="width:90%">
+              <label>Team title</label>
+              <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
+              <input ng-model="newTeam.title" type="text" focus-on="adding" on-enter="addTeam()">
+            </md-input-container>
+            <md-button class="md-primary" ng-click="cancelNewTeam()" aria-label="Cancel">
+              <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
+            </md-button>
+          </div>
+          <md-button class="md-primary" ng-click="addTeam()">Add team</md-button>
+        </div>
+        <md-list ng-cloak>
+          <md-list-item ng-repeat="team in teams">
+            <md-whiteframe class="md-whiteframe-z1"  style="margin:5px;width:100%;padding:20px" layout="row" layout-align="start start">
+              <p> {{ team.title }} </p>
+              <p flex></p>
+              <md-button ng-show="$root.team.id != team._id" class="md-no-ink md-primary" ng-click="setCurrent(team)" layout="end center">
+                Set current
+              </md-button>
+              <p ng-show="$root.team.id == team._id">CURRENT</p>
+              <md-button class="md-no-ink md-primary" ng-href="#/team/{{team._id}}" layout="end center">
+                View
+              </md-button>
+            </md-whiteframe>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </md-tab>
+  </md-tabs>
 </md-content>
