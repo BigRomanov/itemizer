@@ -25,42 +25,27 @@
     </div>
     <md-button class="md-primary" ng-click="sendInvites()">Send invites</md-button>
   </div>
-
   <!-- List of members -->
   <md-list class="fixedRows">
-    <md-subheader class="md-no-sticky">Members({{team.members.length}})
-    <md-list-item class="md-2-line contact-item" ng-repeat="(index, member) in team.members" ng-if="team.members.indexOf(member) < 0">
-      <!-- <img ng-src="{{member.image}}" class="md-avatar" alt="{{member.username}}" /> -->
-      <md-icon md-svg-src="img/ic_account_circle_black_48px.svg" class="s48"></md-icon>
-      <div class="md-list-item-text compact">
-        <h3>{{member.username}} <span style="font-size:9px;color:#ff5252;padding:2px" ng-show="member._id==team.creator">(creator)</span></h3>
-        <p>{{member.email}}</p>        
-      </div>
-    </md-list-item>
-    <md-list-item class="md-2-line contact-item selected" ng-repeat="(index, member) in team.members">
-      <!-- <img ng-src="{{member.image}}" class="md-avatar" alt="{{member.username}}" /> -->
-      <md-icon md-svg-src="img/ic_account_circle_black_48px.svg" class="s48"></md-icon>
-      <div class="md-list-item-text compact">
-        <h3>{{member.username}}<span style="font-size:9px;color:#ff5252;padding:2px" ng-show="member._id==team.creator">(creator)</span></h3>
-        <p>{{member.email}}</p>
-      </div>
-    </md-list-item>
+    <md-subheader class="md-no-sticky">Members({{team.members.length}})</md-subheader>
+      <md-list-item class="md-2-line contact-item selected" ng-repeat="member in team.members" style="width:33%;float:left">
+        <!-- <img ng-src="{{member.image}}" class="md-avatar" alt="{{member.username}}" /> -->
+        <md-icon md-svg-src="img/ic_account_circle_black_48px.svg" class="s48"></md-icon>
+        <div class="md-list-item-text compact">
+          <h3>{{member.username}}<span style="font-size:9px;color:#ff5252;padding:2px" ng-show="member._id==team.creator">(creator)</span></h3>
+          <p>{{member.email}}</p>
+        </div>
+      </md-list-item>
   </md-list>
   <!-- List of pending invites -->
   <md-list class="fixedRows">
     <md-subheader class="md-no-sticky">Invites({{team.invites.length}})</md-subheader>
-    <md-list-item class="md-2-line contact-item" ng-repeat="(index, invite) in team.invites" ng-if="team.invites.indexOf(invite) < 0">
+    <md-list-item class="md-2-line contact-item selected" ng-repeat="invite in team.invites" style="width:33%;float:left">
       <md-icon md-svg-src="img/ic_email_black_24px.svg" class="s48"></md-icon>
       <div class="md-list-item-text compact">
         <h3>{{invite.email}} <span style="font-size:9px;color:#ff5252;padding:2px">({{invite.status}})</span></h3>
-        <p>Sent: {{invite.created | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}</p> 
-      </div>
-    </md-list-item>
-    <md-list-item class="md-2-line contact-item selected" ng-repeat="(index, invite) in team.invites">
-      <md-icon md-svg-src="img/ic_email_black_24px.svg" class="s48"></md-icon>
-      <div class="md-list-item-text compact">
-        <h3>{{invite.email}} <span style="font-size:9px;color:#ff5252;padding:2px">({{invite.status}})</span></h3>
-        <p>Sent: {{invite.created | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}</p> 
+        <p><span style="font-size:9px;padding:2px">
+          Sent: {{invite.created | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</span></p>
       </div>
     </md-list-item>
   </md-list>
