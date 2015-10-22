@@ -10,7 +10,10 @@ var TeamSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   }],
-  invites: [{email: String, invited: Date, status: String}], // list of invited users
+  invites: [{ 
+    type: Schema.ObjectId,
+    ref: 'Invite'
+  }], 
   created: Date,
   updated: [Date],
   creator: {

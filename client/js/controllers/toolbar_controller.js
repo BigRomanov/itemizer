@@ -7,8 +7,9 @@ app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Team
         $rootScope.teams = teams;
         $scope.loading = false;
 
-        $rootScope.team = $rootScope.currentUser.currentTeam;
-        console.log("bbbbb", $rootScope.teams, $rootScope.team);
+        if ($rootScope.currentUser && $rootScope.currentUser.currentTeam) {
+          $rootScope.team = $rootScope.currentUser.currentTeam;  
+        }
       });
 
     }

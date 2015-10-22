@@ -1,12 +1,8 @@
-app.controller('TeamCtrl', function($scope, $routeParams, Teams, $log, $mdDialog) {
+app.controller('TeamCtrl', function($scope, $routeParams, Teams, $log, $http) {
   $scope.init = function() {
     $scope.loading = true;
     $scope.inviting = false;
-    $scope.invitees = [{
-      email: "",
-      invited: Date.now(),
-      status: "pending"
-    }];
+    $scope.invites = "";
     $scope.search = {}
 
     Teams.get({
@@ -20,21 +16,19 @@ app.controller('TeamCtrl', function($scope, $routeParams, Teams, $log, $mdDialog
 
   $scope.sendInvites = function() {
     $scope.inviting = false;
-    var invites = _.filter($scope.invitees, function(invitee) {
-      return invitee.email;
-    });
 
-    $log.log("Inviting", invites);
-    $scope.team.invites = invites;
-    $scope.team.$update();
+    $http.post('/api/team_invites', {invites:$scope.invites, team:$scope.team._id}, {}).then(function(response) {
+      console.log(response);
+      // TODO: Append new invites to existing ones
+      
+    }, function(response) {
+      // TODO: Add proper error reporting
+      console.log("Invite failed failed", response);
+    });
   }
 
-  $scope.inviteAnother = function() {
-    $scope.invitees.push({
-      email: "",
-      invited: Date.now(),
-      status: "pending"
-    });
+  $scope.cancelInvite = function() {
+    $scope.inviting = false;
   }
 
   $scope.init();

@@ -14,28 +14,61 @@ exports.load = function(req, res, next, id) {
 };
 
 exports.create = function(req, res) {
-  var invite = new TeamInvite(req.body);
-  invite.creator = req.user;
+  if (req.body.invites) {
+    var emails = req.body.invites.split(",");
+    var team = req.body.team;
 
-  invite.save(function(err) {
-    if (err) {
-      res.status(500).json(err);
-    } else {
-      res.status(200).json(invite);
-    }
-  });
+    var successes = [];
+    var failures = [];
+
+    console.log("Create invites for team: ", team, " emails: ", emails);
+
+    async.each(emails, function(email, callback) {
+
+      var invite = new TeamInvite({
+        email: email,
+        team: team,
+        status: "pending"
+      });
+      invite.creator = req.user;
+
+      invite.save(function(err) {
+        console.log("saved");
+        if (err) {
+          // TODO: Figure out the reason for failure
+          failures.push(email);
+        } else {
+          successes.push(email);
+        }
+
+        callback();
+      });
+    }, function(err) {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        res.status(200).json({
+          successes: successes,
+          failures: failures
+        });
+      }
+    });
+
+    _.each(emails, function(email) {
+
+    });
+  }
 };
 
 exports.update = function(req, res) {
-  
+
   TeamInvite.findById(req.params.inviteId, function(err, invite) {
     if (err) {
       res.status(500).json(err);
-    } 
-    else {
+    } else {
       // Copy all fields
       invite = _.extend(invite, req.body);
-      
+
       invite.save(function(err) {
         if (err) {
           res.status(500).json(err);
@@ -61,6 +94,21 @@ exports.destroy = function(req, res) {
 
 exports.show = function(req, res) {
   TeamInvite.findById(req.params.teamId).populate('creator team').exec(function(err, invite) {
+    if (err) {
+      console.log(err);
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(invite);
+    }
+  });
+};
+
+
+// TODO: Check if we need this method
+exports.findByEmail = function(req, res) {
+  var email = req.query.email;
+  console.log("Find team invite for", email);
+  TeamInvite.findById(req.query.email).populate('creator team').exec(function(err, invite) {
     if (err) {
       console.log(err);
       res.status(500).json(err);

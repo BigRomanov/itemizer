@@ -1,39 +1,65 @@
 <md-content layout-padding layout="column">
-    <div class="md-toolbar-tools">
-      <h3>
+  <div class="md-toolbar-tools">
+    <h3>
         <span>Team: {{team.title}}</span>
       </h3>
-    </div>
-    </md-toolbar>
-  <!-- <div style="width:100%"></div> -->
+  </div>
+  </md-toolbar>
   <!-- Actions -->
-  <div layout="row" ng-hide="inviting" style="width:100%">
-    <md-button md-no-ink aria-label="Invite members" ng-click="inviting=true" layout-align="end center">
+  <div layout="row" ng-hide="inviting" style="width:100%" layout-align="end center">
+    <md-button class="md-raised md-primary" aria-label="Invite members" ng-click="inviting=true" layout-align="end center">
       Invite members
     </md-button>
   </div>
-  <div ng-show="inviting" style="width:60%;" layout="column">
-    <div ng-repeat="invitee in invitees" layout="column">
-      <form name="inviteForm">
-        <md-input-container md-no-float style="padding:10px;width:100%">
-          <input type="email" required name="inviteeEmail" ng-pattern="/^.+@.+\..+$/" ng-model="invitee.email" placeholder="Enter email" on-enter="inviteAnother()" on-esc="cancelInvite()" focus-on="inviting" ng-disabled="!$last">
-          <div ng-messages="inviteForm.inviteeEmail.$error" role="alert">
-            <div ng-message-exp="['required', 'pattern']">
-              Please enter valid email address
-            </div>
-          </div>
-        </md-input-container>
-      </form>
-      <!-- Buttons -->
-      <div layout="row" style="width:100%" ng-show="$last">
-        <md-button md-no-ink aria-label="Invite another" ng-click="inviteAnother()">
-          Invite another
-        </md-button>
-        <p flex></p>
-        <md-button class="md-raised md-primary" aria-label="Send invites" ng-click="sendInvites()" layout-align="end center">
-          Send invites
-        </md-button>
-      </div>
+  <!-- Invite Editor -->
+  <div ng-show="inviting" layout="column">
+    <div layout="row" style="margin-top:20px">
+      <md-input-container class="md-icon-float" style="width:90%">
+        <label>Comma separated list of emails to invite</label>
+        <md-icon md-svg-src="img/ic_email_black_24px.svg" class="name"></md-icon>
+        <textarea focus-on="inviting" ng-model="invites" columns="1" on-enter="sendInvites()" on-esc="cancelInvite()"></textarea>
+      </md-input-container>
+      <md-button class="md-primary" ng-click="cancelInvite()" aria-label="Cancel">
+        <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
+      </md-button>
     </div>
+    <md-button class="md-primary" ng-click="sendInvites()">Send invites</md-button>
   </div>
+
+  <!-- List of members -->
+  <md-list class="fixedRows">
+    <md-subheader class="md-no-sticky">Members({{team.members.length}})
+    <md-list-item class="md-2-line contact-item" ng-repeat="(index, member) in team.members" ng-if="team.members.indexOf(member) < 0">
+      <!-- <img ng-src="{{member.image}}" class="md-avatar" alt="{{member.username}}" /> -->
+      <md-icon md-svg-src="img/ic_account_circle_black_48px.svg" class="s48"></md-icon>
+      <div class="md-list-item-text compact">
+        <h3>{{member.username}} <span ng-show="member._id==team.creator">(creator)</span></h3>
+        <p>{{member.email}}</p>        
+      </div>
+    </md-list-item>
+    <md-list-item class="md-2-line contact-item selected" ng-repeat="(index, member) in team.members">
+      <!-- <img ng-src="{{member.image}}" class="md-avatar" alt="{{member.username}}" /> -->
+      <md-icon md-svg-src="img/ic_account_circle_black_48px.svg" class="s48"></md-icon>
+      <div class="md-list-item-text compact">
+        <h3>{{member.username}}<span style="font-size:9px;color:#ff5252;padding:2px" ng-show="member._id==team.creator">(creator)</span></h3>
+        <p>{{member.email}}</p>
+      </div>
+    </md-list-item>
+  </md-list>
+  <!-- List of pending invites -->
+  <md-list class="fixedRows">
+    <md-subheader class="md-no-sticky">Pending invites({{team.invites.length}})</md-subheader>
+    <md-list-item class="md-2-line contact-item" ng-repeat="(index, invite) in team.invites" ng-if="team.invites.indexOf(invite) < 0">
+      <md-icon md-svg-src="img/ic_email_black_48px.svg" class="s48"></md-icon>
+      <div class="md-list-item-text compact">
+        <h3>{{invite.email}}</h3>
+      </div>
+    </md-list-item>
+    <md-list-item class="md-2-line contact-item selected" ng-repeat="(index, invite) in team.invites">
+      <md-icon md-svg-src="img/ic_email_black_48px.svg" class="s48"></md-icon>
+      <div class="md-list-item-text compact">
+        <h3>{{member.email}}</h3>
+      </div>
+    </md-list-item>
+  </md-list>
 </md-content>

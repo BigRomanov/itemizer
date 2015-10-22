@@ -66,6 +66,7 @@ module.exports = function(app) {
   app.get('/api/team_invites/:inviteId', team_invites.show);
   app.put('/api/team_invites/:inviteId', auth.ensureAuthenticated, auth.activity.hasAuthorization, team_invites.update);
   app.delete('/api/team_invites/:inviteId', auth.ensureAuthenticated, auth.activity.hasAuthorization, team_invites.destroy);
+  app.get('/api/team_invites_for_email', team_invites.findByEmail);
 
   app.param('blogId', blogs.blog);
   app.param('checklistId', checklists.checklist)

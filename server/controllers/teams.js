@@ -62,7 +62,7 @@ exports.destroy = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  Team.findById(req.params.teamId, function(err, team) {
+  Team.findById(req.params.teamId).populate('members invites').exec(function(err, team) {
     if (err) {
       console.log(err);
       res.status(500).json(err);
