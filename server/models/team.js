@@ -12,7 +12,7 @@ var TeamSchema = new Schema({
   }],
   invites: [{ 
     type: Schema.ObjectId,
-    ref: 'Invite'
+    ref: 'TeamInvite'
   }], 
   created: Date,
   updated: [Date],

@@ -29,6 +29,7 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
   
   Team.findById(req.params.teamId, function(err, team) {
+    console.log(err);
     if (err) {
       res.status(500).json(err);
     } 
@@ -62,7 +63,7 @@ exports.destroy = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  Team.findById(req.params.teamId).populate('members invites').exec(function(err, team) {
+  Team.findById(req.params.teamId).populate('creator members invites').exec(function(err, team) {
     if (err) {
       console.log(err);
       res.status(500).json(err);
@@ -73,7 +74,7 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  Team.find().sort('-created').populate('creator', 'username').exec(function(err, teams) {
+  Team.find().sort('-created').populate('creator members invites').exec(function(err, teams) {
     if (err) {
       res.status(500).json(err);
     } else {

@@ -19,7 +19,8 @@ app.controller('TeamCtrl', function($scope, $routeParams, Teams, $log, $http) {
 
     $http.post('/api/team_invites', {invites:$scope.invites, team:$scope.team._id}, {}).then(function(response) {
       console.log(response);
-      // TODO: Append new invites to existing ones
+      $scope.team.invites = $scope.team.invites.concat(response.data.successes);
+      $scope.team.$update();
       
     }, function(response) {
       // TODO: Add proper error reporting

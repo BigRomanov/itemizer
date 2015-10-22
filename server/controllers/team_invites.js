@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+var async = require('async');
 var mongoose = require('mongoose');
 var TeamInvite = mongoose.model('TeamInvite');
 
@@ -18,8 +19,9 @@ exports.create = function(req, res) {
     var emails = req.body.invites.split(",");
     var team = req.body.team;
 
-    var successes = [];
-    var failures = [];
+    var successes  = [];
+    var failures   = [];
+    var duplicates = [];
 
     console.log("Create invites for team: ", team, " emails: ", emails);
 
@@ -32,13 +34,15 @@ exports.create = function(req, res) {
       });
       invite.creator = req.user;
 
-      invite.save(function(err) {
-        console.log("saved");
+      invite.save(function(err, _invite) {
         if (err) {
-          // TODO: Figure out the reason for failure
-          failures.push(email);
+          console.log(err);
+          if (err.code == 11000)
+            duplicates.push(_invite);
+          else
+            failures.push(_invite);
         } else {
-          successes.push(email);
+          successes.push(_invite);
         }
 
         callback();
