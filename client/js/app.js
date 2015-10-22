@@ -12,9 +12,17 @@ app.config(['$routeProvider', '$httpProvider', '$cryptoProvider',
       templateUrl: '/views/partials/home.html',
       controller: 'HomeCtrl',
       resolve: {
-        "check": function($location, $rootScope) {
+        "check": function($location, $rootScope, $http) {
           if ($rootScope.currentUser) {
-            $location.path('dashboard'); //redirect user to home.
+            // Check if the use has pending invites
+            $http.get('/api/team_invites_for_email?email=' + $rootScope.currentUser.email).then(function(res) {
+              console.log(res);
+              if (res.data.length)
+                $location.path('invited');
+            }, function(res) {
+              console.log("Error retrieving invites", res)
+              $location.path('dashboard'); //redirect user to home.
+            });
           }
         }
       }
@@ -22,6 +30,10 @@ app.config(['$routeProvider', '$httpProvider', '$cryptoProvider',
     when('/dashboard', {
       templateUrl: '/views/partials/dashboard.html',
       controller: 'DashboardCtrl'
+    }).
+    when('/invited', {
+      templateUrl: '/views/partials/invited.html',
+      controller: 'InvitedCtrl'
     }).
     when('/library', {
       templateUrl: '/views/partials/library.html',

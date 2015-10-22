@@ -112,11 +112,12 @@ exports.show = function(req, res) {
 exports.findByEmail = function(req, res) {
   var email = req.query.email;
   console.log("Find team invite for", email);
-  TeamInvite.findById(req.query.email).populate('creator team').exec(function(err, invite) {
+  TeamInvite.find({email:req.query.email}).populate('creator team').exec(function(err, invite) {
     if (err) {
       console.log(err);
       res.status(500).json(err);
     } else {
+      console.log(invite);
       res.status(200).json(invite);
     }
   });
