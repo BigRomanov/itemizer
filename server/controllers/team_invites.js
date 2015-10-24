@@ -111,8 +111,9 @@ exports.show = function(req, res) {
 // TODO: Check if we need this method
 exports.findByEmail = function(req, res) {
   var email = req.query.email;
-  console.log("Find team invite for", email);
-  TeamInvite.find({email:req.query.email}).populate('creator team').exec(function(err, invite) {
+  var status = req.query.status;
+  console.log("Find team invite for: ", email, "status: ", status);
+  TeamInvite.find({email:email, status:status}).populate('creator team').exec(function(err, invite) {
     if (err) {
       console.log(err);
       res.status(500).json(err);

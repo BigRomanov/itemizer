@@ -15,9 +15,9 @@ app.config(['$routeProvider', '$httpProvider', '$cryptoProvider',
         "check": function($location, $rootScope, $http) {
           if ($rootScope.currentUser) {
             // Check if the use has pending invites
-            $http.get('/api/team_invites_for_email?email=' + $rootScope.currentUser.email).then(function(res) {
+            $http.get('/api/team_invites_for_email?status="pending"&email=' + $rootScope.currentUser.email).then(function(res) {
               console.log(res);
-              if (res.data.length)
+              if (res.data.length) // we have some pending invitations
                 $location.path('invited');
             }, function(res) {
               console.log("Error retrieving invites", res)
