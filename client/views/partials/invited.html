@@ -1,1 +1,20 @@
-Invited!!!
+<md-content class="md-padding" style="min-height:300px">
+  <md-list>
+    <div ng-repeat="invite in invites">
+      <md-subheader class="md-no-sticky">You have been invited to join the following teams:</md-subheader>
+      <md-list-item ng-repeat="invite in invites" layout="row" layout-align="start center">
+        <!-- Invite summary -->
+        <md-whiteframe class="md-whiteframe-z1" flex="100" layout="row" layout-align="start center" style="padding:10px;width:100%;margin-bottom:20px">
+          <p><b>TEAM: {{invite.team.title}}</b>  <span style="font-size:12px"><i>(Invited by {{invite.creator.username}} on {{invite.created| amDateFormat:'MMMM Do YYYY, h:mm:ss a'}})</i></span></p>
+          <p flex></p>
+          <md-button class="md-raised md-primary" ng-click="accept(invite)">
+            Accept
+          </md-button>
+          <md-button class="md-raised md-warn" ng-click="decline(invite)">
+            Decline
+          </md-button>
+        </md-whiteframe>
+      </md-list-item>
+    </div>
+  </md-list>
+</md-content>
