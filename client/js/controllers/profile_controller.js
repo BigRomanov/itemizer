@@ -1,30 +1,31 @@
-app.controller('ProfileCtrl', function ($scope, $rootScope, Teams, $http, $log) {
+app.controller('ProfileCtrl', function($scope, $rootScope, Teams, $http, $log) {
   $scope.user = $rootScope.currentUser;
 
   $scope.init = function() {
     $scope.adding = false;
-    
-    if (!$rootScope.teams) {
-      $scope.loading = true;
-      Teams.query(function(teams) {
-        $rootScope.teams = teams;
-        $scope.loading = false;
 
-        $rootScope.team = $rootScope.currentUser.currentTeam;
-        console.log("aaaaa", $rootScope.teams, $rootScope.team);
-      });
-      
-    }
+    $scope.loading = true;
+    Teams.query(function(teams) {
+      $rootScope.currentUser.teams = teams;
+      $scope.loading = false;
+    });
   }
 
   $scope.init();
-  
+
 
   $scope.setCurrent = function(team) {
-    
-    $http.post('/user/team', {userId:$scope.user._id, teamId:team._id, teamTitle: team.title}).then(function(response) {
-      $rootScope.team = {id:team._id, title: team.title};
-      
+
+    $http.post('/user/team', {
+      userId: $scope.user._id,
+      teamId: team._id,
+      teamTitle: team.title
+    }).then(function(response) {
+      $rootScope.team = {
+        id: team._id,
+        title: team.title
+      };
+
     }, function(response) {
       // TODO: Add proper error reporting
       $log.log("Unable to set team as current", response);
@@ -32,12 +33,18 @@ app.controller('ProfileCtrl', function ($scope, $rootScope, Teams, $http, $log) 
   }
 
   $scope.newTeam = function() {
-    $scope.team = {title:"", members:[]}
+    $scope.team = {
+      title: "",
+      members: []
+    }
     $scope.adding = true;
   }
 
   $scope.cancelNewTeam = function() {
-    $scope.team = {title:"", members:[]}
+    $scope.team = {
+      title: "",
+      members: []
+    }
     $scope.adding = false;
   }
 

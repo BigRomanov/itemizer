@@ -77,8 +77,8 @@
               <md-menu-item>
                 <md-input-container class="md-input-has-value">
                   <label style="color:white">Team</label>
-                  <md-select ng-model="$root.team.id" style="color:white">
-                    <md-option ng-repeat="team in $root.teams" value="{{team._id}}">
+                  <md-select ng-model="$root.currentUser.currentTeam" style="color:white">
+                    <md-option ng-repeat="team in $root.currentUser.teams" value="{{team._id}}">
                       Team: {{team.title}}
                     </md-option>
                   </md-select>

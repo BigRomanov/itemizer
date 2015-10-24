@@ -3,13 +3,11 @@ app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Team
     // Load list of teams use belongs to
     if (!$rootScope.teams) {
       $scope.loading = true;
-      Teams.query(function(teams) {
-        $rootScope.teams = teams;
-        $scope.loading = false;
 
-        if ($rootScope.currentUser && $rootScope.currentUser.currentTeam) {
-          $rootScope.team = $rootScope.currentUser.currentTeam;  
-        }
+      // Load all teams for the current user
+      Teams.query(function(teams) {
+        $rootScope.currentUser.teams = teams;
+        $scope.loading = false;
       });
 
     }
@@ -31,6 +29,7 @@ app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Team
   this.logout = function() {
     Auth.logout(function(err) {
       if (!err) {
+        $rootScope.curentUser = null;
         $location.path('/login');
       }
     });

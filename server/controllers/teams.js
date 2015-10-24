@@ -74,7 +74,8 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  Team.find().sort('-created').populate('creator members invites').exec(function(err, teams) {
+  console.log("aaaaaaa", req.user);
+  Team.find({members:req.user.id}).sort('-created').populate('creator members invites').exec(function(err, teams) {
     if (err) {
       res.status(500).json(err);
     } else {

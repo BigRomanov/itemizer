@@ -24,8 +24,7 @@ var UserSchema = new Schema({
   currentTeam: {
     id:String,
     title:String
-  },
-  teams: [{ type: Schema.ObjectId, ref: 'Team'}]
+  }
 });
 
 /**
