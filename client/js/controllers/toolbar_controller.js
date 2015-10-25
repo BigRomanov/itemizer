@@ -4,9 +4,8 @@ app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Team
     if ($rootScope.currentUser) {
       $scope.loading = true;
 
-      // Load all teams for the current user
       Teams.query(function(teams) {
-        $rootScope.currentUser.teams = teams;
+        $scope.teams = teams;
         $scope.loading = false;
       });
 
