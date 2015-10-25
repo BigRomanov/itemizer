@@ -42,10 +42,10 @@
             <md-whiteframe class="md-whiteframe-z1"  style="margin:5px;width:100%;padding:20px" layout="row" layout-align="start start">
               <p> {{ team.title }} </p>
               <p flex></p>
-              <md-button ng-show="$root.team.id != team._id" class="md-no-ink md-primary" ng-click="setCurrent(team)" layout="end center">
+              <md-button ng-show="$root.currentUser.currentTeam != team._id" class="md-no-ink md-primary" ng-click="setCurrent(team)" layout="end center">
                 Set current
               </md-button>
-              <p ng-show="$root.team.id == team._id"  style="padding: 0 16px;color:#ff5252">CURRENT</p>
+              <p ng-show="$root.currentUser.currentTeam == team._id"  style="padding: 0 16px;color:#ff5252">CURRENT</p>
               <md-button class="md-no-ink md-primary" ng-href="#/team/{{team._id}}" layout="end center">
                 <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="View project" class="md-secondary md-hue-3"></md-icon>
                 <md-tooltip>Team details</md-tooltip>

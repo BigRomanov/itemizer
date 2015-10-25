@@ -22,8 +22,8 @@ var UserSchema = new Schema({
   guest: Boolean,
   provider: String,
   currentTeam: {
-    id:String,
-    title:String
+    type: Schema.ObjectId,
+    ref: 'Team'
   }
 });
 

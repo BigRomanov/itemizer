@@ -1,7 +1,7 @@
 app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Teams) {
   $scope.init = function() {
-    // Load list of teams use belongs to
-    if (!$rootScope.teams) {
+    
+    if ($rootScope.currentUser) {
       $scope.loading = true;
 
       // Load all teams for the current user

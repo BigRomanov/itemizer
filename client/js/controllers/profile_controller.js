@@ -6,8 +6,11 @@ app.controller('ProfileCtrl', function($scope, $rootScope, Teams, $http, $log) {
 
     $scope.loading = true;
     Teams.query(function(teams) {
-      $rootScope.currentUser.teams = teams;
+      console.log("Teams:", teams);
+      $scope.teams = teams;
       $scope.loading = false;
+
+      console.log($rootScope.currentUser, teams);
     });
   }
 
