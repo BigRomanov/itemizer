@@ -2,16 +2,6 @@ app.controller('ProfileCtrl', function($scope, $rootScope, Teams, $http, $log) {
   $scope.user = $rootScope.currentUser;
 
   $scope.init = function() {
-    $scope.adding = false;
-
-    $scope.loading = true;
-    Teams.query(function(teams) {
-      console.log("Teams:", teams);
-      $scope.teams = teams;
-      $scope.loading = false;
-
-      console.log($rootScope.currentUser, teams);
-    });
   }
 
   $scope.init();

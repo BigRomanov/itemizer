@@ -1,18 +1,12 @@
 app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Teams) {
   $scope.init = function() {
-    
-    if ($rootScope.currentUser) {
-      $scope.loading = true;
-
-      Teams.query(function(teams) {
-        $scope.teams = teams;
-        $scope.loading = false;
-      });
-
-    }
   }
 
   $scope.init();
+
+  $rootScope.$watch('currentUser', function() {
+    $scope.init();
+  });
 
   $scope.goTo = function(path) {
     console.log("Go to", path);
