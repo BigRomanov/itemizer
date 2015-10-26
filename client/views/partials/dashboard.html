@@ -58,6 +58,7 @@
           </div>
         </md-content>
       </md-tab>
+      <!-- Tasks -->
       <md-tab label="tasks">
         <md-content class="md-padding" style="min-height:300px">
           <md-list ui-sortable="sortableOptions" ng-model="project.tasks">
@@ -120,12 +121,14 @@
           </md-list>
         </md-content>
       </md-tab>
+      <!-- Calendar -->
       <md-tab label="calendar">
         <md-content class="md-padding">
           <calendar-md flex layout layout-fill calendar-direction="horizontal" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="0" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
           </calendar-md>
         </md-content>
       </md-tab>
+      <!-- Teams -->
       <md-tab label="teams">
         <md-content layout="column" class="md-padding" style="min-height:300px">
         <div layout="row" ng-hide="adding">

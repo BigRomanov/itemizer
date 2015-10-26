@@ -31,7 +31,7 @@ app.controller('DashboardCtrl', function($scope, Projects, $timeout, $mdSidenav,
   $scope.newProject = function() {
     $scope.project = {
       title: "",
-      tasks: []
+      team: $rootScope.currentUser.currentTeam
     };
     $scope.adding = true;
   }
@@ -136,4 +136,51 @@ app.controller('DashboardCtrl', function($scope, Projects, $timeout, $mdSidenav,
     // that particular date here.
     return "<p></p>";
   };
+
+  // Team view
+  $scope.setCurrent = function(team) {
+
+    $http.post('/user/team', {
+      userId: $scope.user._id,
+      teamId: team._id,
+      teamTitle: team.title
+    }).then(function(response) {
+      $rootScope.currentUser.currentTeam = team._id;
+    }, function(response) {
+      // TODO: Add proper error reporting
+      $log.log("Unable to set team as current", response);
+    });
+  }
+
+  $scope.newTeam = function() {
+    $scope.team = {
+      title: "",
+      members: []
+    }
+    $scope.adding = true;
+  }
+
+  $scope.cancelNewTeam = function() {
+    $scope.team = {
+      title: "",
+      members: []
+    }
+    $scope.adding = false;
+  }
+
+  $scope.addTeam = function() {
+    $scope.adding = false;
+
+    $scope.team.members.push($scope.user._id);
+
+    $log.log("Adding team", $scope.team);
+
+    $http.post('/api/teams', $scope.team, {}).then(function(response) {
+      $rootScope.teams.unshift(response.data);
+    }, function(response) {
+      // TODO: Add proper error reporting
+      $log.log("Team save failed", response);
+    });
+  }
+  
 });

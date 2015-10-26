@@ -28,6 +28,10 @@ app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Team
     });
   };
 
+  this.currentTeamChanged = function() {
+    console.log("Current team", $rootScope.currentUser.currentTeam);
+  }
+
   this.inLogin = function() {
     return ($location.path().indexOf("login") > -1) || ($location.path().indexOf("signup") > -1);
   }
