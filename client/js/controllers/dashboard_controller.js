@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function($scope, Projects, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('DashboardCtrl', function($scope, $rootScope, Projects, $timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
 
     $scope.adding = false;
@@ -153,7 +153,7 @@ app.controller('DashboardCtrl', function($scope, Projects, $timeout, $mdSidenav,
   }
 
   $scope.newTeam = function() {
-    $scope.team = {
+    $scope.newTeam = {
       title: "",
       members: []
     }
@@ -161,7 +161,7 @@ app.controller('DashboardCtrl', function($scope, Projects, $timeout, $mdSidenav,
   }
 
   $scope.cancelNewTeam = function() {
-    $scope.team = {
+    $scope.newTeam = {
       title: "",
       members: []
     }
@@ -171,11 +171,11 @@ app.controller('DashboardCtrl', function($scope, Projects, $timeout, $mdSidenav,
   $scope.addTeam = function() {
     $scope.adding = false;
 
-    $scope.team.members.push($scope.user._id);
+    $scope.newTeam.members.push($rootScope.currentUser._id);
 
-    $log.log("Adding team", $scope.team);
+    $log.log("Adding team", $scope.newTeam);
 
-    $http.post('/api/teams', $scope.team, {}).then(function(response) {
+    $http.post('/api/teams', $scope.newTeam, {}).then(function(response) {
       $rootScope.teams.unshift(response.data);
     }, function(response) {
       // TODO: Add proper error reporting
