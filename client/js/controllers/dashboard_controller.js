@@ -170,7 +170,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
     });
   }
 
-  $scope.newTeam = function() {
+  $scope.createNewTeam = function() {
     $scope.newTeam = {
       title: "",
       default: false,

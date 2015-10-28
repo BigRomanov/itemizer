@@ -1,14 +1,14 @@
 <md-content layout-padding layout="column">
   <div class="md-toolbar-tools">
-    <h3>
-        <span>Team: <b>{{team.title}}</b></span>
-      </h3>
+    <h3><span>Team: <b>{{team.title}}</b></span></h3>
   </div>
-  </md-toolbar>
   <!-- Actions -->
   <div layout="row" ng-hide="inviting" style="width:100%" layout-align="end center">
     <md-button class="md-raised md-primary" aria-label="Invite members" ng-click="inviting=true" layout-align="end center">
       Invite members
+    </md-button>
+    <md-button class="md-raised md-warn" aria-label="Delete team" ng-click="deleteTeam()" layout-align="end center">
+      Delete team
     </md-button>
   </div>
   <!-- Invite Editor -->
@@ -28,14 +28,14 @@
   <!-- List of members -->
   <md-list class="fixedRows">
     <md-subheader class="md-no-sticky">Members({{team.members.length}})</md-subheader>
-      <md-list-item class="md-2-line contact-item selected" ng-repeat="member in team.members" style="width:33%;float:left">
-        <!-- <img ng-src="{{member.image}}" class="md-avatar" alt="{{member.username}}" /> -->
-        <md-icon md-svg-src="img/ic_account_circle_black_48px.svg" class="s48"></md-icon>
-        <div class="md-list-item-text compact">
-          <h3>{{member.username}}<span style="font-size:9px;color:#ff5252;padding:2px" ng-show="member._id==team.creator">(creator)</span></h3>
-          <p>{{member.email}}</p>
-        </div>
-      </md-list-item>
+    <md-list-item class="md-2-line contact-item selected" ng-repeat="member in team.members" style="width:33%;float:left">
+      <!-- <img ng-src="{{member.image}}" class="md-avatar" alt="{{member.username}}" /> -->
+      <md-icon md-svg-src="img/ic_account_circle_black_48px.svg" class="s48"></md-icon>
+      <div class="md-list-item-text compact">
+        <h3>{{member.username}}<span style="font-size:9px;color:#ff5252;padding:2px" ng-show="member._id==team.creator">(creator)</span></h3>
+        <p>{{member.email}}</p>
+      </div>
+    </md-list-item>
   </md-list>
   <!-- List of pending invites -->
   <md-list class="fixedRows">
