@@ -27,7 +27,7 @@ app.config(['$routeProvider', '$httpProvider', '$cryptoProvider',
         }
       }
     }).
-    when('/dashboard', {
+    when('/dashboard/:view?', {
       templateUrl: '/views/partials/dashboard.html',
       controller: 'DashboardCtrl'
     }).

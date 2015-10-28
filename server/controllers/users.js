@@ -26,6 +26,7 @@ exports.create = function(req, res, next) {
       // Create Peronal project team for the user
       var team = new Team({
         title: 'Personal projects',
+        default: true,
         members: [newUser],
         creator: newUser
       });

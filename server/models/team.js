@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 
 var TeamSchema = new Schema({
   title: String, 
+  default: Boolean
   members: [{ 
     type: Schema.ObjectId,
     ref: 'User'

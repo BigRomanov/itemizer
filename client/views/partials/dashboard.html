@@ -1,6 +1,6 @@
 <md-content ng-init="init()" layout="col">
   <div layout="row" style="width:100%">
-    <md-tabs md-dynamic-height md-border-bottom style="width:100%">
+    <md-tabs md-dynamic-height md-border-bottom style="width:100%" md-selected="selectedView">
       <md-tab label="projects">
         <md-content layout="column" class="md-padding" style="min-height:300px">
           <div layout="row" style="width:100%" layout-align="end end">
@@ -131,39 +131,48 @@
       <!-- Teams -->
       <md-tab label="teams">
         <md-content layout="column" class="md-padding" style="min-height:300px">
-        <div layout="row" ng-hide="adding">
-          <p flex></p>
-          <md-button class="md-raised md-primary" ng-click="newTeam()" layout="end center">Add team</md-button>
-        </div>
-        <div ng-show="adding" layout="column">
-          <div layout="row" style="margin-top:20px">
-            <md-input-container class="md-icon-float" style="width:90%">
-              <label>Team title</label>
-              <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
-              <input ng-model="newTeam.title" type="text" focus-on="adding" on-enter="addTeam()">
-            </md-input-container>
-            <md-button class="md-primary" ng-click="cancelNewTeam()" aria-label="Cancel">
-              <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
-            </md-button>
+          <div layout="row" ng-hide="adding">
+            <p flex></p>
+            <md-button class="md-raised md-primary" ng-click="newTeam()" layout="end center">Add team</md-button>
           </div>
-          <md-button class="md-primary" ng-click="addTeam()">Add team</md-button>
-        </div>
-        <md-list ng-cloak>
-          <md-list-item ng-repeat="team in $root.teams">
-            <md-whiteframe class="md-whiteframe-z1"  style="margin:5px;width:100%;padding:20px" layout="row" layout-align="start start">
-              <p> {{ team.title }} </p>
-              <p flex></p>
-              <md-button ng-show="$root.currentUser.currentTeam != team._id" class="md-no-ink md-primary" ng-click="setCurrent(team)" layout="end center">
-                Set current
+          <div ng-show="adding" layout="column">
+            <div layout="row" style="margin-top:20px">
+              <md-input-container class="md-icon-float" style="width:90%">
+                <label>Team title</label>
+                <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
+                <input ng-model="newTeam.title" type="text" focus-on="adding" on-enter="addTeam()">
+              </md-input-container>
+              <md-button class="md-primary" ng-click="cancelNewTeam()" aria-label="Cancel">
+                <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
               </md-button>
-              <p ng-show="$root.currentUser.currentTeam == team._id"  style="padding: 0 16px;color:#ff5252">CURRENT</p>
-              <md-button class="md-no-ink md-primary" ng-href="#/team/{{team._id}}" layout="end center">
-                <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="View project" class="md-secondary md-hue-3"></md-icon>
-                <md-tooltip>Team details</md-tooltip>
-              </md-button>
-            </md-whiteframe>
-          </md-list-item>
-        </md-list>
+            </div>
+            <md-button class="md-primary" ng-click="addTeam()">Add team</md-button>
+          </div>
+          <md-list ng-cloak>
+            <md-list-item ng-repeat="team in $root.teams">
+              <md-whiteframe class="md-whiteframe-z1" style="margin:5px;width:100%;padding:20px" layout="row" layout-align="start start">
+                <p> {{ team.title }} </p>
+                <p flex></p>
+                <md-button ng-show="$root.currentUser.currentTeam != team._id" class="md-icon-button" ng-click="setCurrent(team)" layout="end center">
+                  <md-icon md-svg-src="img/ic_radio_button_unchecked_black_24px.svg" aria-label="Delete team" class="md-secondary md-hue-3"></md-icon>
+                  <md-tooltip>Select team</md-tooltip>
+                </md-button>
+                <md-button ng-show="$root.currentUser.currentTeam == team._id" ng-disabled="true" class="md-icon-button" ng-click="setCurrent(team)" layout="end center">
+                  <md-icon md-svg-src="img/ic_radio_button_checked_black_24px.svg" aria-label="Delete team" class="md-secondary md-hue-3"></md-icon>
+                  <md-tooltip>Current team</md-tooltip>
+                </md-button>
+                <!-- <p ng-show="$root.currentUser.currentTeam == team._id" style="padding: 0 16px;color:#ff5252">CURRENT</p> -->
+                <md-button ng-show="$root.currentUser._id == team.creator._id" class="md-icon-button" ng-click="delete_team(team)" layout="end center">
+                  <md-icon md-svg-src="img/ic_delete_black_24px.svg" aria-label="Delete team" class="md-secondary md-hue-3"></md-icon>
+                  <md-tooltip>Delete team</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" ng-href="#/team/{{team._id}}" layout="end center">
+                  <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="View team" class="md-secondary md-hue-3"></md-icon>
+                  <md-tooltip>Team details</md-tooltip>
+                </md-button>
+              </md-whiteframe>
+            </md-list-item>
+          </md-list>
         </md-content>
       </md-tab>
     </md-tabs>

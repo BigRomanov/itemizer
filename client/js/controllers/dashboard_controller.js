@@ -1,5 +1,23 @@
-app.controller('DashboardCtrl', function($scope, $rootScope, Projects, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Projects, $timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
+
+    console.log("VIEW: ", $routeParams);
+    // Select view from parameter
+    if ($routeParams.view == "projects") {
+      $scope.selectedView = 0;
+    }
+    else if ($routeParams.view == "tasks") {
+      $scope.selectedView = 1;
+    }
+    else if ($routeParams.view == "calendar") {
+      $scope.selectedView = 2;
+    } 
+    else if ($routeParams.view == "teams") {
+      $scope.selectedView = 3;
+    }
+    else {
+      $scope.selectedView = 0;
+    }
 
     $scope.adding = false;
     $scope.loading = true;
@@ -155,6 +173,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, Projects, $timeout,
   $scope.newTeam = function() {
     $scope.newTeam = {
       title: "",
+      default: false,
       members: []
     }
     $scope.adding = true;
@@ -163,6 +182,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, Projects, $timeout,
   $scope.cancelNewTeam = function() {
     $scope.newTeam = {
       title: "",
+      default: false,
       members: []
     }
     $scope.adding = false;
@@ -182,5 +202,5 @@ app.controller('DashboardCtrl', function($scope, $rootScope, Projects, $timeout,
       $log.log("Team save failed", response);
     });
   }
-  
+
 });
