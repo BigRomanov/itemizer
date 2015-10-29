@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Projects, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Projects, Teams, $timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
 
     console.log("VIEW: ", $routeParams);
@@ -159,7 +159,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
   $scope.setCurrent = function(team) {
 
     $http.post('/user/team', {
-      userId: $scope.user._id,
+      userId: $rootScope.currentUser._id,
       teamId: team._id,
       teamTitle: team.title
     }).then(function(response) {
@@ -195,11 +195,10 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
 
     $log.log("Adding team", $scope.newTeam);
 
-    $http.post('/api/teams', $scope.newTeam, {}).then(function(response) {
-      $rootScope.teams.unshift(response.data);
-    }, function(response) {
-      // TODO: Add proper error reporting
-      $log.log("Team save failed", response);
+    var newTeamResource = new Teams($scope.newTeam);
+    newTeamResource.$save(function(team, headers) {
+      console.log("Added team", team);
+      $rootScope.teams.unshift(team);
     });
   }
 

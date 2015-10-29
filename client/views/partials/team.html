@@ -1,13 +1,13 @@
 <md-content layout-padding layout="column">
   <div class="md-toolbar-tools">
-    <h3><span>Team: <b>{{team.title}}</b></span></h3>
+    <h3><span>Team: <b>{{team.title}}</b></span><a style="font-size:14px;text-decoration:underline;margin-left:10px" href="#/dashboard/teams">view all teams</a></h3>
   </div>
   <!-- Actions -->
   <div layout="row" ng-hide="inviting" style="width:100%" layout-align="end center">
     <md-button class="md-raised md-primary" aria-label="Invite members" ng-click="inviting=true" layout-align="end center">
       Invite members
     </md-button>
-    <md-button class="md-raised md-warn" aria-label="Delete team" ng-click="deleteTeam()" layout-align="end center">
+    <md-button ng-show="!team.default" class="md-raised md-warn" aria-label="Delete team" ng-click="deleteTeam()" layout-align="end center">
       Delete team
     </md-button>
   </div>

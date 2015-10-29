@@ -35,6 +35,20 @@ app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Teams, $lo
     $scope.inviting = false;
   }
 
+  $scope.setCurrent = function(team) {
+
+    $http.post('/user/team', {
+      userId: $rootScope.currentUser._id,
+      teamId: team._id,
+      teamTitle: team.title
+    }).then(function(response) {
+      $rootScope.currentUser.currentTeam = team._id;
+    }, function(response) {
+      // TODO: Add proper error reporting
+      $log.log("Unable to set team as current", response);
+    });
+  }
+
   $scope.deleteTeam = function(ev) {
     // If this is a default team do not delete it
     if ($scope.team.default) {
@@ -51,12 +65,22 @@ app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Teams, $lo
       .cancel('No');
     $mdDialog.show(confirm).then(function() {
       $http.delete('/api/teams/' + $scope.team._id, {}).then(function(response) {
-        var index = $rootScope.teams.indexOf($scope.team);
-        if (index > -1) {
-          $rootScope.teams.splice(index, 1);
+
+        // If the team we are deleting is active, move the active to the default team
+        if ($scope.team._id == $scope.currentUser.currentTeam) {
+          _.each($rootScope.teams, function(team) {
+            if (team.default) {
+              $scope.setCurrent(team);
+            }
+          });
         }
+
+        // Remove team from the list
+        $rootScope.teams = _.reject($rootScope.teams, function(team) {
+          return (team._id == $scope.team._id);
+        });
         
-        console.log("Team deleted");
+        console.log("Team deleted", $rootScope.teams);
         $location.path('/dashboard/teams');
       }, function(response) {
         // TODO: Add proper error reporting
