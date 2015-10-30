@@ -49,6 +49,13 @@ app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Teams, $lo
     });
   }
 
+  $scope.updateTitle = function() {
+    $scope.team.$update(function(team) {
+      console.log("Updated", team);
+      $scope.editingTitle = false;
+    });
+  }
+
   $scope.deleteTeam = function(ev) {
     // If this is a default team do not delete it
     if ($scope.team.default) {
