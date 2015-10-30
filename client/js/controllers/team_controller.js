@@ -3,15 +3,17 @@ app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Teams, $lo
     $scope.loading = true;
     $scope.inviting = false;
     $scope.invites = "";
-    $scope.search = {}
+    $scope.search = {};
 
-    Teams.get({
-      teamId: $routeParams.id
-    }, function(team) {
-      $log.log("Loaded team", team);
-      $scope.team = team;
-      $scope.loading = false;
+    console.log("TEams", $rootScope.teams);
+    $scope.team = _.find($rootScope.teams, function(team) {
+      console.log(team);
+      return team._id == $routeParams.id;
+      
     });
+
+    $scope.loading = false;
+    console.log($scope.team);
   }
 
   $scope.sendInvites = function() {
@@ -43,6 +45,7 @@ app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Teams, $lo
       teamTitle: team.title
     }).then(function(response) {
       $rootScope.currentUser.currentTeam = team._id;
+      $rootScope.team = team;
     }, function(response) {
       // TODO: Add proper error reporting
       $log.log("Unable to set team as current", response);
@@ -52,7 +55,7 @@ app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Teams, $lo
   $scope.updateTitle = function() {
     $scope.team.$update(function(team) {
       console.log("Updated", team);
-      $scope.editingTitle = false;
+      $scope.editingTitle = false;      
     });
   }
 

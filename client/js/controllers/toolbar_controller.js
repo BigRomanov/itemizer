@@ -1,6 +1,5 @@
-app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Teams) {
-  $scope.init = function() {
-  }
+app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Teams, $log, $http) {
+  $scope.init = function() {}
 
   $scope.init();
 
@@ -28,8 +27,22 @@ app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Team
     });
   };
 
-  this.currentTeamChanged = function() {
+  this.updateTeam = function() {
     console.log("Current team", $rootScope.currentUser.currentTeam);
+
+    $http.post('/user/team', {
+      userId: $rootScope.currentUser._id,
+      teamId: $rootScope.currentUser.currentTeam,
+    }).then(function(response) {
+      $rootScope.team = _.find($rootScope.teams, function(team) {
+        return team._id == $rootScope.currentUser.currentTeam;
+      });
+    }, function(response) {
+      // TODO: Add proper error reporting
+      $log.log("Unable to set team as current", response);
+    });
+
+
   }
 
   this.inLogin = function() {

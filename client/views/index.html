@@ -67,7 +67,7 @@
             </md-button>
             <label ng-if="teams.length==1">{{teams[0].title}}</label>
             <md-input-container ng-if="teams.length > 1" md-no-float class="md-input-has-value" style="margin-top:20px">
-              <md-select placeholder="Select team" ng-model="$root.currentUser.currentTeam" style="color:white">
+              <md-select placeholder="Select team" ng-model="$root.currentUser.currentTeam" style="color:white" ng-change="ctrl.updateTeam()">
                 <md-option ng-repeat="team in teams" value="{{team._id}}">
                   {{team.title}}
                 </md-option>

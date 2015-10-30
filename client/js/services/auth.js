@@ -22,6 +22,9 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Teams, $
         // Load teams for that user
         Teams.query(function(teams) {
           $rootScope.teams = teams;
+          $rootScope.team = _.find($rootScope.teams, function(team) {
+            return team._id == $rootScope.currentUser.currentTeam;
+          });
         });
         return cb();
       }, function(err) {

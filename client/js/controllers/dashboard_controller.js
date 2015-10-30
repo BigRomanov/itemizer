@@ -5,74 +5,87 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
     // Select view from parameter
     if ($routeParams.view == "projects") {
       $scope.selectedView = 0;
-    }
-    else if ($routeParams.view == "tasks") {
+    } else if ($routeParams.view == "tasks") {
       $scope.selectedView = 1;
-    }
-    else if ($routeParams.view == "calendar") {
+    } else if ($routeParams.view == "calendar") {
       $scope.selectedView = 2;
-    } 
-    else if ($routeParams.view == "teams") {
+    } else if ($routeParams.view == "teams") {
       $scope.selectedView = 3;
-    }
-    else {
+    } else {
       $scope.selectedView = 0;
     }
 
-    $scope.adding = false;
-    $scope.loading = true;
-    $scope.currentTask = null;
-    Projects.query(function(projects) {
-      $log.log("Loading projects", projects);
-      $scope.projects = projects;
-
-      // Task accumulator
-      $scope.tasks = [];
-
-      _.each($scope.projects, function(project) {
-        if (project.tasks && project.tasks.length > 0) {
-          $log.log(project.tasks)
-          $scope.tasks = $scope.tasks.concat(project.tasks);
-          project.unfinished = _.reduce(project.tasks, function(memo, task) {
-            if (task && task.complete) return memo;
-            else return memo + 1;
-          }, 0);
-        }
-      });
-
-      $log.log("Loading tasks", $scope.tasks);
-
-      $scope.loading = false;
+    $scope.projects = [];
+    $rootScope.$watch('team', function(newVal, oldVal) {
+      console.log("Team change detected", newVal, oldVal);
+      if (newVal)
+        $scope.projects = newVal.projects;
     });
+
+    $scope.adding = false;
+    //$scope.loading = true;
+
+    // Load tasks for current project
+
+    // Projects.query(function(projects) {
+    //   $log.log("Loading projects", projects);
+    //   $scope.projects = projects;
+
+    //   // Task accumulator
+    //   $scope.tasks = [];
+
+    //   _.each($scope.projects, function(project) {
+    //     if (project.tasks && project.tasks.length > 0) {
+    //       $log.log(project.tasks)
+    //       $scope.tasks = $scope.tasks.concat(project.tasks);
+    //       project.unfinished = _.reduce(project.tasks, function(memo, task) {
+    //         if (task && task.complete) return memo;
+    //         else return memo + 1;
+    //       }, 0);
+    //     }
+    //   });
+
+    //   $log.log("Loading tasks", $scope.tasks);
+
+    //   $scope.loading = false;
+    // });
   }
 
   $scope.newProject = function() {
     $scope.project = {
-      title: "",
-      team: $rootScope.currentUser.currentTeam
+      title: ""
     };
     $scope.adding = true;
   }
 
   $scope.cancelNewProject = function() {
     $scope.project = {
-      title: "",
-      steps: []
+      title: ""
     };
     $scope.adding = false;
   }
 
   $scope.addProject = function() {
-    $scope.adding = false;
 
-    $http.post('/api/projects', $scope.project, {}).then(function(response) {
-      $log.log("Project created", response);
-      $scope.projects.unshift(response.data);
+    var project = new Projects($scope.project);
+    project.team = $rootScope.currentUser.currentTeam;
+    project.$save(function(project) {
+      $log.log("Project created", project);
+      $scope.projects.unshift(project);
+      $scope.adding = false;
 
-    }, function(response) {
-      // TODO: Add proper error reporting
-      $log.log("Project save failed", response);
+    }, function(err) {
+      console.log("Error", err);
     });
+
+    // $http.post('/api/projects', $scope.project, {}).then(function(response) {
+    //   $log.log("Project created", response);
+    //   $scope.projects.unshift(response.data);
+
+    // }, function(response) {
+    //   // TODO: Add proper error reporting
+    //   $log.log("Project save failed", response);
+    // });
   }
 
   $scope.edit = function(project) {
@@ -125,6 +138,8 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
   }
 
 
+
+
   // Calendar view
   $scope.dayFormat = "d";
   $scope.selectedDate = null;
@@ -164,6 +179,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
       teamTitle: team.title
     }).then(function(response) {
       $rootScope.currentUser.currentTeam = team._id;
+      $rootScope.team = team;
     }, function(response) {
       // TODO: Add proper error reporting
       $log.log("Unable to set team as current", response);

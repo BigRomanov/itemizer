@@ -28,17 +28,13 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
   
-  Team.findById(req.params.teamId, function(err, team) {
+  Team.findById(req.params.teamId).populate('creator members invites').exec(function(err, team) {
     console.log(err);
     if (err) {
       res.status(500).json(err);
     } 
     else {
-      // Copy all fields
       team = _.extend(team, req.body);
-      // team.title = req.body.title;
-      // team.invites = req.body.invites;
-      // team.members = req.body.members;
       team.save(function(err) {
         if (err) {
           res.status(500).json(err);
