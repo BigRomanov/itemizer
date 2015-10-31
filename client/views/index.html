@@ -34,6 +34,7 @@
   <script src="/js/models/checklist_model.js"></script>
   <script src="/js/models/team_model.js"></script>
   <script src="/js/models/project_model.js"></script>
+  <script src="/js/models/team_project_model.js"></script>
   <script src="/js/services/auth.js"></script>
   <script src="/js/services/session.js"></script>
   <script src="/js/services/user.js"></script>
@@ -66,14 +67,14 @@
               <md-icon md-svg-src="img/ic_apps_white_24px.svg"></md-icon>
               <md-tooltip>Dashboard</md-tooltip>
             </md-button>
-            <label ng-if="teams.length==1">{{teams[0].title}}</label>
-            <md-input-container ng-if="teams.length > 1" md-no-float class="md-input-has-value" style="margin-top:20px">
+            <label >{{$root.team.title}}</label>
+            <!-- <md-input-container ng-if="teams.length > 1" md-no-float class="md-input-has-value" style="margin-top:20px">
               <md-select placeholder="Select team" ng-model="$root.currentUser.currentTeam" style="color:white" ng-change="ctrl.updateTeam()">
                 <md-option ng-repeat="team in teams" value="{{team._id}}">
                   {{team.title}}
                 </md-option>
               </md-select>
-            </md-input-container>
+            </md-input-container> -->
           </div>
           <md-button ng-show="!currentUser && !ctrl.inLogin()" class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">LOGIN</md-button>
           <md-menu ng-show="currentUser">

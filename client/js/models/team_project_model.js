@@ -1,7 +1,8 @@
 'use strict';
 
-app.factory('Project', function($resource) {
-  return $resource('api/projects/:projectId', { 
+app.factory('TeamProject', function($resource) {
+  return $resource('api/teams/:teamId/projects/:projectId', {
+
     projectId: '@_id'
   }, {
     query: {
@@ -21,7 +22,7 @@ app.factory('Project', function($resource) {
             task.due_date = new Date(task.due_date);
           }
         });
-        
+
         return project;
       }
     },

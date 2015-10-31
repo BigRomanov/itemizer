@@ -1,11 +1,16 @@
 'use strict';
 
 
-app.factory('Auth', function Auth($location, $rootScope, Session, User, Teams, $cookieStore) {
+app.factory('Auth', function Auth($location, $rootScope, Session, User, Team, $cookieStore) {
   $rootScope.currentUser = $cookieStore.get('user') || null;
   $cookieStore.remove('user');
-  Teams.query(function(teams) {
+  Team.query(function(teams) {
     $rootScope.teams = teams;
+    $rootScope.team = _.find($rootScope.teams, function(team) {
+      return team._id == $rootScope.currentUser.currentTeam;
+    });
+
+    console.log("aaaaaaaaaaaa Current team:", $rootScope.team);
   });
 
   return {
@@ -20,7 +25,7 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Teams, $
       }, function(user) {
         $rootScope.currentUser = user;
         // Load teams for that user
-        Teams.query(function(teams) {
+        Team.query(function(teams) {
           $rootScope.teams = teams;
           $rootScope.team = _.find($rootScope.teams, function(team) {
             return team._id == $rootScope.currentUser.currentTeam;

@@ -1,4 +1,4 @@
-app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Teams, $log, $http) {
+app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Team, $log, $http) {
   $scope.init = function() {}
 
   $scope.init();

@@ -1,4 +1,4 @@
-app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projects, $log, $mdDialog, $location) {
+app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Project, $log, $mdDialog, $location) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.editingTitle = false;
@@ -7,22 +7,12 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
 
     $scope.search = {}
     
-    Projects.get({projectId:$routeParams.id}, function(project) {
+    Project.get({projectId:$routeParams.id}, function(project) {
       $log.log("Loaded project", project);
       $scope.project = project;
       $scope.loading = false;
     });
   }
-
-  // $scope.fixDates = function(project) {
-  //   _.each(project.tasks, function(task) {
-  //       if (!task.due_date) 
-  //         task.due_date = new Date();
-
-  //       if (typeof task.due_date == 'string')
-  //         task.due_date = new Date(task.due_date);
-  //     });
-  // }
 
   $scope.sortableOptions = {
     update: function(e, ui) {$log.log("Update called");},

@@ -1,4 +1,4 @@
-app.controller('ProfileCtrl', function($scope, $rootScope, Teams, $http, $log) {
+app.controller('ProfileCtrl', function($scope, $rootScope, Team, $http, $log) {
   $scope.user = $rootScope.currentUser;
 
   $scope.init = function() {

@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('Teams', function($resource) {
+app.factory('Team', function($resource) {
   return $resource('api/teams/:teamId', {
     teamId: '@_id'
   }, {

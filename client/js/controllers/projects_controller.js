@@ -1,4 +1,4 @@
-app.controller('ProjectsCtrl', function($scope, $http, Projects, $location, $routeParams, $rootScope) {
+app.controller('ProjectsCtrl', function($scope, $http, Project, $location, $routeParams, $rootScope) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.loading = true;

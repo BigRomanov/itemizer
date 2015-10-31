@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Projects, Teams, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Project, Team, TeamProject, $timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
 
     console.log("VIEW: ", $routeParams);
@@ -27,7 +27,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
 
     // Load tasks for current project
 
-    Projects.query({teamId:$rootScope.currentUser.currentTeam}, function(projects) {
+    TeamProject.query({teamId:$rootScope.currentUser.currentTeam}, function(projects) {
       $log.log("Loading projects", projects);
       $scope.projects = projects;
 
@@ -67,7 +67,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
 
   $scope.addProject = function() {
 
-    var project = new Projects($scope.project);
+    var project = new Project($scope.project);
     project.team = $rootScope.currentUser.currentTeam;
     project.$save(function(project) {
       $log.log("Project created", project);
@@ -211,7 +211,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
 
     $log.log("Adding team", $scope.newTeam);
 
-    var newTeamResource = new Teams($scope.newTeam);
+    var newTeamResource = new Team($scope.newTeam);
     newTeamResource.$save(function(team, headers) {
       console.log("Added team", team);
       $rootScope.teams.unshift(team);
