@@ -1,6 +1,6 @@
 <md-content layout-padding layout="column">
   <div class="md-toolbar-tools">
-    <md-button class="md-icon-button " aria-label="View all teams" ng-href="#/dashboard/team" layout-align="end center">
+    <md-button class="md-icon-button " aria-label="View all teams" ng-href="#/dashboard/teams" layout-align="end center">
       <md-icon md-svg-src="img/ic_view_list_black_24px.svg" class="name"></md-icon>
       <md-tooltip>View all teams</md-tooltip>
     </md-button>
@@ -13,15 +13,17 @@
       <md-icon md-svg-src="img/ic_edit_black_18px.svg" class="name"></md-icon>
       <md-tooltip>Edit title</md-tooltip>
     </md-button>
+    <p flex></p>
+    <md-button ng-show="!team.default" class="md-warn" aria-label="Delete team" ng-click="deleteTeam()" layout-align="end center">
+      Delete team
+    </md-button>
   </div>
   <!-- Actions -->
   <div layout="row" ng-hide="inviting" style="width:100%" layout-align="end center">
     <md-button class="md-raised md-primary" aria-label="Invite members" ng-click="inviting=true" layout-align="end center">
       Invite members
     </md-button>
-    <md-button ng-show="!team.default" class="md-raised md-warn" aria-label="Delete team" ng-click="deleteTeam()" layout-align="end center">
-      Delete team
-    </md-button>
+    
   </div>
   <!-- Invite Editor -->
   <div ng-show="inviting" layout="column">

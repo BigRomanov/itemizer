@@ -42,6 +42,18 @@ exports.project = {
   }
 };
 
+exports.task = {
+  hasAuthorization: function(req, res, next) {
+    
+    // TODO: Implement authorization in which only team members can see the task
+
+    // if (req.task.creator._id.toString() !== req.user._id.toString()) {
+    //   return res.sendStatus(403);
+    // }
+    next();
+  }
+};
+
 exports.team = {
   hasAuthorization: function(req, res, next) {
     if (req.team.creator._id.toString() !== req.user._id.toString()) {

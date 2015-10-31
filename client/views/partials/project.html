@@ -19,27 +19,44 @@
   </md-whiteframe>
   <md-whiteframe class="md-whiteframe-z1" flex="100" style="padding:20px" layout="column" layout-align="start start">
     <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
-    <div ng-hide="editing" layout="row" style="width:100%">
-      <p> <span style="font-weight:bold">{{project.title}}</span> </p>
+    <div layout="row" style="width:100%">
+      <md-button class="md-icon-button " aria-label="View all proejcts" ng-href="#/dashboard/projects" layout-align="end center">
+        <md-icon md-svg-src="img/ic_view_list_black_24px.svg" class="name"></md-icon>
+        <md-tooltip>View all projects</md-tooltip>
+      </md-button>
+      <h3 ng-hide="editingTitle"><span><b>{{project.title}}</b></span></h3>
+      <md-button ng-show="$root.currentUser._id == project.creator._id && !editingTitle" class="md-icon-button " aria-label="Edit project title" ng-click="editingTitle=true" layout-align="end center">
+        <md-icon md-svg-src="img/ic_edit_black_18px.svg" class="name"></md-icon>
+        <md-tooltip>Edit title</md-tooltip>
+      </md-button>
       <p flex></p>
-      <md-switch ng-model="show_completed" aria-label="Show completed tasks">
+      <md-button ng-click="deleteProject()" aria-label="Delete" class="md-warn">
+        Delete project
+      </md-button>
+      <!-- <md-fab-speed-dial md-open="false" md-direction="left" ng-class="md-fling">
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-fab md-primary md-mini">
+      <md-icon md-svg-src="img/ic_settings_white_18px.svg"></md-icon>
+    </md-button>
+  </md-fab-trigger>
+  <md-fab-actions>
+    <md-button ng-click="deleteProject()" aria-label="Delete" class="md-fab md-warn md-mini">
+      <md-icon md-svg-src="img/ic_delete_white_18px.svg" aria-label="Delete"></md-icon>
+    </md-button>
+    <md-button aria-label="Edit" class="md-fab md-raised md-mini" ng-click="editing=true">
+      <md-icon md-svg-src="img/ic_edit_black_18px.svg" aria-label="Edit"></md-icon>
+    </md-button>
+  </md-fab-actions>
+</md-fab-speed-dial> -->
+    </div>
+    <div layout="row" style="width:100%;margin-top:20px">
+      <md-switch ng-model="show_completed" layout-align="start end" aria-label="Show completed tasks">
         Show completed tasks
       </md-switch>
-      <md-fab-speed-dial md-open="false" md-direction="left" ng-class="md-fling">
-        <md-fab-trigger>
-          <md-button aria-label="menu" class="md-fab md-primary md-mini">
-            <md-icon md-svg-src="img/ic_settings_white_18px.svg"></md-icon>
-          </md-button>
-        </md-fab-trigger>
-        <md-fab-actions>
-          <md-button ng-click="deleteProject()" aria-label="Delete" class="md-fab md-warn md-mini">
-            <md-icon md-svg-src="img/ic_delete_white_18px.svg" aria-label="Delete"></md-icon>
-          </md-button>
-          <md-button aria-label="Edit" class="md-fab md-raised md-mini" ng-click="editing=true">
-            <md-icon md-svg-src="img/ic_edit_black_18px.svg" aria-label="Edit"></md-icon>
-          </md-button>
-        </md-fab-actions>
-      </md-fab-speed-dial>
+      <p flex></p>
+      <md-button class="md-raised md-primary" ng-click="newTask()" ng-show="!editing" layout="end end">
+        Add task
+      </md-button>
     </div>
     <div ng-show="editing" layout="row" style="width:100%">
       <md-input-container md-no-float style="padding-bottom:2px;width:100%">
@@ -97,10 +114,5 @@
           </div>
         </md-list-item>
       </md-list>
-    </div>
-    <div layout="row" layout-align="end end" style="width:100%;margin-top:20px">
-      <md-button class="md-raised md-primary" ng-click="newTask()" ng-show="!editing" layout="end end">
-        Add task
-      </md-button>
     </div>
   </md-whiteframe </md-content>
