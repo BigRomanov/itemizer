@@ -40,7 +40,7 @@ module.exports = function(app) {
   app.delete('/api/checklists/:checklistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.destroy);
 
   var projects = require('../controllers/projects');
-  app.get('/api/projects', projects.all);
+  app.get('/api/teams/:teamId/projects', projects.all);
   app.post('/api/projects', auth.ensureAuthenticated, projects.create);
   app.get('/api/projects/:projectId', projects.show);
   app.put('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.update);

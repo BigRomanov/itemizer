@@ -62,8 +62,9 @@
           </div>
           <!-- <div flex></div> -->
           <div layout-align="center center" layout="row" style="width:100%">
-            <md-button ng-show="currentUser" layout-align="center center" style="border:1px solid white" class="md-fab md-primary md-mini" ng-href="#/dashboard" aria-label="Dashboard">
+            <md-button ng-show="currentUser" layout-align="center center" class="md-icon-button" ng-href="#/dashboard" aria-label="Dashboard">
               <md-icon md-svg-src="img/ic_apps_white_24px.svg"></md-icon>
+              <md-tooltip>Dashboard</md-tooltip>
             </md-button>
             <label ng-if="teams.length==1">{{teams[0].title}}</label>
             <md-input-container ng-if="teams.length > 1" md-no-float class="md-input-has-value" style="margin-top:20px">

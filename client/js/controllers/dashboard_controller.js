@@ -23,32 +23,32 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
     });
 
     $scope.adding = false;
-    //$scope.loading = true;
+    $scope.loading = true;
 
     // Load tasks for current project
 
-    // Projects.query(function(projects) {
-    //   $log.log("Loading projects", projects);
-    //   $scope.projects = projects;
+    Projects.query({teamId:$rootScope.currentUser.currentTeam}, function(projects) {
+      $log.log("Loading projects", projects);
+      $scope.projects = projects;
 
-    //   // Task accumulator
-    //   $scope.tasks = [];
+      // Task accumulator
+      $scope.tasks = [];
 
-    //   _.each($scope.projects, function(project) {
-    //     if (project.tasks && project.tasks.length > 0) {
-    //       $log.log(project.tasks)
-    //       $scope.tasks = $scope.tasks.concat(project.tasks);
-    //       project.unfinished = _.reduce(project.tasks, function(memo, task) {
-    //         if (task && task.complete) return memo;
-    //         else return memo + 1;
-    //       }, 0);
-    //     }
-    //   });
+      _.each($scope.projects, function(project) {
+        if (project.tasks && project.tasks.length > 0) {
+          $log.log(project.tasks)
+          $scope.tasks = $scope.tasks.concat(project.tasks);
+          project.unfinished = _.reduce(project.tasks, function(memo, task) {
+            if (task && task.complete) return memo;
+            else return memo + 1;
+          }, 0);
+        }
+      });
 
-    //   $log.log("Loading tasks", $scope.tasks);
+      $log.log("Loading tasks", $scope.tasks);
 
-    //   $scope.loading = false;
-    // });
+      $scope.loading = false;
+    });
   }
 
   $scope.newProject = function() {

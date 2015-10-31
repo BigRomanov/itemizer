@@ -7,14 +7,6 @@ var mongoose = require('mongoose'),
 var TeamSchema = new Schema({
   title: String, 
   default: Boolean,
-  projects: [{
-    title: String, 
-    created: Date,
-    creator: {
-      type: Schema.ObjectId,
-      ref: 'User'
-    }
-  }],
   members: [{ 
     type: Schema.ObjectId,
     ref: 'User'

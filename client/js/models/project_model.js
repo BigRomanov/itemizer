@@ -1,7 +1,7 @@
 'use strict';
 
 app.factory('Projects', function($resource) {
-  return $resource('api/projects/:projectId', {
+  return $resource('api/teams/:teamId/projects/:projectId', {
     projectId: '@_id'
   }, {
     query: {
