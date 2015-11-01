@@ -1,4 +1,4 @@
-app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Project, $log, $mdDialog, $location) {
+app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Project, Task, ProjectTask, $log, $mdDialog, $location) {
   $scope.init = function() {
     $scope.adding = false;
     $scope.editingTitle = false;
@@ -10,7 +10,16 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
     Project.get({projectId:$routeParams.id}, function(project) {
       $log.log("Loaded project", project);
       $scope.project = project;
+
       $scope.loading = false;
+
+      // Load all tasks for this project
+      // ProjectTask.query({projectId:$routeParams.id}, function(tasks)) {
+      //   $log.log("Loaded tasks", tasks);
+      //   $scope.tasks = tasks;        
+
+      //   $scope.loading = false;
+      // });
     });
   }
 
@@ -28,6 +37,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
     $log.log("Search for:", term);
   }
 
+  // Project management
   $scope.editTitle = function(item) {
     item.prevTitle = item.title;
   }
@@ -63,6 +73,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
     });
   };
 
+  // Task management
   $scope.complete = function(task, complete) {
     task.complete = complete;
     if (task.complete) {
@@ -100,21 +111,15 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
   }
 
   $scope.newTask = function() {
-    _.each($scope.project.tasks, function(task) {
-      task.edit = false;
-    });
-    var newTask = {edit:true}
-    $scope.project.tasks.push(newTask);
+    $scope.currentTask = new Task();
     $scope.editing = true;
   }
 
-
-
-
   $scope.addTask = function() {
-
-    $scope.project.tasks.push($scope.task);
-    $scope.project.$update();
+    $scope.currentTask.$save(function(task) {
+      $scope.project.tasks.push(task);  
+      $scope.project.$update();
+    })
   }
 
   $scope.deleteTask = function(task) {

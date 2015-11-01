@@ -27,7 +27,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
 
     // Load tasks for current project
 
-    TeamProject.query({teamId:$rootScope.currentUser.currentTeam}, function(projects) {
+    Project.query({teamId: $rootScope.currentUser.currentTeam}, function(projects) {
       $log.log("Loading projects", projects);
       $scope.projects = projects;
 
@@ -51,6 +51,11 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
     });
   }
 
+  $scope.editProject = function(project) {
+    $scope.project = project;
+    $scope.editing = true;
+  }
+
   $scope.newProject = function() {
     $scope.project = {
       title: ""
@@ -59,10 +64,16 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
   }
 
   $scope.cancelNewProject = function() {
-    $scope.project = {
-      title: ""
-    };
+    $scope.project = null;
     $scope.adding = false;
+    $scope.editing = false;
+  }
+
+  $scope.updateProject = function() {
+    console.log($scope.project);
+    $scope.project.$update(function(project) {
+      $scope.editing = false;
+    });
   }
 
   $scope.addProject = function() {
@@ -78,14 +89,6 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
       console.log("Error", err);
     });
 
-    // $http.post('/api/projects', $scope.project, {}).then(function(response) {
-    //   $log.log("Project created", response);
-    //   $scope.projects.unshift(response.data);
-
-    // }, function(response) {
-    //   // TODO: Add proper error reporting
-    //   $log.log("Project save failed", response);
-    // });
   }
 
   $scope.edit = function(project) {

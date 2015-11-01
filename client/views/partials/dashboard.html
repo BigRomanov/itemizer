@@ -3,7 +3,7 @@
     <md-tabs md-dynamic-height md-border-bottom style="width:100%" md-selected="selectedView">
       <md-tab label="projects">
         <md-content layout="column" class="md-padding" style="min-height:300px">
-          <div layout="row" style="width:100%" layout-align="end end">
+          <div layout="row" style="width:100%" layout-align="end end" ng-show="!adding && !editing">
             <md-button class="md-raised md-primary" aria-label="Add project" ng-click="newProject()">
               Add project
             </md-button>
@@ -15,21 +15,28 @@
             </md-card-content>
           </md-card>
           <!-- Editor -->
-          <div ng-show="adding" layout="column">
+          <div ng-show="adding || editing" layout="column">
             <div layout="row" style="margin-top:20px">
               <md-input-container class="md-icon-float" style="width:90%">
                 <label>Project title</label>
                 <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
-                <input ng-model="project.title" type="text" focus-on="adding" on-enter="addProject()">
+                <input ng-model="project.title" type="text" focus-on="adding || editing" on-esc="adding=false;editing=false">
               </md-input-container>
               <md-button class="md-primary" ng-click="cancelNewProject()" aria-label="Cancel">
                 <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
               </md-button>
             </div>
-            <md-button class="md-primary" ng-click="addProject()">Create project</md-button>
+            <div style="padding:0px 24px" ng-show="adding" >
+              <md-button class="md-primary"  ng-click="addProject()">Create project</md-button>
+            </div>
+            <div layout="row" style="padding:0px 24px" ng-show="editing">
+              <md-button class="md-primary"  ng-click="updateProject()">Update project</md-button>
+              <p flex></p>
+              <md-button class="md-warn"     ng-click="deleteProject()">Delete</md-button>
+            </div>
           </div>
           <!-- Project   list -->
-          <div ng-show="!loading && !adding && projects && projects.length">
+          <div ng-show="!loading && !adding && !editing && projects && projects.length">
             <md-list ui-sortable="sortableOptions" ng-model="projects">
               <md-list-item ng-repeat="project in projects">
                 <md-whiteframe class="md-whiteframe-z1" flex="100" layout="column" layout-align="start center" style="width:100%;margin-bottom:20px">
@@ -37,6 +44,10 @@
                     <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
                     <p style="margin-right:24px;font-weight:bold" ng-bind="project.title"></p>
                     <p flex></p>
+                    <md-button ng-show="$root.currentUser._id == project.creator._id && !editing" class="md-icon-button" aria-label="Edit project title" ng-click="editProject(project)" layout-align="end center">
+                      <md-icon md-svg-src="img/ic_edit_black_18px.svg" class="name"></md-icon>
+                      <md-tooltip>Edit project</md-tooltip>
+                    </md-button>
                     <md-button class="md-icon-button md-primary" ng-href="#/project/{{project._id}}">
                       <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="View project" class="md-secondary md-hue-3"></md-icon>
                       <md-tooltip>Project details</md-tooltip>

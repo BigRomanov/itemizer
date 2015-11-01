@@ -10,6 +10,10 @@ var ProjectSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Team'
   },
+  tasks: [{
+    type: Schema.ObjectId,
+    ref: 'Task'
+  }],
   // tasks: [{  
   //   title: String,
   //   description: String,
@@ -53,7 +57,7 @@ ProjectSchema.statics = {
   load: function(id, cb) {
     this.findOne({
       _id: id
-    }).populate('creator', 'username').exec(cb);
+    }).populate('creator team tasks').exec(cb);
   }
 };
 

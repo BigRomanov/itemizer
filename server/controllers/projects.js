@@ -27,18 +27,12 @@ exports.create = function(req, res) {
 };
 
 exports.update = function(req, res) {
-  
-  Project.findById(req.params.projectId, function(err, project) {
+  Project.findById(req.params.projectId).populate('creator team tasks').exec(function(err, project) {
     if (err) {
       res.status(500).json(err);
     } 
     else {
-      // Copy all fields
       project = _.extend(project, req.body);
-      console.log(req.body);
-      console.log(project.tasks[0]);
-      // project.title = req.body.title;
-      // project.tasks = req.body.tasks;
       project.save(function(err) {
         if (err) {
           res.status(500).json(err);
@@ -63,7 +57,7 @@ exports.destroy = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  Project.findById(req.params.projectId).populate('creator').exec( function(err, project) {
+  Project.findById(req.params.projectId).populate('creator team tasks').exec( function(err, project) {
     if (err) {
       res.status(500).json(err);
     } else {
@@ -73,7 +67,7 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  Project.find(req.params.teamId).sort('-created').populate('creator').exec(function(err, projects) {
+  Project.find(req.params.teamId).sort('-created').populate('creator team tasks').exec(function(err, projects) {
     if (err) {
       res.status(500).json(err);
     } else {

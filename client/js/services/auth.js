@@ -9,8 +9,6 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Team, $c
     $rootScope.team = _.find($rootScope.teams, function(team) {
       return team._id == $rootScope.currentUser.currentTeam;
     });
-
-    console.log("aaaaaaaaaaaa Current team:", $rootScope.team);
   });
 
   return {

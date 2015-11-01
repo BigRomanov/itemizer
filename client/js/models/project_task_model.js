@@ -15,8 +15,8 @@ app.factory('ProjectTask', function($resource) {
       method: 'GET',
       transformResponse: function(data, headers) {
         console.log("transforming", data);
-        var project = angular.fromJson(data);
-        _.each(project.tasks, function(task) {
+        var tasks = angular.fromJson(data);
+        _.each(tasks, function(task) {
           if (task.due_date) {
             task.due_date = new Date(task.due_date);
           }
@@ -34,8 +34,8 @@ app.factory('ProjectTask', function($resource) {
   });
 });
 
-function fixProjectDates(project) {
-  _.each(project.tasks, function(task) {
+function fixProjectDates(tasks) {
+  _.each(tasks, function(task) {
     if (task.due_date && typeof task.due_date == 'string')
       task.due_date = new Date(task.due_date);
   });
