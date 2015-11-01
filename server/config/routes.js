@@ -47,7 +47,7 @@ module.exports = function(app) {
   app.delete('/api/projects/:projectId', auth.ensureAuthenticated, auth.project.hasAuthorization, projects.destroy);
 
   var tasks = require('../controllers/tasks');
-  app.get('/api/projects/:projectId/tasks', tasks.all);
+  app.get('/api/tasks', tasks.all);
   app.post('/api/tasks', auth.ensureAuthenticated, tasks.create);
   app.get('/api/tasks/:taskId', tasks.show);
   app.put('/api/tasks/:taskId', auth.ensureAuthenticated, auth.task.hasAuthorization, tasks.update);

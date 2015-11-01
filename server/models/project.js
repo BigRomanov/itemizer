@@ -9,28 +9,7 @@ var ProjectSchema = new Schema({
   team: {
     type: Schema.ObjectId,
     ref: 'Team'
-  },
-  tasks: [{
-    type: Schema.ObjectId,
-    ref: 'Task'
-  }],
-  // tasks: [{  
-  //   title: String,
-  //   description: String,
-  //   complete: Boolean,
-  //   due_date: Date,
-  //   assignee: {
-  //     type: Schema.ObjectId,
-  //     ref: 'User'
-  //   },
-  //   assigned_to:String,
-
-  //   completed_date: Date,
-  //   completed_by: {
-  //     type: Schema.ObjectId,
-  //     ref: 'User'
-  //   }
-  // }],
+  },  
   slug: {
     type: String,
     lowercase: true,

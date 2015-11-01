@@ -27,7 +27,7 @@ exports.create = function(req, res) {
 };
 
 exports.update = function(req, res) {
-  Project.findById(req.params.projectId).populate('creator team tasks').exec(function(err, project) {
+  Project.findById(req.params.projectId).populate('creator team').exec(function(err, project) {
     if (err) {
       res.status(500).json(err);
     } 
@@ -57,7 +57,7 @@ exports.destroy = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  Project.findById(req.params.projectId).populate('creator team tasks').exec( function(err, project) {
+  Project.findById(req.params.projectId).populate('creator team').exec( function(err, project) {
     if (err) {
       res.status(500).json(err);
     } else {
@@ -67,7 +67,7 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  Project.find(req.params.teamId).sort('-created').populate('creator team tasks').exec(function(err, projects) {
+  Project.find(req.params.teamId).sort('-created').populate('creator team').exec(function(err, projects) {
     if (err) {
       res.status(500).json(err);
     } else {

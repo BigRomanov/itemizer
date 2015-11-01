@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Project, Team, TeamProject, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
 
     console.log("VIEW: ", $routeParams);
@@ -90,6 +90,24 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
     });
 
   }
+
+  $scope.deleteProject = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to delete this project?')
+          .content($scope.project.title)
+          .ariaLabel('Delete confirmation')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      $scope.project.$delete();
+      console.log("Go to dashboard");
+      $location.path("#/dashboard");
+    }, function() {
+      // nothing to do
+    });
+  };
 
   $scope.edit = function(project) {
     $location.path('/project/' + project._id);
