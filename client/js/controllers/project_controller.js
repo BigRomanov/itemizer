@@ -1,4 +1,4 @@
-app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Project, Task,$log, $mdDialog, $location) {
+app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Itemizer, Project, Task, $log, $mdDialog, $location) {
   $scope.init = function() {
     $scope.editing = false;
     
@@ -10,7 +10,12 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Projec
     Project.get({projectId:$routeParams.id}, function(project) {
       $log.log("Loaded project", project);
       $scope.project = project;
-      $scope.loading = false;
+
+      // Load tasks
+      Task.query({projectId:$routeParams.id}, function(tasks) {
+        $log.log("Loaded tasks");
+        $scope.loading = false;
+      });
     });
   }
 

@@ -160,7 +160,7 @@
             <md-button class="md-primary" ng-click="addTeam()">Add team</md-button>
           </div>
           <md-list ng-cloak>
-            <md-list-item ng-repeat="team in $root.teams">
+            <md-list-item ng-repeat="team in teams">
               <md-whiteframe class="md-whiteframe-z1" style="margin:5px;width:100%;padding:20px" layout="row" layout-align="start start">
                 <p> {{ team.title }} </p>
                 <p flex></p>

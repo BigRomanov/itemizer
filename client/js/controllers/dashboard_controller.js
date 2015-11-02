@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemizer, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
 
     console.log("VIEW: ", $routeParams);
@@ -15,39 +15,21 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
       $scope.selectedView = 0;
     }
 
-    $scope.projects = [];
+    $scope.adding = false;
+    $scope.loading = true;
+
     $rootScope.$watch('team', function(newVal, oldVal) {
       console.log("Team change detected", newVal, oldVal);
       if (newVal)
         $scope.projects = newVal.projects;
     });
 
-    $scope.adding = false;
-    $scope.loading = true;
-
-    // Load tasks for current project
-
-    Project.query({teamId: $rootScope.currentUser.currentTeam}, function(projects) {
-      $log.log("Loading projects", projects);
-      $scope.projects = projects;
-
-      // Task accumulator
-      $scope.tasks = [];
-
-      _.each($scope.projects, function(project) {
-        if (project.tasks && project.tasks.length > 0) {
-          $log.log(project.tasks)
-          $scope.tasks = $scope.tasks.concat(project.tasks);
-          project.unfinished = _.reduce(project.tasks, function(memo, task) {
-            if (task && task.complete) return memo;
-            else return memo + 1;
-          }, 0);
-        }
-      });
-
-      $log.log("Loading tasks", $scope.tasks);
-
-      $scope.loading = false;
+    Itemizer.getTeams(function(teams) {
+      $scope.teams = teams;
+      Itemizer.getProjects(Itemizer.currentTeamId, function(projects) {
+        $scope.projects = projects;
+        $scope.loading = false;
+      })
     });
   }
 
@@ -94,12 +76,12 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Proje
   $scope.deleteProject = function(ev) {
     // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
-          .title('Are you sure you want to delete this project?')
-          .content($scope.project.title)
-          .ariaLabel('Delete confirmation')
-          .targetEvent(ev)
-          .ok('Yes')
-          .cancel('No');
+      .title('Are you sure you want to delete this project?')
+      .content($scope.project.title)
+      .ariaLabel('Delete confirmation')
+      .targetEvent(ev)
+      .ok('Yes')
+      .cancel('No');
     $mdDialog.show(confirm).then(function() {
       $scope.project.$delete();
       console.log("Go to dashboard");

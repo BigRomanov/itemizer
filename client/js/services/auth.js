@@ -1,15 +1,21 @@
 'use strict';
 
 
-app.factory('Auth', function Auth($location, $rootScope, Session, User, Team, $cookieStore) {
+app.factory('Auth', function Auth($location, $rootScope, Session, User, Itemizer, Team, $cookieStore) {
   $rootScope.currentUser = $cookieStore.get('user') || null;
   $cookieStore.remove('user');
-  Team.query(function(teams) {
-    $rootScope.teams = teams;
-    $rootScope.team = _.find($rootScope.teams, function(team) {
-      return team._id == $rootScope.currentUser.currentTeam;
-    });
+
+  console.log("Initialize itemizer model");
+  Itemizer.setUser($rootScope.createUser);
+  Itemizer.getTeams(function(teams) {
+
   });
+  // Team.query(function(teams) {
+  //   $rootScope.teams = teams;
+  //   $rootScope.team = _.find($rootScope.teams, function(team) {
+  //     return team._id == $rootScope.currentUser.currentTeam;
+  //   });
+  // });
 
   return {
 
@@ -22,14 +28,20 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Team, $c
         rememberMe: user.rememberMe
       }, function(user) {
         $rootScope.currentUser = user;
-        // Load teams for that user
-        Team.query(function(teams) {
-          $rootScope.teams = teams;
-          $rootScope.team = _.find($rootScope.teams, function(team) {
-            return team._id == $rootScope.currentUser.currentTeam;
-          });
+
+        console.log("Initialize itemizer model");
+        Itemizer.initialize($rootScope.currentUser, function() {
+          return cb();  
         });
-        return cb();
+        
+        // // Load teams for that user
+        // Team.query(function(teams) {
+        //   $rootScope.teams = teams;
+        //   $rootScope.team = _.find($rootScope.teams, function(team) {
+        //     return team._id == $rootScope.currentUser.currentTeam;
+        //   });
+        // });
+        //return cb();
       }, function(err) {
         return cb(err.data);
       });
