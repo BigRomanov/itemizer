@@ -4,13 +4,13 @@ app.factory('Project', function($resource) {
   return $resource('api/projects/:projectId', { 
     projectId: '@_id'
   }, {
-    query: {
-      method: 'GET',
-      interceptor: {
-        response: parseResponseDates
-      },
-      isArray: true
-    },
+    // query: {
+    //   method: 'GET',
+    //   interceptor: {
+    //     response: parseResponseDates
+    //   },
+    //   isArray: true
+    // },
     get: {
       method: 'GET',
       transformResponse: function(data, headers) {
