@@ -8,8 +8,9 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Itemizer
   console.log("Initialize itemizer model");
   Itemizer.setUser($rootScope.createUser);
   Itemizer.getTeams(function(teams) {
-
+    $rootScope.teams = teams;
   });
+  
   // Team.query(function(teams) {
   //   $rootScope.teams = teams;
   //   $rootScope.team = _.find($rootScope.teams, function(team) {

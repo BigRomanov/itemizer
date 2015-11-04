@@ -181,7 +181,9 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemi
       teamId: team._id,
       teamTitle: team.title
     }).then(function(response) {
+      // TODO: Remove rootScope references
       $rootScope.currentUser.currentTeam = team._id;
+      Itemizer.currentTeamId = team._id;
       $rootScope.team = team;
     }, function(response) {
       // TODO: Add proper error reporting
