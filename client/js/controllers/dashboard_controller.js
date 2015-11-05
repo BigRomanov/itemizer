@@ -174,18 +174,12 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemi
   };
 
   // Team view
-  $scope.setCurrent = function(team) {
+  $scope.setCurrentTeam = function(team) {
+    $rootScope.currentUser.currentTeam = teamId;
+    Itemizer.setCurrentTeam(function(err, team) {
 
-    $http.post('/user/team', {
-      userId: $rootScope.currentUser._id,
-      teamId: team._id,
-      teamTitle: team.title
-    }).then(function(response) {
-      $rootScope.currentUser.currentTeam = team._id;
-      $rootScope.team = team;
-    }, function(response) {
-      // TODO: Add proper error reporting
-      $log.log("Unable to set team as current", response);
+      $log.log("Current team updated", team, "Error:", err);
+      $scope.team = team
     });
   }
 
@@ -217,7 +211,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemi
     var newTeamResource = new Team($scope.newTeam);
     newTeamResource.$save(function(team, headers) {
       console.log("Added team", team);
-      $rootScope.teams.unshift(team);
+      Itemizer.teams.unshift(team);
     });
   }
 

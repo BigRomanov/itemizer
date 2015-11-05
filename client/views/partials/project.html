@@ -39,7 +39,7 @@
     </div>
 
     <!-- No tasks card -->
-    <md-card ng-show="!loading && !adding && !editing && (!project.tasks || !project.tasks.length)" style="margin-top:50px;width:100%">
+    <md-card ng-show="!loading && !adding && !editing && (!tasks || !tasks.length)" style="margin-top:50px;width:100%">
       <md-card-content layout="row">
         <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No tasks. Click 'Add' to create one</p>
       </md-card-content>
@@ -90,9 +90,9 @@
 
 
     <!-- Task   list -->
-    <div ng-show="!editing && !adding && !loading && project.tasks && project.tasks.length" style="width:100%">
-      <md-list ui-sortable="sortableOptions" ng-model="project.tasks">
-        <md-list-item ng-repeat="task in project.tasks" layout="column" ng-show="show_completed || !task.complete">
+    <div ng-show="!editing && !adding && !loading && tasks && tasks.length" style="width:100%">
+      <md-list ui-sortable="sortableOptions" ng-model="tasks">
+        <md-list-item ng-repeat="task in tasks" layout="column" ng-show="show_completed || !task.complete">
           <!-- Task summary -->
           <div style="width:100%" layout="row" layout-align="start center">
             <md-icon class="itemHandle" layout-align="start center" md-svg-src="img/vert.svg" class="s24" style="margin-right:20px" aria-label="Move"></md-icon>

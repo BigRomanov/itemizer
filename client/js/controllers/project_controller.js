@@ -6,17 +6,26 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Itemiz
     $scope.show_completed = false;
 
     $scope.search = {}
-    
-    Project.get({projectId:$routeParams.id}, function(project) {
-      $log.log("Loaded project", project);
-      $scope.project = project;
 
-      // Load tasks
-      Task.query({projectId:$routeParams.id}, function(tasks) {
-        $log.log("Loaded tasks");
-        $scope.loading = false;
-      });
+    Itemizer.getProject($routeParams.id, function(project) {
+      $scope.project = project;
     });
+
+    Itemizer.getTasks($routeParams.id, function(tasks) {
+      $scope.tasks = tasks;
+      $scope.loading = false;
+    });
+    
+    // Project.get({projectId:$routeParams.id}, function(project) {
+    //   $log.log("Loaded project", project);
+    //   $scope.project = project;
+
+    //   // Load tasks
+    //   Task.query({projectId:$routeParams.id}, function(tasks) {
+    //     $log.log("Loaded tasks");
+    //     $scope.loading = false;
+    //   });
+    // });
   }
 
   $scope.sortableOptions = {
@@ -48,24 +57,17 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Itemiz
   }
 
   $scope.editTask = function(_task) {
-    _.each($scope.project.tasks, function(task) {
-      task.edit = false;
-    });
-
-    _task.edit = true;
+    $scope.editingTask = _task;
     $scope.editing = true;
   }
 
   $scope.cancelEditTask = function(task) {
-    if (!task.title && !task.description) {
-      $scope.deleteTask(task);
-    }
+    
     task.edit = false;
     $scope.editing = false; 
   }
 
   $scope.saveTask = function() {
-    console.log("aaaaaaaa", $scope.task);
     $scope.task.$update(function(task) {
       console.log("Task updated", task);
       $scope.editing = false;
@@ -78,10 +80,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, Itemiz
   }
 
   $scope.addTask = function() {
-    $scope.currentTask.$save(function(task) {
-      $scope.project.tasks.push(task);  
-      $scope.project.$update();
-    })
+    Itemizer.addTask($scope.task);
   }
 
   $scope.deleteTask = function(task) {

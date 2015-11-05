@@ -1,16 +1,20 @@
 'use strict';
 
-app.service('Itemizer', ['Team', 'Project', 'Task', '$log', function(Team, Project, Task, $log) {
+app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Team, Project, Task, $log, $http) {
   
   this.user = null;
 	this.teams = null;
 	this.projects = {};
+  this.tasks = {};
+
+  this.teamMap = {};
+  this.projectMap = {};
+  this.taskMap = {};
 
 	this.setUser = function(user) {
-    console.log("Setting user", user);
+    console.log("Itemizer::Setting user", user);
     if (user) {
       this.user = user;
-      this.currentTeamId = user.currentTeam;  
     }
 	}
 	
@@ -28,13 +32,12 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', function(Team, Proje
 	  	Team.query(function(teams) {
         $log.log("Itemizer::getTeams", teams);
 	      self.teams = teams;
-	      self.currentTeamId = self.user.currentTeam;
-
-	      console.log("Loaded teams:", teams);
 
 	      self.teamMap = _.object(_.map(teams, function(item) {
 	   			return [item._id, item]
 				}));
+
+        self.currentTeam = self.teamMap[self.user.currentTeam];
 
         if (callback)
 				  callback(self.teams);
@@ -46,18 +49,31 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', function(Team, Proje
     $log.log("Itemizer::getCurrentTeam");
     var self = this;
     if (self.teams) {
-      var team = self.teamMap[self.currentTeamId];
-      $log.log("Itemizer::getCurrentTeam - cache", team);
-      callback(team);
+      callback(self.currentTeam);
     }
     else {
       $log.log("Itemizer::getCurrentTeam 2");
       self.getTeams(function(teams) {
-        var team = self.teamMap[self.currentTeamId];
-        $log.log("Itemizer::getCurrentTeam - live", team);
-        callback(team);
+        $log.log("Itemizer::getCurrentTeam - live", self.currentTeam);
+        callback(self.currentTeam);
       })
     }
+  }
+
+  this.setCurrentTeam = function(teamId, callback) {
+    var self = this;
+    self.user.currentTeam = teamId;
+    $http.post('/user/team', {
+      userId: self.user._id,
+      teamId: teamId,
+    }).then(function(response) {
+      self.currentTeam = self.teamMap[self.user.currentTeam];
+      if (callback)
+        callback(null, self.currentTeam);
+    }, function(response) {
+      $log.warn("Unable to set team as current", response);
+      callback("Unable to set team as current", null);
+    });
   }
 
   this.getProjects = function(teamId, callback) {
@@ -68,8 +84,77 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', function(Team, Proje
   		Project.query({ teamId: teamId }, function(projects) {
           $log.log("Loading projects", projects);
           self.projects[teamId] = projects;
+
+          self.projectMap = _.object(_.map(projects, function(item) {
+            return [item._id, item]
+          }));
+
           callback(projects);
         });
   	}
   };
+
+  this.getProject = function(projectId, callback) {
+    var self = this;
+    if (projectId in self.projectMap) {
+      callback(self.projectMap[projectId]);
+    }
+    else {
+       Project.get({projectId:projectId}, function(project) {
+        $log.log("Loaded project", project);
+        self.projectMap[projectId] = project;
+        callback(project);
+    });
+    }
+  }
+
+  this.getTasks = function(projectId, callback) {
+    var self = this;
+    if (projectId in self.tasks) {
+      $log.log("Itemizer::getTasks - cache", self.tasks);
+      if (callback) {
+        callback(self.tasks[projectId]);
+      }
+    }
+    else {
+      Task.query({ projectId: projectId }, function(tasks) {
+        $log.log("Itemizer::getTasks - live", tasks);
+        self.tasks[projectId] = tasks;
+
+        self.taskMap = _.object(_.map(tasks, function(item) {
+          return [item._id, item]
+        }));
+
+        if (callback) {
+          callback(tasks);  
+        }
+      });
+    }
+  };
+
+  this.getTask = function(taskId, callback) {
+    var self = this;
+    if (taskId in self.taskMap) {
+      callback(self.taskMap[taskId]);
+    }
+    else {
+      Task.get({taskId:taskId}, function(task) {
+        $log.log("Loaded task", task);
+        self.taskMap[taskId] = task;
+        callback(task);
+      });
+    }
+  }
+
+  this.addTask = function(task, callback) {
+    var self = this;
+    task.$save(function(_task) {
+      $log.log("Created new task", _task);
+      self.taskMap[_task._id] = task;
+      self.tasks[_task.project._id].upshift(_task);
+      if (callback) {
+        callback(_task);
+      }
+    })
+  }
 }]);

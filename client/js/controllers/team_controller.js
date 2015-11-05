@@ -1,19 +1,20 @@
-app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Team, $log, $http, $mdDialog, $location) {
+app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Itemizer, Team, $log, $http, $mdDialog, $location) {
   $scope.init = function() {
     $scope.loading = true;
     $scope.inviting = false;
     $scope.invites = "";
     $scope.search = {};
 
-    console.log("Teams", $rootScope.teams);
-    $scope.team = _.find($rootScope.teams, function(team) {
-      console.log(team);
-      return team._id == $routeParams.id;
-      
-    });
-
+    $scope.team = Itemizer.teamMap[$routeParams.id];
     $scope.loading = false;
-    console.log($scope.team);
+      
+    // console.log("Teams", $rootScope.teams);
+    // $scope.team = _.find($rootScope.teams, function(team) {
+    //   console.log(team);
+    //   return team._id == $routeParams.id;
+      
+    // });
+
   }
 
   $scope.sendInvites = function() {

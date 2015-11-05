@@ -1,6 +1,7 @@
 app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Itemizer, Auth, Team, $log, $http) {
   $scope.init = function() {
-    $log.log("Initializing ToolbarCtrl");
+    $log.log("Initializing ToolbarCtrl", Itemizer.currentTeam);
+    
     Itemizer.getCurrentTeam(function(team) {
       $log.log("Initializing ToolbarCtrl 2", team);
       $scope.team = team;

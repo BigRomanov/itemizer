@@ -25,6 +25,12 @@ var TaskSchema = new Schema({
     completed_by: {
       type: Schema.ObjectId,
       ref: 'User'
+    },
+    created: Date,
+    updated: [Date],
+    creator: {
+      type: Schema.ObjectId,
+      ref: 'User'
     }
 });
 
