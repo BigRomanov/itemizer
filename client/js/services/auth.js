@@ -6,10 +6,10 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Itemizer
   $cookieStore.remove('user');
 
   console.log("Initialize itemizer model");
-  Itemizer.setUser($rootScope.createUser);
-  Itemizer.getTeams(function(teams) {
+  Itemizer.setUser($rootScope.currentUser);
+  Itemizer.getTeams(); // preload list of teams
 
-  });
+  // });
   // Team.query(function(teams) {
   //   $rootScope.teams = teams;
   //   $rootScope.team = _.find($rootScope.teams, function(team) {
@@ -30,9 +30,13 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Itemizer
         $rootScope.currentUser = user;
 
         console.log("Initialize itemizer model");
-        Itemizer.initialize($rootScope.currentUser, function() {
-          return cb();  
-        });
+        Itemizer.setUser($rootScope.currentUser);
+        Itemizer.getTeams();
+        return cb();  
+        // Itemizer.getTeams(function(teams) {
+        //   $rootScope.teams = teams;
+          
+        // });
         
         // // Load teams for that user
         // Team.query(function(teams) {

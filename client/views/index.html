@@ -70,14 +70,7 @@
               <md-icon md-svg-src="img/ic_apps_white_24px.svg"></md-icon>
               <md-tooltip>Dashboard</md-tooltip>
             </md-button>
-            <label >{{$root.team.title}}</label>
-            <!-- <md-input-container ng-if="teams.length > 1" md-no-float class="md-input-has-value" style="margin-top:20px">
-              <md-select placeholder="Select team" ng-model="$root.currentUser.currentTeam" style="color:white" ng-change="ctrl.updateTeam()">
-                <md-option ng-repeat="team in teams" value="{{team._id}}">
-                  {{team.title}}
-                </md-option>
-              </md-select>
-            </md-input-container> -->
+            <label >{{team.title}}</label>
           </div>
           <md-button ng-show="!currentUser && !ctrl.inLogin()" class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">LOGIN</md-button>
           <md-menu ng-show="currentUser">

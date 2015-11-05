@@ -1,9 +1,16 @@
-app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Auth, Team, $log, $http) {
-  $scope.init = function() {}
+app.controller('ToolbarCtrl', function($scope, $rootScope, $location, Itemizer, Auth, Team, $log, $http) {
+  $scope.init = function() {
+    $log.log("Initializing ToolbarCtrl");
+    Itemizer.getCurrentTeam(function(team) {
+      $log.log("Initializing ToolbarCtrl 2", team);
+      $scope.team = team;
+    });
+  }
 
   $scope.init();
 
   $rootScope.$watch('currentUser', function() {
+    $log.log("Current team changed");
     $scope.init();
   });
 
