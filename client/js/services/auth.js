@@ -6,10 +6,18 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Itemizer
   $cookieStore.remove('user');
 
   console.log("Initialize itemizer model");
+<<<<<<< HEAD
   Itemizer.setUser($rootScope.currentUser);
   Itemizer.getTeams(); // preload list of teams
 
   // });
+=======
+  Itemizer.setUser($rootScope.createUser);
+  Itemizer.getTeams(function(teams) {
+    $rootScope.teams = teams;
+  });
+  
+>>>>>>> origin/master
   // Team.query(function(teams) {
   //   $rootScope.teams = teams;
   //   $rootScope.team = _.find($rootScope.teams, function(team) {
