@@ -174,29 +174,12 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemi
   };
 
   // Team view
-<<<<<<< HEAD
+
   $scope.setCurrentTeam = function(team) {
     $rootScope.currentUser.currentTeam = teamId;
     Itemizer.setCurrentTeam(function(err, team) {
-
       $log.log("Current team updated", team, "Error:", err);
       $scope.team = team
-=======
-  $scope.setCurrent = function(team) {
-
-    $http.post('/user/team', {
-      userId: $rootScope.currentUser._id,
-      teamId: team._id,
-      teamTitle: team.title
-    }).then(function(response) {
-      // TODO: Remove rootScope references
-      $rootScope.currentUser.currentTeam = team._id;
-      Itemizer.currentTeamId = team._id;
-      $rootScope.team = team;
-    }, function(response) {
-      // TODO: Add proper error reporting
-      $log.log("Unable to set team as current", response);
->>>>>>> origin/master
     });
   }
 

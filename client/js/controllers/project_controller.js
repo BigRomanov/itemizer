@@ -7,32 +7,13 @@ app.controller('ProjectCtrl', function($scope, $rootScope, $routeParams, Itemize
 
     $scope.search = {}
 
-<<<<<<< HEAD
+
     Itemizer.getProject($routeParams.id, function(project) {
       $scope.project = project;
     });
 
     Itemizer.getTasks($routeParams.id, function(tasks) {
       $scope.tasks = tasks;
-=======
-    async.parallel([
-      function(callback) {
-        Project.get({ projectId: $routeParams.id }, function(project) {
-          $log.log("Loaded project", project);
-          $scope.project = project;
-          callback(null, 'projects');
-        });
-      },
-      function(callback) {
-        Task.query({projectId: $routeParams.id }, function(tasks) {
-          $log.log("Loaded tasks", tasks);
-          $scope.tasks = tasks;
-          callback(null, 'tasks');
-        });
-      }
-    ],
-    function(err, results) {
->>>>>>> origin/master
       $scope.loading = false;
     });
     
@@ -102,14 +83,8 @@ app.controller('ProjectCtrl', function($scope, $rootScope, $routeParams, Itemize
   }
 
   $scope.addTask = function() {
-<<<<<<< HEAD
-    Itemizer.addTask($scope.task);
-=======
-    $scope.task.$save(function(task) {
 
-      $scope.adding = false;
-    })
->>>>>>> origin/master
+    Itemizer.addTask($scope.task);
   }
 
   $scope.deleteTask = function(task) {

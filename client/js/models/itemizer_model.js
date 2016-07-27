@@ -2,21 +2,6 @@
 
 app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Team, Project, Task, $log, $http) {
   
-<<<<<<< HEAD
-  this.user = null;
-	this.teams = null;
-	this.projects = {};
-  this.tasks = {};
-
-  this.teamMap = {};
-  this.projectMap = {};
-  this.taskMap = {};
-
-	this.setUser = function(user) {
-    console.log("Itemizer::Setting user", user);
-    if (user) {
-      this.user = user;
-=======
   this.user     = null;
 	this.teams    = null;
 	this.teamProjects = {}; // map team to project
@@ -27,7 +12,6 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
     if (user) {
       this.user = user;
       this.currentTeamId = user.currentTeam;
->>>>>>> origin/master
     }
 	}
 	
@@ -45,10 +29,7 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
 	  	Team.query(function(teams) {
         $log.log("Itemizer::getTeams", teams);
 	      self.teams = teams;
-<<<<<<< HEAD
-=======
 	      console.log("Loaded teams:", teams);
->>>>>>> origin/master
 
 	      self.teamMap = _.object(_.map(teams, function(item) {
 	   			return [item._id, item]
@@ -100,26 +81,18 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
   	else {
   		Project.query({ teamId: teamId }, function(projects) {
           $log.log("Loading projects", projects);
-<<<<<<< HEAD
-          self.projects[teamId] = projects;
 
-          self.projectMap = _.object(_.map(projects, function(item) {
-            return [item._id, item]
-          }));
-=======
           $scope.teamProjects[teamId] = projects;
 
           _.each(projects, function(project) {
             self.projects[project._id] = project;
           });
->>>>>>> origin/master
 
           callback(projects);
         });
   	}
   };
 
-<<<<<<< HEAD
   this.getProject = function(projectId, callback) {
     var self = this;
     if (projectId in self.projectMap) {
@@ -183,33 +156,4 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
       }
     })
   }
-=======
-  // Load project and it's tasks
-  this.getProject = function(projectId, callback) {
-    var self = this;
-    if (projectId in self.projects)
-      callback(self.projects[projectId]);
-    else {
-      Project.get({projectId:projectId}, function(project) {
-        $log.log("Loaded project", project);
-        self.projects[project._id] = project;
-        callback(project);
-      });
-    }
-  };
-
-  this.getTasks = function(projectId, callback) {
-    var self = this;
-    if (projectId in self.tasks)
-      callback(self.tasks[projectId]);
-    else {
-      Task.query({ projectId: projectId }, function(tasks) {
-          $log.log("Loading tasks", tasks);
-          $scope.tasks[projectId] = tasks;
-          callback(tasks);
-        });
-    }
-  };
-
->>>>>>> origin/master
 }]);
