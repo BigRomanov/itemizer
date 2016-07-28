@@ -1,188 +1,209 @@
-<md-content ng-init="init()" layout="col">
-  <div layout="row" style="width:100%">
-    <md-tabs md-dynamic-height md-border-bottom style="width:100%" md-selected="selectedView">
-      <md-tab label="projects">
-        <md-content layout="column" class="md-padding" style="min-height:300px">
-          <div layout="row" style="width:100%" layout-align="end end" ng-show="!adding && !editing">
-            <md-button class="md-raised md-primary" aria-label="Add project" ng-click="newProject()">
-              Add project
+<md-content layout="row">
+    <md-button class="md-primary md-icon-button" ng-click="openLeftNav()" layout-align="start center" aria-label="Open menu">
+        <md-icon md-svg-src="img/ic_menu_black_18px.svg" class="name"></md-icon>
+    </md-button>
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
+        <md-toolbar class="md-theme-indigo" layout="row">
+        <md-button class="md-primary md-icon-button" ng-click="closeLeftNav()" aria-label="Cancel" layout-align="start center">
+            <md-icon md-svg-src="img/ic_menu_white_24px.svg" class="s48"></md-icon>
+          </md-button>
+          <div flex></div>
+            <md-button class="md-primary md-icon-button" ng-click="closeLeftNav()" aria-label="Cancel" layout-align="end center">
+                <md-icon md-svg-src="img/ic_close_white_24px.svg" class="name"></md-icon>
             </md-button>
-          </div>
-          <!-- No projects card -->
-          <md-card ng-show="!loading && !adding && (!projects || !projects.length)" style="margin-top:50px">
-            <md-card-content layout="row">
-              <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No projects. Click 'Add' to create one</p>
-            </md-card-content>
-          </md-card>
-          <!-- Editor -->
-          <div ng-show="adding || editing" layout="column">
-            <div layout="row" style="margin-top:20px">
-              <md-input-container class="md-icon-float" style="width:90%">
-                <label>Project title</label>
-                <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
-                <input ng-model="project.title" type="text" focus-on="adding || editing" on-esc="adding=false;editing=false">
-              </md-input-container>
-              <md-button class="md-primary" ng-click="cancelNewProject()" aria-label="Cancel">
-                <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
-              </md-button>
-            </div>
-            <div style="padding:0px 24px" ng-show="adding" >
-              <md-button class="md-primary"  ng-click="addProject()">Create project</md-button>
-            </div>
-            <div layout="row" style="padding:0px 24px" ng-show="editing">
-              <md-button class="md-primary"  ng-click="updateProject()">Update project</md-button>
-              <p flex></p>
-              <md-button class="md-warn"     ng-click="deleteProject()">Delete</md-button>
-            </div>
-          </div>
-          <!-- Project   list -->
-          <div ng-show="!loading && !adding && !editing && projects && projects.length">
-            <md-list ui-sortable="sortableOptions" ng-model="projects">
-              <md-list-item ng-repeat="project in projects">
-                <md-whiteframe class="md-whiteframe-z1" flex="100" layout="column" layout-align="start center" style="width:100%;margin-bottom:20px">
-                  <div layout="row" style="width:100%">
-                    <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
-                    <p style="margin-right:24px;font-weight:bold" ng-bind="project.title"></p>
-                    <p flex></p>
-                    <md-button ng-show="$root.currentUser._id == project.creator._id && !editing" class="md-icon-button" aria-label="Edit project title" ng-click="editProject(project)" layout-align="end center">
-                      <md-icon md-svg-src="img/ic_edit_black_18px.svg" class="name"></md-icon>
-                      <md-tooltip>Edit project</md-tooltip>
-                    </md-button>
-                    <md-button class="md-icon-button md-primary" ng-href="#/project/{{project._id}}">
-                      <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="View project" class="md-secondary md-hue-3"></md-icon>
-                      <md-tooltip>Project details</md-tooltip>
-                    </md-button>
-                  </div>
-                  <div layout="row" flex layout-align="start start" style="text-align:left;width:100%;padding:0 10px">
-                    <p flex>
-                      <ng-pluralize count="project.unfinished" when="{'0': 'No open tasks',
+        </md-toolbar>
+        <md-content layout-padding ng-controller="LeftCtrl">
+            <p hide show-gt-md>
+                Menu will be here
+            </p>
+        </md-content>
+    </md-sidenav>
+    <md-content ng-init="init()" layout="col" style="width:100%">
+        <div layout="row" style="width:100%">
+            <md-tabs md-dynamic-height md-border-bottom style="width:100%" md-selected="selectedView">
+                <md-tab label="projects">
+                    <md-content layout="column" class="md-padding" style="min-height:300px">
+                        <div layout="row" style="width:100%" layout-align="end end" ng-show="!adding && !editing">
+                            <md-button class="md-raised md-primary" aria-label="Add project" ng-click="newProject()">
+                                Add project
+                            </md-button>
+                        </div>
+                        <!-- No projects card -->
+                        <md-card ng-show="!loading && !adding && (!projects || !projects.length)" style="margin-top:50px">
+                            <md-card-content layout="row">
+                                <p layout-align="center center" class="md-title" style="width:100%;text-align:center">No projects. Click 'Add' to create one</p>
+                            </md-card-content>
+                        </md-card>
+                        <!-- Editor -->
+                        <div ng-show="adding || editing" layout="column">
+                            <div layout="row" style="margin-top:20px">
+                                <md-input-container class="md-icon-float" style="width:90%">
+                                    <label>Project title</label>
+                                    <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
+                                    <input ng-model="project.title" type="text" focus-on="adding || editing" on-esc="adding=false;editing=false">
+                                </md-input-container>
+                                <md-button class="md-primary" ng-click="cancelNewProject()" aria-label="Cancel">
+                                    <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
+                                </md-button>
+                            </div>
+                            <div style="padding:0px 24px" ng-show="adding">
+                                <md-button class="md-primary" ng-click="addProject()">Create project</md-button>
+                            </div>
+                            <div layout="row" style="padding:0px 24px" ng-show="editing">
+                                <md-button class="md-primary" ng-click="updateProject()">Update project</md-button>
+                                <p flex></p>
+                                <md-button class="md-warn" ng-click="deleteProject()">Delete</md-button>
+                            </div>
+                        </div>
+                        <!-- Project   list -->
+                        <div ng-show="!loading && !adding && !editing && projects && projects.length">
+                            <md-list ui-sortable="sortableOptions" ng-model="projects">
+                                <md-list-item ng-repeat="project in projects">
+                                    <md-whiteframe class="md-whiteframe-z1" flex="100" layout="column" layout-align="start center" style="width:100%;margin-bottom:20px">
+                                        <div layout="row" style="width:100%">
+                                            <md-icon class="itemHandle" md-svg-src="img/vert.svg" class="s24" aria-label="Move"></md-icon>
+                                            <p style="margin-right:24px;font-weight:bold" ng-bind="project.title"></p>
+                                            <p flex></p>
+                                            <md-button ng-show="$root.currentUser._id == project.creator._id && !editing" class="md-icon-button" aria-label="Edit project title" ng-click="editProject(project)" layout-align="end center">
+                                                <md-icon md-svg-src="img/ic_edit_black_18px.svg" class="name"></md-icon>
+                                                <md-tooltip>Edit project</md-tooltip>
+                                            </md-button>
+                                            <md-button class="md-icon-button md-primary" ng-href="#/project/{{project._id}}">
+                                                <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="View project" class="md-secondary md-hue-3"></md-icon>
+                                                <md-tooltip>Project details</md-tooltip>
+                                            </md-button>
+                                        </div>
+                                        <div layout="row" flex layout-align="start start" style="text-align:left;width:100%;padding:0 10px">
+                                            <p flex>
+                                                <ng-pluralize count="project.unfinished" when="{'0': 'No open tasks',
                      'one': '1 open task',
                      'other': '{} open tasks'}">
-                      </ng-pluralize>
-                    </p>
-                    <!-- <p flex>{{project.unfinished}} open tasks</p> -->
-                    <p>Created <span am-time-ago="project.created"></span></p>
-                  </div>
-                </md-whiteframe>
-              </md-list-item>
-            </md-list>
-          </div>
-        </md-content>
-      </md-tab>
-      <!-- Tasks -->
-      <md-tab label="tasks">
-        <md-content class="md-padding" style="min-height:300px">
-          <md-list ui-sortable="sortableOptions" ng-model="project.tasks">
-            <div ng-repeat="project in projects">
-              <md-subheader class="md-no-sticky">{{project.title}}</md-subheader>
-              <md-list-item ng-repeat="task in project.tasks" layout="column" ng-show="show_completed || !task.complete">
-                <!-- Task summary -->
-                <div style="width:100%" layout="row" layout-align="start center">
-                  <md-icon class="itemHandle" layout-align="start center" md-svg-src="img/vert.svg" class="s24" style="margin-right:20px" aria-label="Move"></md-icon>
-                  <md-input-container md-no-float style="padding-bottom:2px;width:78%">
-                    <input required name="taskTitle" ng-model="task.title" ng-class="{complete: task.complete==true}" placeholder="Enter task title" on-enter="update()" on-esc="cancelEditTitle(task)" focus-on="task.edit">
-                  </md-input-container>
-                  <p flex></p>
-                  <md-button class="md-icon-button" ng-click="complete(task,true)" ng-hide="task.complete">
-                    <md-icon md-svg-src="img/ic_check_box_outline_blank_black_24px.svg" aria-label="Mark done" class="md-secondary md-hue-3"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button complete_task" ng-click="complete(task,false)" ng-show="task.complete">
-                    <md-icon md-svg-src="img/ic_check_box_black_24px.svg" aria-label="Undo" class="md-secondary md-hue-3"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button" ng-click="editTask(task)" ng-hide="task.edit==true">
-                    <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button" ng-click="cancelEditTask(task)" ng-show="task.edit==true">
-                    <md-icon md-svg-src="img/ic_close_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
-                  </md-button>
-                </div>
-                <!-- Details editor -->
-                <div ng-show="task.edit==true" layout="column" style="width:90%;padding:5px;border:1px solid #eee">
-                  <div layout="row">
-                    <md-input-container style="width:80%;margin-right:10px">
-                      <label>Description</label>
-                      <textarea ng-model="task.description" columns="1" md-maxlength="150"></textarea>
-                    </md-input-container>
-                    <md-input-container>
-                      <label>Priority</label>
-                      <md-select ng-model="task.priority" md-placeholder="Priority" arial-label="Priority">
-                        <md-option ng-value="0">Super important</md-option>
-                        <md-option ng-value="1">Important</md-option>
-                        <md-option ng-value="2">Should be done</md-option>
-                        <md-option ng-value="3">Optional</md-option>
-                        <md-option ng-value="4">If time permits</md-option>
-                      </md-select>
-                    </md-input-container>
-                  </div>
-                  <div layout="row">
-                    <div style="padding-top:25px">Due:</div>
-                    <md-datepicker ng-model="task.due_date" md-placeholder="Enter due date" style="margin-top:10px"></md-datepicker>
-                  </div>
-                  <div layout="row" layout-align="end center">
-                    <md-button class="md-fab md-mini md-warn" ng-click="showConfirm($event, task)">
-                      <md-icon md-svg-src="img/ic_delete_white_18px.svg" aria-label="Delete task"></md-icon>
-                    </md-button>
-                    <md-button class="md-fab md-mini md-primary" ng-click="saveTask(task)">
-                      <md-icon md-svg-src="img/ic_delete_white_18px.svg" aria-label="Save task" class="md-primary"></md-icon>
-                    </md-button>
-                  </div>
-                </div>
-              </md-list-item>
+                                                </ng-pluralize>
+                                            </p>
+                                            <!-- <p flex>{{project.unfinished}} open tasks</p> -->
+                                            <p>Created <span am-time-ago="project.created"></span></p>
+                                        </div>
+                                    </md-whiteframe>
+                                </md-list-item>
+                            </md-list>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <!-- Tasks -->
+                <md-tab label="tasks">
+                    <md-content class="md-padding" style="min-height:300px">
+                        <md-list ui-sortable="sortableOptions" ng-model="project.tasks">
+                            <div ng-repeat="project in projects">
+                                <md-subheader class="md-no-sticky">{{project.title}}</md-subheader>
+                                <md-list-item ng-repeat="task in project.tasks" layout="column" ng-show="show_completed || !task.complete">
+                                    <!-- Task summary -->
+                                    <div style="width:100%" layout="row" layout-align="start center">
+                                        <md-icon class="itemHandle" layout-align="start center" md-svg-src="img/vert.svg" class="s24" style="margin-right:20px" aria-label="Move"></md-icon>
+                                        <md-input-container md-no-float style="padding-bottom:2px;width:78%">
+                                            <input required name="taskTitle" ng-model="task.title" ng-class="{complete: task.complete==true}" placeholder="Enter task title" on-enter="update()" on-esc="cancelEditTitle(task)" focus-on="task.edit">
+                                        </md-input-container>
+                                        <p flex></p>
+                                        <md-button class="md-icon-button" ng-click="complete(task,true)" ng-hide="task.complete">
+                                            <md-icon md-svg-src="img/ic_check_box_outline_blank_black_24px.svg" aria-label="Mark done" class="md-secondary md-hue-3"></md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button complete_task" ng-click="complete(task,false)" ng-show="task.complete">
+                                            <md-icon md-svg-src="img/ic_check_box_black_24px.svg" aria-label="Undo" class="md-secondary md-hue-3"></md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button" ng-click="editTask(task)" ng-hide="task.edit==true">
+                                            <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button" ng-click="cancelEditTask(task)" ng-show="task.edit==true">
+                                            <md-icon md-svg-src="img/ic_close_black_24px.svg" aria-label="Edit task" class="md-secondary md-hue-3"></md-icon>
+                                        </md-button>
+                                    </div>
+                                    <!-- Details editor -->
+                                    <div ng-show="task.edit==true" layout="column" style="width:90%;padding:5px;border:1px solid #eee">
+                                        <div layout="row">
+                                            <md-input-container style="width:80%;margin-right:10px">
+                                                <label>Description</label>
+                                                <textarea ng-model="task.description" columns="1" md-maxlength="150"></textarea>
+                                            </md-input-container>
+                                            <md-input-container>
+                                                <label>Priority</label>
+                                                <md-select ng-model="task.priority" md-placeholder="Priority" arial-label="Priority">
+                                                    <md-option ng-value="0">Super important</md-option>
+                                                    <md-option ng-value="1">Important</md-option>
+                                                    <md-option ng-value="2">Should be done</md-option>
+                                                    <md-option ng-value="3">Optional</md-option>
+                                                    <md-option ng-value="4">If time permits</md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div layout="row">
+                                            <div style="padding-top:25px">Due:</div>
+                                            <md-datepicker ng-model="task.due_date" md-placeholder="Enter due date" style="margin-top:10px"></md-datepicker>
+                                        </div>
+                                        <div layout="row" layout-align="end center">
+                                            <md-button class="md-fab md-mini md-warn" ng-click="showConfirm($event, task)">
+                                                <md-icon md-svg-src="img/ic_delete_white_18px.svg" aria-label="Delete task"></md-icon>
+                                            </md-button>
+                                            <md-button class="md-fab md-mini md-primary" ng-click="saveTask(task)">
+                                                <md-icon md-svg-src="img/ic_delete_white_18px.svg" aria-label="Save task" class="md-primary"></md-icon>
+                                            </md-button>
+                                        </div>
+                                    </div>
+                                </md-list-item>
+                            </div>
+                        </md-list>
+                    </md-content>
+                </md-tab>
+                <!-- Calendar -->
+                <md-tab label="calendar">
+                    <md-content class="md-padding">
+                        <calendar-md flex layout layout-fill calendar-direction="horizontal" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="0" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
+                        </calendar-md>
+                    </md-content>
+                </md-tab>
+                <!-- Teams -->
+                <md-tab label="teams">
+                    <md-content layout="column" class="md-padding" style="min-height:300px">
+                        <div layout="row" ng-hide="adding">
+                            <p flex></p>
+                            <md-button class="md-raised md-primary" ng-click="createNewTeam()" layout="end center">Add team</md-button>
+                        </div>
+                        <div ng-show="adding" layout="column">
+                            <div layout="row" style="margin-top:20px">
+                                <md-input-container class="md-icon-float" style="width:90%">
+                                    <label>Team title</label>
+                                    <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
+                                    <input ng-model="newTeam.title" type="text" focus-on="adding" on-enter="addTeam()" on-esc="cancelNewTeam()">
+                                </md-input-container>
+                                <md-button class="md-primary" ng-click="cancelNewTeam()" aria-label="Cancel">
+                                    <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
+                                </md-button>
+                            </div>
+                            <md-button class="md-primary" ng-click="addTeam()">Add team</md-button>
+                        </div>
+                        <md-list ng-cloak>
+                            <md-list-item ng-repeat="team in teams">
+                                <md-whiteframe class="md-whiteframe-z1" style="margin:5px;width:100%;padding:20px" layout="row" layout-align="start start">
+                                    <p> {{ team.title }} </p>
+                                    <p flex></p>
+                                    <md-button ng-show="$root.currentUser.currentTeam != team._id" class="md-icon-button" ng-click="setCurrentTeam(team)" layout="end center">
+                                        <md-icon md-svg-src="img/ic_radio_button_unchecked_black_24px.svg" aria-label="Delete team" class="md-secondary md-hue-3"></md-icon>
+                                        <md-tooltip>Select team</md-tooltip>
+                                    </md-button>
+                                    <md-button ng-show="$root.currentUser.currentTeam == team._id" ng-disabled="true" class="md-icon-button" ng-click="setCurrentTeam(team)" layout="end center">
+                                        <md-icon md-svg-src="img/ic_radio_button_checked_black_24px.svg" aria-label="Delete team" class="md-secondary md-hue-3"></md-icon>
+                                        <md-tooltip>Current team</md-tooltip>
+                                    </md-button>
+                                    <md-button class="md-icon-button" ng-href="#/team/{{team._id}}" layout="end center">
+                                        <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="View team" class="md-secondary md-hue-3"></md-icon>
+                                        <md-tooltip>Team details</md-tooltip>
+                                    </md-button>
+                                </md-whiteframe>
+                            </md-list-item>
+                        </md-list>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+            <div ng-show="loading" layout="row" layout-sm="column" layout-align="space-around">
+                <md-progress-linear md-mode="indeterminate"></md-progress-linear>
             </div>
-          </md-list>
-        </md-content>
-      </md-tab>
-      <!-- Calendar -->
-      <md-tab label="calendar">
-        <md-content class="md-padding">
-          <calendar-md flex layout layout-fill calendar-direction="horizontal" on-prev-month="prevMonth" on-next-month="nextMonth" on-day-click="dayClick" title-format="'MMMM y'" ng-model='selectedDate' week-starts-on="0" day-format="dayFormat" day-label-format="'EEE'" day-label-tooltip-format="'EEEE'" day-tooltip-format="'fullDate'" day-content="setDayContent">
-          </calendar-md>
-        </md-content>
-      </md-tab>
-      <!-- Teams -->
-      <md-tab label="teams">
-        <md-content layout="column" class="md-padding" style="min-height:300px">
-          <div layout="row" ng-hide="adding">
-            <p flex></p>
-            <md-button class="md-raised md-primary" ng-click="createNewTeam()" layout="end center">Add team</md-button>
-          </div>
-          <div ng-show="adding" layout="column">
-            <div layout="row" style="margin-top:20px">
-              <md-input-container class="md-icon-float" style="width:90%">
-                <label>Team title</label>
-                <md-icon md-svg-src="img/ic_assignment_black_24px.svg" class="name"></md-icon>
-                <input ng-model="newTeam.title" type="text" focus-on="adding" on-enter="addTeam()" on-esc="cancelNewTeam()">
-              </md-input-container>
-              <md-button class="md-primary" ng-click="cancelNewTeam()" aria-label="Cancel">
-                <md-icon md-svg-src="img/ic_close_black_24px.svg" class="name"></md-icon>
-              </md-button>
-            </div>
-            <md-button class="md-primary" ng-click="addTeam()">Add team</md-button>
-          </div>
-          <md-list ng-cloak>
-            <md-list-item ng-repeat="team in teams">
-              <md-whiteframe class="md-whiteframe-z1" style="margin:5px;width:100%;padding:20px" layout="row" layout-align="start start">
-                <p> {{ team.title }} </p>
-                <p flex></p>
-                <md-button ng-show="$root.currentUser.currentTeam != team._id" class="md-icon-button" ng-click="setCurrentTeam(team)" layout="end center">
-                  <md-icon md-svg-src="img/ic_radio_button_unchecked_black_24px.svg" aria-label="Delete team" class="md-secondary md-hue-3"></md-icon>
-                  <md-tooltip>Select team</md-tooltip>
-                </md-button>
-                <md-button ng-show="$root.currentUser.currentTeam == team._id" ng-disabled="true" class="md-icon-button" ng-click="setCurrentTeam(team)" layout="end center">
-                  <md-icon md-svg-src="img/ic_radio_button_checked_black_24px.svg" aria-label="Delete team" class="md-secondary md-hue-3"></md-icon>
-                  <md-tooltip>Current team</md-tooltip>
-                </md-button>
-                <md-button class="md-icon-button" ng-href="#/team/{{team._id}}" layout="end center">
-                  <md-icon md-svg-src="img/ic_details_black_24px.svg" aria-label="View team" class="md-secondary md-hue-3"></md-icon>
-                  <md-tooltip>Team details</md-tooltip>
-                </md-button>
-              </md-whiteframe>
-            </md-list-item>
-          </md-list>
-        </md-content>
-      </md-tab>
-    </md-tabs>
-    <div ng-show="loading" layout="row" layout-sm="column" layout-align="space-around">
-      <md-progress-linear md-mode="indeterminate"></md-progress-linear>
-    </div>
+    </md-content>
 </md-content>

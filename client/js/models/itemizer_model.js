@@ -35,6 +35,7 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
 	   			return [item._id, item]
 				}));
 
+        console.log("aaaaaa", self.user);
         self.currentTeam = self.teamMap[self.user.currentTeam];
 
         if (callback)
@@ -82,7 +83,7 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
   		Project.query({ teamId: teamId }, function(projects) {
           $log.log("Loading projects", projects);
 
-          $scope.teamProjects[teamId] = projects;
+          self.teamProjects[teamId] = projects;
 
           _.each(projects, function(project) {
             self.projects[project._id] = project;
