@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemizer, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('TripPlannerDashboardCtrl', function($scope, $rootScope, $routeParams, Itemizer, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
 
     console.log("VIEW: ", $routeParams);

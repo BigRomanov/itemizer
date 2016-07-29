@@ -40,5 +40,10 @@
     "management",
     "simple"
   ],
-  "license": "Custom"
+  "license": "Custom",
+  "devDependencies": {
+    "gulp-inject": "^4.1.0",
+    "gulp-install": "^0.6.0",
+    "gulp-nodemon": "^2.1.0"
+  }
 }

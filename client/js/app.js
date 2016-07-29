@@ -31,6 +31,14 @@ app.config(['$routeProvider', '$httpProvider', '$cryptoProvider',
       templateUrl: '/views/partials/dashboard.html',
       controller: 'DashboardCtrl'
     }).
+    when('/tp/dashboard/:view?', {
+      templateUrl: '/views/partials/tp/dashboard.html',
+      controller: 'TripPlannerDashboardCtrl'
+    }).
+    when('/pm/dashboard/:view?', {
+      templateUrl: '/views/partials/pm/dashboard.html',
+      controller: 'ProjectManagerDashboardCtrl'
+    }).
     when('/invited', {
       templateUrl: '/views/partials/invited.html',
       controller: 'InvitedCtrl'
