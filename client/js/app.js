@@ -31,10 +31,16 @@ app.config(['$routeProvider', '$httpProvider', '$cryptoProvider',
       templateUrl: '/views/partials/dashboard.html',
       controller: 'DashboardCtrl'
     }).
+    // Trip planner
     when('/tp/dashboard/:view?', {
       templateUrl: '/views/partials/tp/dashboard.html',
-      controller: 'TripPlannerDashboardCtrl'
+      controller: 'TP_DashboardCtrl'
     }).
+    when('/tp/trip/:id', {
+      templateUrl: '/views/partials/tp/trip.html',
+      controller: 'TP_TripCtrl'
+    }).
+    // Project management
     when('/pm/dashboard/:view?', {
       templateUrl: '/views/partials/pm/dashboard.html',
       controller: 'ProjectManagerDashboardCtrl'

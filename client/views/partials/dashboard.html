@@ -13,19 +13,16 @@
             </md-button>
         </md-toolbar>
         <md-content layout-padding ng-controller="LeftCtrl" layout="column">
-            <md-button class="md-primary" ng-click="tripPlanner()" aria-label="New Trip">
+            <md-button class="md-primary" ng-href="#/tp/dashboard" aria-label="Trip Planner">
               Trip planner
             </md-button>
-            <md-button class="md-primary" ng-click="projectManager()" aria-label="New Trip">
+            <md-button class="md-primary" ng-href="#/pm/dashboard" aria-label="Project Manager">
               Project manager
             </md-button>
         </md-content>
     </md-sidenav>
-    <md-content layout="col" style="width:100%" ng-show="mode=tp">
-    </md-content>
 
-    <!-- Content pane for project manager -->
-    <md-content layout="col" style="width:100%" ng-show="mode=pm">
+    <md-content layout="col" style="width:100%">
         <div layout="row" style="width:100%">
             <md-tabs md-dynamic-height md-border-bottom style="width:100%" md-selected="selectedView">
                 <md-tab label="projects">

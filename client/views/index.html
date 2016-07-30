@@ -69,8 +69,6 @@
   
   <script src="/js/directives/ui-directives.js"></script>
   
-  <script src="/js/filters/filters.js"></script>
-  
   <script src="/js/models/checklist_model.js"></script>
   
   <script src="/js/models/itemizer_model.js"></script>
@@ -80,6 +78,8 @@
   <script src="/js/models/task_model.js"></script>
   
   <script src="/js/models/team_model.js"></script>
+  
+  <script src="/js/filters/filters.js"></script>
   
   <script src="/js/services/auth.js"></script>
   
@@ -93,6 +93,8 @@
   
   <script src="/js/controllers/tp/dashboard_controller.js"></script>
   
+  <script src="/js/controllers/tp/trip_controller.js"></script>
+  
   <!-- endinject -->
 
 </head>
@@ -103,16 +105,30 @@
       <md-toolbar>
         <div class="md-toolbar-tools" layout="row">
           <div layout-align="start center" layout="row">
-            <h2><span style="font-weight:bold">ITEMIZER</span></h2>
+            <md-menu ng-show="currentUser">
+            <md-button aria-label="Menu" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
+              <span style="font-size:22px;font-weight:bold">ITEMIZER</span>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item>
+                <md-button ng-href="#/tp/dashboard">
+                  Trip Planner
+                </md-button>
+              </md-menu-item>              
+              <md-menu-item>
+                <md-button ng-href="#/pm/dashboard">Project Management</md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
           </div>
           <!-- <div flex></div> -->
-          <div layout-align="center center" layout="row" style="width:100%">
+          <!-- <div layout-align="center center" layout="row" style="width:100%">
             <md-button ng-show="currentUser" layout-align="center center" class="md-icon-button" ng-href="#/dashboard" aria-label="Dashboard">
               <md-icon md-svg-src="img/ic_apps_white_24px.svg"></md-icon>
               <md-tooltip>Dashboard</md-tooltip>
             </md-button>
             <label >{{team.title}}</label>
-          </div>
+          </div> -->
           <md-button ng-show="!currentUser && !ctrl.inLogin()" class="md-icon-button" aria-label="Login" style="width:100px" ng-href="#/login">LOGIN</md-button>
           <md-menu ng-show="currentUser">
             <md-button aria-label="User profile" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)" style="width:200px">

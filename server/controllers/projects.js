@@ -67,7 +67,8 @@ exports.show = function(req, res) {
 };
 
 exports.all = function(req, res) {
-  Project.find(req.params.teamId).sort('-created').populate('creator team').exec(function(err, projects) {
+  console.log(req.params, req.session);
+  Project.find({team:req.params.teamId}).sort('-created').populate('creator team').exec(function(err, projects) {
     if (err) {
       res.status(500).json(err);
     } else {

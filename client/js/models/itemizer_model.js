@@ -10,6 +10,7 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
 
 	this.setUser = function(user) {
     if (user) {
+      console.log("Set user", user);
       this.user = user;
       this.currentTeamId = user.currentTeam;
     }
@@ -19,23 +20,18 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
     $log.log("Itemizer::getTeams");
   	var self = this;
   	if (self.teams) {
-      $log.log("Itemizer::getTeams - cache", self.teams);
       if (callback) {
   		  callback(self.teams);
       }
     }
   	else {
-      $log.log("Itemizer::getTeams - live 1");
 	  	Team.query(function(teams) {
-        $log.log("Itemizer::getTeams", teams);
 	      self.teams = teams;
-	      console.log("Loaded teams:", teams);
 
 	      self.teamMap = _.object(_.map(teams, function(item) {
 	   			return [item._id, item]
 				}));
 
-        console.log("aaaaaa", self.user);
         self.currentTeam = self.teamMap[self.user.currentTeam];
 
         if (callback)
@@ -45,15 +41,12 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
   }
 
   this.getCurrentTeam = function(callback) {
-    $log.log("Itemizer::getCurrentTeam");
     var self = this;
     if (self.teams) {
       callback(self.currentTeam);
     }
-    else {
-      $log.log("Itemizer::getCurrentTeam 2");
+    else {;
       self.getTeams(function(teams) {
-        $log.log("Itemizer::getCurrentTeam - live", self.currentTeam);
         callback(self.currentTeam);
       })
     }
@@ -62,15 +55,12 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
   this.setCurrentTeam = function(teamId, callback) {
     var self = this;
     self.user.currentTeam = teamId;
-    $http.post('/user/team', {
-      userId: self.user._id,
-      teamId: teamId,
-    }).then(function(response) {
+    $http.post('/user/team', { userId: self.user._id, teamId: teamId,}) 
+    .then(function(response) {
       self.currentTeam = self.teamMap[self.user.currentTeam];
       if (callback)
         callback(null, self.currentTeam);
     }, function(response) {
-      $log.warn("Unable to set team as current", response);
       callback("Unable to set team as current", null);
     });
   }

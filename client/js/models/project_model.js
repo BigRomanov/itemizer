@@ -4,18 +4,13 @@ app.factory('Project', function($resource) {
   return $resource('api/projects/:projectId', { 
     projectId: '@_id'
   }, {
-    // query: {
-    //   method: 'GET',
-    //   interceptor: {
-    //     response: parseResponseDates
-    //   },
-    //   isArray: true
-    // },
     get: {
       method: 'GET',
       transformResponse: function(data, headers) {
-        console.log("transforming", data);
+
         var project = angular.fromJson(data);
+
+        // This is needed to create a Date object for each date in the data
         _.each(project.tasks, function(task) {
           if (task.due_date) {
             task.due_date = new Date(task.due_date);
