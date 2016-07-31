@@ -24,6 +24,21 @@ module.exports = function(app) {
   app.post('/auth/session', session.login);
   app.delete('/auth/session', session.logout);
 
+  var workspaces = require('../controllers/workspaces');
+  app.get('/api/workspaces', workspaces.all);
+  app.post('/api/workspaces', auth.ensureAuthenticated, workspaces.create);
+  app.get('/api/workspaces/:workspacesId', workspaces.show);
+  app.put('/api/workspaces/:workspacesId', auth.ensureAuthenticated, auth.workspace.hasAuthorization, workspaces.update);
+  app.delete('/api/workspaces/:workspacesId', auth.ensureAuthenticated, auth.workspace.hasAuthorization, workspaces.destroy);
+
+  // Trip Planner routes
+  var trips = require('../controllers/tp/trips');
+  app.get('/api/trips', trips.all);
+  app.post('/api/trips', auth.ensureAuthenticated, trips.create);
+  app.get('/api/trips/:tripsId', trips.show);
+  app.put('/api/trips/:tripsId', auth.ensureAuthenticated, auth.trip.hasAuthorization, trips.update);
+  app.delete('/api/trips/:tripsId', auth.ensureAuthenticated, auth.trip.hasAuthorization, trips .destroy);
+
   // Blog Routes
   var blogs = require('../controllers/blogs');
   app.get('/api/blogs', blogs.all);

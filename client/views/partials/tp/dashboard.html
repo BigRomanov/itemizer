@@ -1,3 +1,13 @@
 <md-content layout="row">
-    List of trips
+    <md-list flex>
+        <md-subheader class="md-no-sticky">My trips</md-subheader>
+        <md-list-item class="md-3-line" ng-repeat="trip in trips" ng-click="null">
+          <img ng-src="img/ic_card_travel_black_24px.svg" class="md-avatar" alt="{{item.who}}" />
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ item.who }}</h3>
+            <h4>{{ item.what }}</h4>
+            <p>{{ item.notes }}</p>
+          </div>
+        </md-list-item>
+    </md-list>
 </md-content>

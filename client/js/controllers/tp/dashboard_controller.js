@@ -1,21 +1,6 @@
 app.controller('TP_DashboardCtrl', function($scope, $rootScope, $routeParams, Itemizer, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
     $scope.init = function() {
 
-        console.log("VIEW: ", $routeParams);
-        // Select view from parameter
-        if ($routeParams.view == "projects") {
-            $scope.selectedView = 0;
-        } else if ($routeParams.view == "tasks") {
-            $scope.selectedView = 1;
-        } else if ($routeParams.view == "calendar") {
-            $scope.selectedView = 2;
-        } else if ($routeParams.view == "teams") {
-            $scope.selectedView = 3;
-        } else {
-            $scope.selectedView = 0;
-        }
-
-        $scope.adding = false;
         $scope.loading = true;
 
         $rootScope.$watch('team', function(newVal, oldVal) {
@@ -24,12 +9,8 @@ app.controller('TP_DashboardCtrl', function($scope, $rootScope, $routeParams, It
                 $scope.projects = newVal.projects;
         });
 
-        Itemizer.getTeams(function(teams) {
-            $scope.teams = teams;
-            Itemizer.getProjects(Itemizer.currentTeamId, function(projects) {
-                $scope.projects = projects;
-                $scope.loading = false;
-            })
+        TripPlanner.loadTrips(function(trips) {
+            $scope.trips = trips;
         });
     }
 
@@ -50,32 +31,18 @@ app.controller('TP_DashboardCtrl', function($scope, $rootScope, $routeParams, It
             .then(function() {});
     };
 
-    $scope.editProject = function(project) {
-        $scope.project = project;
-        $scope.editing = true;
-    }
-
-    $scope.newProject = function() {
-        $scope.project = {
+    $scope.createNewTrip = function() {
+        $scope.newtrip = {
             title: ""
         };
         $scope.adding = true;
     }
 
-    $scope.cancelNewProject = function() {
-        $scope.project = null;
-        $scope.adding = false;
-        $scope.editing = false;
+    $scope.cancelNewTrip = function() {
+        $scope.newtrip = null;
     }
 
-    $scope.updateProject = function() {
-        console.log($scope.project);
-        $scope.project.$update(function(project) {
-            $scope.editing = false;
-        });
-    }
-
-    $scope.addProject = function() {
+    $scope.saveNewTrip = function() {
 
         var project = new Project($scope.project);
         project.team = $rootScope.currentUser.currentTeam;
@@ -90,7 +57,7 @@ app.controller('TP_DashboardCtrl', function($scope, $rootScope, $routeParams, It
 
     }
 
-    $scope.deleteProject = function(ev) {
+    $scope.deleteTrip = function(ev) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
             .title('Are you sure you want to delete this project?')
@@ -108,58 +75,8 @@ app.controller('TP_DashboardCtrl', function($scope, $rootScope, $routeParams, It
         });
     };
 
-    $scope.edit = function(project) {
-        $location.path('/project/' + project._id);
-    }
 
-    // Sidenav toggle
-    $scope.toggleNav = buildToggler('right');
-    /**
-     * Build handler to open/close a SideNav; when animation finishes
-     * report completion in console
-     */
-    function buildToggler(navID) {
-        var debounceFn = $mdUtil.debounce(function() {
-            $mdSidenav(navID)
-                .toggle()
-                .then(function() {
-                    $log.debug("toggle " + navID + " is done");
-                });
-        }, 200);
-        return debounceFn;
-    }
-
-    // Tasklist view
-    $scope.editTask = function(_task) {
-        if ($scope.currentTask) {
-            $scope.currentTask.edit = false;
-        }
-
-        $scope.currentTask = _task;
-
-        _task.edit = true;
-        $scope.editing = true;
-    }
-
-    $scope.cancelEditTask = function(task) {
-        if (!task.title && !task.description) {
-            $scope.deleteTask(task);
-        }
-        $scope.currentTask.edit = false;
-        $scope.currentTask = null;
-        task.edit = false;
-        $scope.editing = false;
-    }
-
-    $scope.saveTask = function(task) {
-        task.edit = false;
-        $scope.editing = false;
-        $scope.update();
-    }
-
-
-
-
+    // Dashboard overview
     // Calendar view
     $scope.dayFormat = "d";
     $scope.selectedDate = null;
@@ -189,48 +106,7 @@ app.controller('TP_DashboardCtrl', function($scope, $rootScope, $routeParams, It
         // that particular date here.
         return "<p></p>";
     };
-
-    // Team view
-
-    $scope.setCurrentTeam = function(team) {
-        $rootScope.currentUser.currentTeam = teamId;
-        Itemizer.setCurrentTeam(function(err, team) {
-            $log.log("Current team updated", team, "Error:", err);
-            $scope.team = team
-        });
-    }
-
-    $scope.createNewTeam = function() {
-        $scope.newTeam = {
-            title: "",
-            default: false,
-            members: []
-        }
-        $scope.adding = true;
-    }
-
-    $scope.cancelNewTeam = function() {
-        $scope.newTeam = {
-            title: "",
-            default: false,
-            members: []
-        }
-        $scope.adding = false;
-    }
-
-    $scope.addTeam = function() {
-        $scope.adding = false;
-
-        $scope.newTeam.members.push($rootScope.currentUser._id);
-
-        $log.log("Adding team", $scope.newTeam);
-
-        var newTeamResource = new Team($scope.newTeam);
-        newTeamResource.$save(function(team, headers) {
-            console.log("Added team", team);
-            Itemizer.teams.unshift(team);
-        });
-    }
+    
 });
 
 app.controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {

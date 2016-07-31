@@ -59,10 +59,6 @@ BlogPostSchema.statics.findByTitle = function (title, callback) {
   return this.find({ title: title }, callback);
 }
 
-BlogPostSchema.methods.expressiveQuery = function (creator, date, callback) {
-  return this.find('creator', creator).where('date').gte(date).run(callback);
-}
-
 /**
  * Plugins
  */
