@@ -1,11 +1,11 @@
-app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, Itemizer, Team, $log, $http, $mdDialog, $location) {
+app.controller('TeamCtrl', function($scope, $rootScope, $routeParams, ProjectManager, Team, $log, $http, $mdDialog, $location) {
   $scope.init = function() {
     $scope.loading = true;
     $scope.inviting = false;
     $scope.invites = "";
     $scope.search = {};
 
-    $scope.team = Itemizer.teamMap[$routeParams.id];
+    $scope.team = ProjectManager.teamMap[$routeParams.id];
     $scope.loading = false;
       
     // console.log("Teams", $rootScope.teams);

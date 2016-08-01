@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Team, Project, Task, $log, $http) {
+app.service('ProjectManager', ['Team', 'Project', 'Task', '$log', '$http', function(Team, Project, Task, $log, $http) {
   
   this.user     = null;
 	this.teams    = null;
@@ -17,8 +17,7 @@ app.service('Itemizer', ['Team', 'Project', 'Task', '$log', '$http', function(Te
 	}
 	
   this.getTeams = function(callback) {
-    $log.log("Itemizer::getTeams");
-  	var self = this;
+   	var self = this;
   	if (self.teams) {
       if (callback) {
   		  callback(self.teams);

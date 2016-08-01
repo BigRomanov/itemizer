@@ -1,15 +1,15 @@
 'use strict';
 
 
-app.factory('Auth', function Auth($location, $rootScope, Session, User, Itemizer, Team, $cookieStore) {
+app.factory('Auth', function Auth($location, $rootScope, Session, User, ProjectManager, Team, $cookieStore) {
   $rootScope.currentUser = $cookieStore.get('user') || null;
   $cookieStore.remove('user');
 
   if ($rootScope.currentUser)
   {
     console.log("Initialize itemizer model, user from cookie:", $rootScope.createUser);
-    Itemizer.setUser($rootScope.currentUser);
-    Itemizer.getTeams(function(teams) {
+    ProjectManager.setUser($rootScope.currentUser);
+    ProjectManager.getTeams(function(teams) {
       $rootScope.teams = teams;
     });  
   }
@@ -27,8 +27,8 @@ app.factory('Auth', function Auth($location, $rootScope, Session, User, Itemizer
         $rootScope.currentUser = user;
 
         console.log("Initialize itemizer model");
-        Itemizer.setUser($rootScope.currentUser);
-        Itemizer.getTeams();
+        ProjectManager.setUser($rootScope.currentUser);
+        ProjectManager.getTeams();
         return cb();  
       }, function(err) {
         return cb(err.data);

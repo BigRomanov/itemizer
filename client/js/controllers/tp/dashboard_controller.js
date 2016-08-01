@@ -1,4 +1,4 @@
-app.controller('TP_DashboardCtrl', function($scope, $rootScope, $routeParams, Itemizer, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('TP_DashboardCtrl', function($scope, $rootScope, $routeParams, TripPlanner, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
     $scope.init = function() {
 
         $scope.loading = true;

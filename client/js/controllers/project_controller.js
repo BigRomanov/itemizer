@@ -1,4 +1,4 @@
-app.controller('ProjectCtrl', function($scope, $rootScope, $routeParams, Itemizer, Project, Task, $log, $mdDialog, $location) {
+app.controller('ProjectCtrl', function($scope, $rootScope, $routeParams, ProjectManager, Project, Task, $log, $mdDialog, $location) {
   $scope.init = function() {
     $scope.editing = false;
 
@@ -8,11 +8,11 @@ app.controller('ProjectCtrl', function($scope, $rootScope, $routeParams, Itemize
     $scope.search = {}
 
 
-    Itemizer.getProject($routeParams.id, function(project) {
+    ProjectManager.getProject($routeParams.id, function(project) {
       $scope.project = project;
     });
 
-    Itemizer.getTasks($routeParams.id, function(tasks) {
+    ProjectManager.getTasks($routeParams.id, function(tasks) {
       $scope.tasks = tasks;
       $scope.loading = false;
     });

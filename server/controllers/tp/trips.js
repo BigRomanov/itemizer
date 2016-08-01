@@ -27,7 +27,7 @@ exports.create = function(req, res) {
 };
 
 exports.update = function(req, res) {
-  Trip.findById(req.params.tripId).populate('creator team').exec(function(err, trip) {
+  Trip.findById(req.params.tripId).populate('creator').exec(function(err, trip) {
     if (err) {
       res.status(500).json(err);
     } 
@@ -57,7 +57,7 @@ exports.destroy = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  Trip.findById(req.params.tripId).populate('creator team').exec( function(err, trip) {
+  Trip.findById(req.params.tripId).populate('creator').exec( function(err, trip) {
     if (err) {
       res.status(500).json(err);
     } else {
@@ -68,7 +68,8 @@ exports.show = function(req, res) {
 
 exports.all = function(req, res) {
   console.log(req.params, req.session);
-  Trip.find({team:req.params.teamId}).sort('-created').populate('creator team').exec(function(err, trips) {
+  //Trip.find({team:req.params.teamId}).sort('-created').populate('creator').exec(function(err, trips) {
+  Trip.find({team:req.params.teamId}).sort('-created').exec(function(err, trips) {
     if (err) {
       res.status(500).json(err);
     } else {

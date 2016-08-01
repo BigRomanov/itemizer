@@ -23,6 +23,15 @@ exports.workspace = {
   }
 };
 
+exports.item = {
+  hasAuthorization: function(req, res, next) {
+    if (req.item.creator._id.toString() !== req.user._id.toString()) {
+      return res.sendStatus(403);
+    }
+    next();
+  }
+};
+
 // Trip planner auth
 exports.trip = {
   hasAuthorization: function(req, res, next) {
@@ -32,28 +41,6 @@ exports.trip = {
     next();
   }
 };
-
-/**
- * Blog authorizations routing middleware
- */
-exports.blog = {
-  hasAuthorization: function(req, res, next) {
-    if (req.blog.creator._id.toString() !== req.user._id.toString()) {
-      return res.sendStatus(403);
-    }
-    next();
-  }
-};
-
-exports.checklist = {
-  hasAuthorization: function(req, res, next) {
-    if (req.checklist.creator._id.toString() !== req.user._id.toString()) {
-      return res.sendStatus(403);
-    }
-    next();
-  }
-};
-
 
 
 exports.project = {

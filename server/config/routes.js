@@ -24,36 +24,38 @@ module.exports = function(app) {
   app.post('/auth/session', session.login);
   app.delete('/auth/session', session.logout);
 
+  // General entities
   var workspaces = require('../controllers/workspaces');
   app.get('/api/workspaces', workspaces.all);
   app.post('/api/workspaces', auth.ensureAuthenticated, workspaces.create);
-  app.get('/api/workspaces/:workspacesId', workspaces.show);
-  app.put('/api/workspaces/:workspacesId', auth.ensureAuthenticated, auth.workspace.hasAuthorization, workspaces.update);
-  app.delete('/api/workspaces/:workspacesId', auth.ensureAuthenticated, auth.workspace.hasAuthorization, workspaces.destroy);
+  app.get('/api/workspaces/:workspaceId', workspaces.show);
+  app.put('/api/workspaces/:workspaceId', auth.ensureAuthenticated, auth.workspace.hasAuthorization, workspaces.update);
+  app.delete('/api/workspaces/:workspaceId', auth.ensureAuthenticated, auth.workspace.hasAuthorization, workspaces.destroy);
+
+  var activities = require('../controllers/activities');
+  app.get('/api/activities', activities.all);
+  app.post('/api/activities', auth.ensureAuthenticated, activities.create);
+  app.get('/api/activities/:activityId', activities.show);
+  app.put('/api/activities/:activityId', auth.ensureAuthenticated, auth.activity.hasAuthorization, activities.update);
+  app.delete('/api/activities/:activityId', auth.ensureAuthenticated, auth.activity.hasAuthorization, activities.destroy);
+
+  var items = require('../controllers/items');
+  app.get('/api/items', items.all);
+  app.post('/api/items', auth.ensureAuthenticated, items.create);
+  app.get('/api/items/:itemId', items.show);
+  app.put('/api/items/:itemId', auth.ensureAuthenticated, auth.item.hasAuthorization, items.update);
+  app.delete('/api/items/:itemId', auth.ensureAuthenticated, auth.item.hasAuthorization, items.destroy);
 
   // Trip Planner routes
   var trips = require('../controllers/tp/trips');
   app.get('/api/trips', trips.all);
   app.post('/api/trips', auth.ensureAuthenticated, trips.create);
-  app.get('/api/trips/:tripsId', trips.show);
-  app.put('/api/trips/:tripsId', auth.ensureAuthenticated, auth.trip.hasAuthorization, trips.update);
-  app.delete('/api/trips/:tripsId', auth.ensureAuthenticated, auth.trip.hasAuthorization, trips .destroy);
+  app.get('/api/trips/:tripId', trips.show);
+  app.put('/api/trips/:tripId', auth.ensureAuthenticated, auth.trip.hasAuthorization, trips.update);
+  app.delete('/api/trips/:tripId', auth.ensureAuthenticated, auth.trip.hasAuthorization, trips.destroy);
 
-  // Blog Routes
-  var blogs = require('../controllers/blogs');
-  app.get('/api/blogs', blogs.all);
-  app.post('/api/blogs', auth.ensureAuthenticated, blogs.create);
-  app.get('/api/blogs/:blogId', blogs.show);
-  app.put('/api/blogs/:blogId', auth.ensureAuthenticated, auth.blog.hasAuthorization, blogs.update);
-  app.delete('/api/blogs/:blogId', auth.ensureAuthenticated, auth.blog.hasAuthorization, blogs.destroy);
 
-  var checklists = require('../controllers/checklists');
-  app.get('/api/checklists', checklists.all);
-  app.post('/api/checklists', auth.ensureAuthenticated, checklists.create);
-  app.get('/api/checklists/:checklistId', checklists.show);
-  app.put('/api/checklists/:checklistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.update);
-  app.delete('/api/checklists/:checklistId', auth.ensureAuthenticated, auth.checklist.hasAuthorization, checklists.destroy);
-
+  // Project manager routes
   var projects = require('../controllers/projects');
   app.get('/api/projects', projects.all);
   app.post('/api/projects', auth.ensureAuthenticated, projects.create);
@@ -75,12 +77,7 @@ module.exports = function(app) {
   app.put('/api/teams/:teamId', auth.ensureAuthenticated, auth.team.hasAuthorization, teams.update);
   app.delete('/api/teams/:teamId', auth.ensureAuthenticated, auth.team.hasAuthorization, teams.destroy);
 
-  var activities = require('../controllers/activities');
-  app.get('/api/activities', activities.all);
-  app.post('/api/activities', auth.ensureAuthenticated, activities.create);
-  app.get('/api/activities/:activityId', activities.show);
-  app.put('/api/activities/:activityId', auth.ensureAuthenticated, auth.activity.hasAuthorization, activities.update);
-  app.delete('/api/activities/:activityId', auth.ensureAuthenticated, auth.activity.hasAuthorization, activities.destroy);
+  
 
   var team_invites = require('../controllers/team_invites');
   app.get('/api/team_invites', team_invites.all);
@@ -90,8 +87,6 @@ module.exports = function(app) {
   app.delete('/api/team_invites/:inviteId', auth.ensureAuthenticated, auth.activity.hasAuthorization, team_invites.destroy);
   app.get('/api/team_invites_for_email', team_invites.findByEmail);
 
-  app.param('blogId', blogs.blog);
-  app.param('checklistId', checklists.checklist)
   app.param('projectId', projects.load);
   app.param('teamId', teams.load);
   app.param('activityId', activities.load);

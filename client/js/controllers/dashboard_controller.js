@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemizer, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
+app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, ProjectManager, Project, Team, $timeout, $mdSidenav, $mdUtil, $log, $http) {
   $scope.init = function() {
 
     console.log("VIEW: ", $routeParams);
@@ -24,9 +24,9 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemi
         $scope.projects = newVal.projects;
     });
 
-    Itemizer.getTeams(function(teams) {
+    ProjectManager.getTeams(function(teams) {
       $scope.teams = teams;
-      Itemizer.getProjects(Itemizer.currentTeamId, function(projects) {
+      ProjectManager.getProjects(Itemizer.currentTeamId, function(projects) {
         $scope.projects = projects;
         $scope.loading = false;
       })
@@ -187,7 +187,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemi
 
   $scope.setCurrentTeam = function(team) {
     $rootScope.currentUser.currentTeam = teamId;
-    Itemizer.setCurrentTeam(function(err, team) {
+    ProjectManager.setCurrentTeam(function(err, team) {
       $log.log("Current team updated", team, "Error:", err);
       $scope.team = team
     });
@@ -221,7 +221,7 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $routeParams, Itemi
     var newTeamResource = new Team($scope.newTeam);
     newTeamResource.$save(function(team, headers) {
       console.log("Added team", team);
-      Itemizer.teams.unshift(team);
+      ProjectManager.teams.unshift(team);
     });
   }
 });
